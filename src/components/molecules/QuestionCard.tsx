@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import QuestionCardText from '../atoms/QuestionCardText';
 import QuestionAuthorDate from '../atoms/QuestionAuthorDate';
 import QuestionCommentCount from '../atoms/QuestionCommentCount';
+import UserAvatar from '../atoms/UserAvatar';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -36,7 +37,14 @@ const QuestionCard = ({
       <CardContent className={classes.questionCardContent}>
         <Grid container direction="column" gap={0.8}>
           <Grid item>
-            <QuestionAuthorDate author={author} datetime={datetime} />
+            <Grid container alignItems="center" gap={1}>
+              <Grid item>
+                <UserAvatar username={author} size="small" />
+              </Grid>
+              <Grid item>
+                <QuestionAuthorDate author={author} datetime={datetime} />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
             <QuestionCardText text={questionText} />

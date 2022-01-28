@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 
 import Typography from '@mui/material/Typography';
 
+import logo from '../../images/logo2.jpg';
+
 interface LogoProps {
   text: string;
 }
@@ -17,15 +19,19 @@ const Logo = ({ text }: LogoProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
-    <Typography
-      className={classes.logo}
-      color="black"
-      variant="h6"
-      component="div"
-      sx={{ flexGrow: 1 }}
-    >
-      {text}
-    </Typography>
+    <>
+      <img src={logo} alt="Logo" />
+
+      <Typography
+        className={classes.logo}
+        color="black"
+        variant="h6"
+        component="div"
+        sx={{ flexGrow: 1, marginLeft: '1rem' }}
+      >
+        {text}
+      </Typography>
+    </>
   );
 };
 

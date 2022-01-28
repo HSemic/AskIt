@@ -5,10 +5,7 @@ import { Button as Btn } from '@mui/material';
 const useStyles = makeStyles({
   button: {
     width: '10rem',
-    borderRadius: '20px',
-    '&:last-child': {
-      marginLeft: '1rem'
-    }
+    borderRadius: '20px'
   }
 });
 
