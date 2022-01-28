@@ -1,7 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-const ButtonGroup = () => {
-  return <div></div>;
+interface ButtonGroupProps {
+  children: JSX.Element;
+}
+
+const ButtonGroup = ({ children }: ButtonGroupProps): React.ReactElement => {
+  return <div>{children}</div>;
 };
 
 export default ButtonGroup;

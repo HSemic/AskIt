@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { makeStyles } from '@mui/styles';
 
 import AppBar from '@mui/material/AppBar';
@@ -7,10 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 
 import Logo from '../atoms/Logo';
 import Button from '../atoms/Button';
+import ButtonGroup from '../molecules/ButtonGroup';
 
 const useStyles = makeStyles({
   appBar: {
-    backgroundColor: 'white'
+    backgroundColor: 'white !important'
   }
 });
 
@@ -25,11 +26,15 @@ const Navbar = (): React.ReactElement => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar className={classes.appBar} position="static">
+      <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <Logo text={config.logoText} />
-          <Button text={config.buttonSignInText} color="primary" />
-          <Button text={config.buttonSignUpText} color="secondary" />
+          <ButtonGroup>
+            <>
+              <Button text={config.buttonSignInText} color="primary" />
+              <Button text={config.buttonSignUpText} color="secondary" />
+            </>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
     </Box>

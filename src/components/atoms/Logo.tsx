@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { makeStyles } from '@mui/styles';
 
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,7 @@ interface LogoProps {
 
 const useStyles = makeStyles({
   logo: {
-    fontSize: '3rem'
+    fontSize: '3rem !important'
   }
 });
 
