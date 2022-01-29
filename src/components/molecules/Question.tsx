@@ -8,11 +8,13 @@ import CardContent from '@mui/material/CardContent';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 
 import QuestionText from '../atoms/QuestionText';
-import QuestionAuthorDate from '../atoms/QuestionAuthorDate';
+import Author from '../atoms/Author';
+import Date from '../atoms/Date';
 import QuestionCommentCount from '../atoms/QuestionCommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
 import IconButton from '../atoms/IconButton';
+import AuthorDateDivider from '../atoms/AuthorDateDivider';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -62,7 +64,9 @@ const Question = ({
                 />
               </Grid>
               <Grid item>
-                <QuestionAuthorDate author={author} datetime={datetime} />
+                <Author author={author} variant={variant} />
+                <AuthorDateDivider variant={variant} />
+                <Date date={datetime} />
               </Grid>
             </Grid>
           </Grid>

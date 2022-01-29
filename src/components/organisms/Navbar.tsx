@@ -9,6 +9,8 @@ import Logo from '../atoms/Logo';
 import LinkButton from '../atoms/LinkButton';
 import ButtonGroup from '../molecules/ButtonGroup';
 
+import logo from '../../images/logo2.jpg';
+
 const useStyles = makeStyles({
   appBar: {
     backgroundColor: 'white !important'
@@ -28,7 +30,7 @@ const Navbar = (): React.ReactElement => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
-          <Logo text={config.logoText} />
+          <Logo text={config.logoText} imgSrc={logo} />
           <ButtonGroup direction="row" gap={1}>
             <>
               <LinkButton text={config.buttonSignInText} color="primary" />

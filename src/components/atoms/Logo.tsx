@@ -3,10 +3,9 @@ import { makeStyles } from '@mui/styles';
 
 import Typography from '@mui/material/Typography';
 
-import logo from '../../images/logo2.jpg';
-
 interface LogoProps {
   text: string;
+  imgSrc: string;
 }
 
 const useStyles = makeStyles({
@@ -15,12 +14,12 @@ const useStyles = makeStyles({
   }
 });
 
-const Logo = ({ text }: LogoProps): React.ReactElement => {
+const Logo = ({ text, imgSrc }: LogoProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <>
-      <img src={logo} alt="Logo" />
+      <img src={imgSrc} alt="Logo" />
 
       <Typography
         className={classes.logo}
