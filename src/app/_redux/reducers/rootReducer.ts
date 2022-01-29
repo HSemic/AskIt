@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import questionListReducer from './questionListReducer/questionListReducer';
+import questionListReducer from './questionReducer/questionReducer';
 import userReducer from './userReducer/userReducer';
 
 const rootReducer = combineReducers({
-  questionList: questionListReducer,
+  question: questionListReducer,
   user: userReducer
 });
 

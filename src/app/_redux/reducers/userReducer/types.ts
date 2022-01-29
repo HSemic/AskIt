@@ -8,9 +8,15 @@ export interface UserApiData {
   password: string;
 }
 
+export interface UserData {
+  firstName: string;
+  lastName: string;
+}
+
 export interface UserState {
   pending: boolean;
   user: UserApiData | null;
+  userList: { [id: string]: UserData };
   error: string | null;
 }
 
@@ -37,4 +43,32 @@ export type FetchUserFailure = {
   payload: FetchUserFailurePayload;
 };
 
-export type UserAction = FetchUserRequest | FetchUserSuccess | FetchUserFailure;
+export interface FetchUserListSuccessPayload {
+  userList: { [id: string]: UserData };
+}
+
+export interface FetchUserListFailurePayload {
+  error: string;
+}
+
+export interface FetchUserListRequest {
+  type: typeof userTypes.FETCH_USERLIST_REQUEST;
+}
+
+export type FetchUserListSuccess = {
+  type: typeof userTypes.FETCH_USERLIST_SUCCESS;
+  payload: FetchUserListSuccessPayload;
+};
+
+export type FetchUserListFailure = {
+  type: typeof userTypes.FETCH_USERLIST_FAILURE;
+  payload: FetchUserListFailurePayload;
+};
+
+export type UserAction =
+  | FetchUserRequest
+  | FetchUserSuccess
+  | FetchUserFailure
+  | FetchUserListRequest
+  | FetchUserListSuccess
+  | FetchUserListFailure;

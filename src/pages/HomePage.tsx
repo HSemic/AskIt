@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuestionListRequest } from '../app/_redux/actions/questionListActions';
+import { fetchQuestionListRequest } from '../app/_redux/actions/questionActions';
 import { fetchUserRequest } from '../app/_redux/actions/userActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 
@@ -68,7 +68,7 @@ const HomePage = (): React.ReactElement => {
     pending: pendingQuestions,
     questionList,
     error: errorQuestions
-  } = useSelector((state: RootState) => state.questionList);
+  } = useSelector((state: RootState) => state.question);
 
   const { pending, user, error } = useSelector(
     (state: RootState) => state.user
