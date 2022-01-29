@@ -32,21 +32,36 @@ function stringAvatar(name: string) {
   };
 }
 
+const config = {
+  avatarSizes: {
+    small: '26px',
+    medium: '32px',
+    large: '64px'
+  }
+};
+
 interface UserAvatarProps {
   username: string;
-  size: 'small' | 'normal';
+  size: 'small' | 'normal' | 'large';
 }
 
 const UserAvatar = ({
   username,
   size
 }: UserAvatarProps): React.ReactElement => {
+  const dimension =
+    size === 'normal'
+      ? config.avatarSizes.medium
+      : size === 'small'
+      ? config.avatarSizes.small
+      : config.avatarSizes.large;
+
   return (
     <Avatar
       {...stringAvatar(username)}
       sx={{
-        width: size === 'normal' ? '32px' : '26px',
-        height: size === 'normal' ? '32px' : '26px',
+        width: dimension,
+        height: dimension,
         margin: '0'
       }}
     />

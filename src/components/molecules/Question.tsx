@@ -47,8 +47,13 @@ const Question = ({
   const classes = useStyles();
 
   const questionContent = (
-    <Grid container gap={1} alignItems="center">
-      <Grid item>
+    <Grid
+      container
+      gap={variant === 'card' ? 1 : 2}
+      alignItems="center"
+      justifyContent="flex-start"
+    >
+      <Grid item xs={1}>
         <ButtonGroup direction="column" gap={0}>
           <>
             <IconButton>
@@ -60,7 +65,7 @@ const Question = ({
           </>
         </ButtonGroup>
       </Grid>
-      <Grid item>
+      <Grid item xs={10}>
         <Grid container direction="column" gap={variant === 'card' ? 1 : 2}>
           <Grid item>
             <Grid container alignItems="center" gap={1}>

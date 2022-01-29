@@ -7,13 +7,13 @@ const useStyles = makeStyles({
     color: '#787C7E'
   },
   author: {
-    fontWeight: 500
+    fontWeight: '500 !important'
   }
 });
 
 interface Author {
   author: string;
-  variant: QuestionContentVariant;
+  variant: QuestionContentVariant | 'profile';
 }
 
 const Author = ({ author, variant }: Author): React.ReactElement => {

@@ -4,7 +4,8 @@ import QuestionTemplate from '../components/templates/QuestionTemplate';
 
 const config: { question: QuestionData; comments: CommentData[] } = {
   question: {
-    questionText: 'How is everyone doing?',
+    questionText:
+      'How is everyone doing today? This is one longer question to test the layout.',
     author: 'HSemic',
     datetime: '23.01.2022',
     variant: 'page'

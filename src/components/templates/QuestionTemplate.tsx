@@ -9,8 +9,14 @@ import Question from '../molecules/Question';
 import CommentList from '../organisms/CommentList';
 
 const useStyles = makeStyles({
-  questionPaper: {
+  paperMain: {
     padding: '3rem'
+  },
+  paperQuestion: {
+    padding: '2rem 1rem'
+  },
+  paperComments: {
+    padding: '2rem'
   }
 });
 
@@ -27,13 +33,17 @@ const QuestionTemplate = ({
 
   return (
     <Container maxWidth="md">
-      <Paper className={classes.questionPaper}>
-        <Grid container direction="column" gap={10}>
+      <Paper className={classes.paperMain}>
+        <Grid container direction="column" gap={4}>
           <Grid item xs={12}>
-            <Question {...question} />
+            <Paper elevation={3} className={classes.paperQuestion}>
+              <Question {...question} />
+            </Paper>
           </Grid>
           <Grid item xs={12}>
-            <CommentList comments={comments} />
+            <Paper elevation={3} className={classes.paperComments}>
+              <CommentList comments={comments} />
+            </Paper>
           </Grid>
         </Grid>
       </Paper>
