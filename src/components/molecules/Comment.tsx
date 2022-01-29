@@ -8,6 +8,13 @@ import Date from '../atoms/Date';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import CommentText from '../atoms/CommentText';
 
+const config = {
+  authorDateDivider: {
+    cardDivider: ' at ',
+    pageDivider: ' - '
+  }
+};
+
 const Comment = ({
   author,
   datetime,
@@ -22,7 +29,7 @@ const Comment = ({
         <Grid container direction="column" gap={1}>
           <Grid item>
             <Author author={author} variant="page" />
-            <AuthorDateDivider variant="page" />
+            <AuthorDateDivider variant="page" {...config.authorDateDivider} />
             <Date date={datetime} />
           </Grid>
           <Grid item>

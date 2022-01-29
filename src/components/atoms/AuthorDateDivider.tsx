@@ -10,16 +10,20 @@ const useStyles = makeStyles({
 
 interface AuthorDateDividerProps {
   variant: QuestionContentVariant;
+  cardDivider: string;
+  pageDivider: string;
 }
 
 const AuthorDateDivider = ({
-  variant
+  variant,
+  cardDivider,
+  pageDivider
 }: AuthorDateDividerProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <Typography className={classes.divider} variant="body2" component="span">
-      {variant === 'card' ? ' at ' : ' - '}
+      {variant === 'card' ? cardDivider : pageDivider}
     </Typography>
   );
 };

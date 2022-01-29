@@ -3,7 +3,9 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import Navbar from './components/organisms/Navbar';
-import Home from './pages/Home';
+import HomePage from './pages/HomePage';
+import QuestionPage from './pages/QuestionPage';
+
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 
 const App = (): React.ReactElement => {
@@ -12,7 +14,7 @@ const App = (): React.ReactElement => {
       <CssBaseline />
       <Navbar />
       <VerticalSpacer />
-      <Home />
+      <QuestionPage />
       <VerticalSpacer />
     </>
   );

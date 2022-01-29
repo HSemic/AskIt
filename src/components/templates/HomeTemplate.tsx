@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
 
+import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
 import QuestionList from '../organisms/QuestionList';

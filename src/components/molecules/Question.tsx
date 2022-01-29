@@ -31,6 +31,13 @@ const useStyles = makeStyles({
   }
 });
 
+const config = {
+  authorDateDivider: {
+    cardDivider: ' at ',
+    pageDivider: ' - '
+  }
+};
+
 const Question = ({
   questionText,
   author,
@@ -54,7 +61,7 @@ const Question = ({
         </ButtonGroup>
       </Grid>
       <Grid item>
-        <Grid container direction="column" gap={1}>
+        <Grid container direction="column" gap={variant === 'card' ? 1 : 2}>
           <Grid item>
             <Grid container alignItems="center" gap={1}>
               <Grid item>
@@ -65,7 +72,10 @@ const Question = ({
               </Grid>
               <Grid item>
                 <Author author={author} variant={variant} />
-                <AuthorDateDivider variant={variant} />
+                <AuthorDateDivider
+                  variant={variant}
+                  {...config.authorDateDivider}
+                />
                 <Date date={datetime} />
               </Grid>
             </Grid>

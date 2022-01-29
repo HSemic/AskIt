@@ -10,7 +10,7 @@ interface CommentListProps {
 
 const CommentList = ({ comments }: CommentListProps): React.ReactElement => {
   return (
-    <Grid container direction="column" gap={2}>
+    <Grid container direction="column" gap={4}>
       {comments.map((comment) => {
         return (
           <Grid item>

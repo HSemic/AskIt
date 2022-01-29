@@ -56,10 +56,10 @@ const config: { questions: QuestionData[]; topUsers: string[] } = {
   topUsers: ['Haris1', 'Haris2', 'Haris3', 'Haris4', 'Haris5']
 };
 
-const Home = (): React.ReactElement => {
+const HomePage = (): React.ReactElement => {
   return (
     <HomeTemplate questions={config.questions} topUsers={config.topUsers} />
   );
 };
 
-export default Home;
+export default HomePage;
