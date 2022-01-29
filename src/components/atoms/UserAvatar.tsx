@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -36,25 +38,40 @@ const config = {
   avatarSizes: {
     small: '26px',
     medium: '32px',
-    large: '64px'
+    large: '64px',
+    profile: '128px'
   }
 };
 
 interface UserAvatarProps {
   username: string;
-  size: 'small' | 'normal' | 'large';
+  size: 'small' | 'normal' | 'large' | 'profile';
 }
 
 const UserAvatar = ({
   username,
   size
 }: UserAvatarProps): React.ReactElement => {
-  const dimension =
-    size === 'normal'
-      ? config.avatarSizes.medium
-      : size === 'small'
-      ? config.avatarSizes.small
-      : config.avatarSizes.large;
+  let dimension,
+    fontSize = '1rem';
+
+  switch (size) {
+    case 'small':
+      dimension = config.avatarSizes.small;
+
+      break;
+    case 'large':
+      dimension = config.avatarSizes.large;
+      fontSize = '2rem';
+      break;
+    case 'profile':
+      dimension = config.avatarSizes.profile;
+      fontSize = '7rem';
+      break;
+    default:
+      dimension = config.avatarSizes.medium;
+      break;
+  }
 
   return (
     <Avatar
@@ -62,8 +79,10 @@ const UserAvatar = ({
       sx={{
         width: dimension,
         height: dimension,
-        margin: '0'
+        margin: '0',
+        fontSize: fontSize
       }}
+      sizes="50px 50px"
     />
   );
 };

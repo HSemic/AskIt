@@ -1,0 +1,15 @@
+{
+  "questions": [{ "id": 1, "title": "What is up, guys?", "authorId": 1 }],
+  "comments": [
+    { "id": 1, "commentText": "some comment", "questionId": 1, "authorId": 1 }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Haris",
+      "lastName": "Semic",
+      "email": "hsemic2@etf.unsa.ba",
+      "password": "hehe"
+    }
+  ]
+}

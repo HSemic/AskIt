@@ -11,18 +11,18 @@ const useStyles = makeStyles({
   }
 });
 
-interface Author {
+interface MetaAuthor {
   author: string;
   variant: QuestionContentVariant | 'profile';
 }
 
-const Author = ({ author, variant }: Author): React.ReactElement => {
+const MetaAuthor = ({ author, variant }: MetaAuthor): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <Typography
       className={variant === 'card' ? classes.authorCard : classes.author}
-      variant="body2"
+      variant={variant === 'profile' ? 'body1' : 'body2'}
       component="span"
     >
       {variant === 'card' ? `Posted by ${author}` : author}
@@ -30,4 +30,4 @@ const Author = ({ author, variant }: Author): React.ReactElement => {
   );
 };
 
-export default Author;
+export default MetaAuthor;

@@ -8,8 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 
 import QuestionText from '../atoms/QuestionText';
-import Author from '../atoms/Author';
-import Date from '../atoms/Date';
+import Author from '../atoms/MetaAuthor';
+import MetaDate from '../atoms/MetaDate';
 import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
@@ -81,7 +81,7 @@ const Question = ({
                   variant={variant}
                   {...config.authorDateDivider}
                 />
-                <Date date={datetime} />
+                <MetaDate date={datetime} variant="normal" />
               </Grid>
             </Grid>
           </Grid>

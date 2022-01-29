@@ -8,18 +8,23 @@ const useStyles = makeStyles({
   }
 });
 
-interface DateProps {
+interface MetaDateProps {
   date: string;
+  variant: 'normal' | 'profile';
 }
 
-const Date = ({ date }: DateProps): React.ReactElement => {
+const MetaDate = ({ date, variant }: MetaDateProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
-    <Typography className={classes.date} variant="body2" component="span">
+    <Typography
+      className={classes.date}
+      variant={variant === 'normal' ? 'body2' : 'body1'}
+      component="span"
+    >
       {date}
     </Typography>
   );
 };
 
-export default Date;
+export default MetaDate;

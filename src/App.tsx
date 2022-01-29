@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import Navbar from './components/organisms/Navbar';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
 import QuestionPage from './pages/QuestionPage';
 
 import VerticalSpacer from './components/atoms/VerticalSpacer';
@@ -14,7 +15,7 @@ const App = (): React.ReactElement => {
       <CssBaseline />
       <Navbar />
       <VerticalSpacer />
-      <QuestionPage />
+      <ProfilePage />
       <VerticalSpacer />
     </>
   );
