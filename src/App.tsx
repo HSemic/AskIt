@@ -10,21 +10,19 @@ import QuestionPage from './pages/QuestionPage';
 
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 
-import { fetchUserListRequest } from './app/_redux/actions/userActions';
-import { RootState } from './app/_redux/reducers/rootReducer';
+// import { fetchUserListRequest } from './app/_redux/actions/userActions';
+// import { RootState } from './app/_redux/reducers/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 const App = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const { pending, userList, error } = useSelector(
-    (state: RootState) => state.user
-  );
+  // const { pending, userList, error } = useSelector(
+  //   (state: RootState) => state.user
+  // );
 
-  useEffect(() => {
-    dispatch(fetchUserListRequest());
-  }, []);
-
-  console.log(userList);
+  // useEffect(() => {
+  //   dispatch(fetchUserListRequest());
+  // }, []);
 
   return (
     <>

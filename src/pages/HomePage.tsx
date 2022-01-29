@@ -70,20 +70,16 @@ const HomePage = (): React.ReactElement => {
     error: errorQuestions
   } = useSelector((state: RootState) => state.question);
 
-  const { pending, user, error } = useSelector(
+  const { pending, user, userList, error } = useSelector(
     (state: RootState) => state.user
   );
 
   useEffect(() => {
     dispatch(fetchQuestionListRequest());
     dispatch(fetchUserRequest('1'));
-  }, []);
+  }, [userList]);
 
-  console.log(questionList);
-  console.log(user);
-
-  // return <HomeTemplate questions={questionList} topUsers={config.topUsers} />;
-  return <></>;
+  return <HomeTemplate questions={questionList} topUsers={config.topUsers} />;
 };
 
 export default HomePage;

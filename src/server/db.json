@@ -1,14 +1,19 @@
 {
   "questions": [
     {
-      "id": 1,
+      "id": "1",
       "title": "What is up, guys?",
-      "authorId": 1,
+      "authorId": "1",
       "datetime": "03.11.1991"
     }
   ],
   "comments": [
-    { "id": 1, "commentText": "some comment", "questionId": 1, "authorId": 1 }
+    {
+      "id": 1,
+      "commentText": "some comment",
+      "questionId": "1",
+      "authorId": "1"
+    }
   ],
   "users": [
     {

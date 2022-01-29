@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
 import store from '../src/app/_redux/store';
+import { fetchUserListRequest } from './app/_redux/actions/userActions';
 
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -9,6 +10,8 @@ import './styles/base.css';
 import theme from './styles/theme';
 
 import App from './App';
+
+store.dispatch(fetchUserListRequest());
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

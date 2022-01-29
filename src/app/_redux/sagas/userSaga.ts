@@ -38,9 +38,8 @@ function* fetchUser(action: FetchUserRequest) {
 function* fetchUserList() {
   try {
     const response: AxiosResponse<UserApiData[]> = yield call(getAllUsers);
-    console.log(response);
     const results: { [id: string]: UserData } = {};
-    response.data.map((user) => {
+    response.data.forEach((user) => {
       results[user.id] = { firstName: user.firstName, lastName: user.lastName };
     });
     yield put(

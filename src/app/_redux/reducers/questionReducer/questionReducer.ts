@@ -34,7 +34,7 @@ export default (
         pending: false,
         questionList: [],
         error: action.payload.error,
-        currentPage: 0
+        currentPage: 1
       };
     case questionTypes.FETCH_QUESTIONDETAILS_SUCCESS:
       return {

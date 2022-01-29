@@ -19,42 +19,41 @@ import { AxiosResponse } from 'axios';
 import * as questionSelectors from '../selectors/questionSelectors';
 import * as userSelectors from '../selectors/userSelectors';
 
-const getQuestionListNewest = (page: number) => {
+const getQuestionListNewest = (page: number) =>
   askIt.get<QuestionApiData[]>(`/questions?_page=${page}&_limit=20`);
-};
 
-const getQuestionDetails = (id: string) => {
+const getQuestionDetails = (id: string) =>
   askIt.get<QuestionData>(`/questions/${id}`);
-};
 
 function* fetchNewQuestionList() {
   try {
-    const currentPage: number = yield select(questionSelectors.currentPage);
-    console.log(currentPage);
     const response: AxiosResponse<QuestionApiData[]> = yield call(
       getQuestionListNewest,
-      currentPage
+      1
     );
 
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers
     );
+
     const results: QuestionData[] = [];
 
-    response.data.map((question) => {
-      const author: UserData = users[question.authorId];
+    response.data.forEach((question) => {
+      const user: UserData = users[question.authorId];
 
       results.push({
         id: question.id,
         questionText: question.title,
         author:
-          author.firstName.length > 0 || author.lastName.length > 0
-            ? author.firstName + ' ' + author.lastName
+          user.firstName.length > 0 || user.lastName.length > 0
+            ? user.firstName + ' ' + user.lastName
             : 'Unknown',
         datetime: question.datetime,
         variant: 'card'
       });
     });
+
+    console.log(results);
 
     yield put(
       fetchQuestionListSuccess({
@@ -90,7 +89,7 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
   }
 }
 
-function* questionListSaga() {
+function* questionSaga() {
   yield all([
     takeLatest(questionTypes.FETCH_QUESTIONLIST_REQUEST, fetchNewQuestionList),
     takeLatest(
@@ -100,4 +99,4 @@ function* questionListSaga() {
   ]);
 }
 
-export default questionListSaga;
+export default questionSaga;

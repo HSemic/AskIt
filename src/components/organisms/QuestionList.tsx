@@ -9,10 +9,10 @@ interface QuestionListProps {
 
 const QuestionList = ({ questions }: QuestionListProps): React.ReactElement => {
   return (
-    <Grid container rowGap={2}>
+    <Grid container gap={2} direction="column" justifyContent="flex-start">
       {questions.map((question) => {
         return (
-          <Grid item xs={12}>
+          <Grid item>
             <QuestionCard {...question} />
           </Grid>
         );
