@@ -13,6 +13,7 @@ const App = (): React.ReactElement => {
       <Navbar />
       <VerticalSpacer />
       <Home />
+      <VerticalSpacer />
     </>
   );
 };

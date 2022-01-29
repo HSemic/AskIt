@@ -10,7 +10,7 @@ const QuestionCardText = ({
   text
 }: QuestionCardTextProps): React.ReactElement => {
   return (
-    <Typography variant="h5" component="div">
+    <Typography variant="h6" component="div">
       {text}
     </Typography>
   );

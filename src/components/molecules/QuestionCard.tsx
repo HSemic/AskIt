@@ -35,7 +35,7 @@ const QuestionCard = ({
   return (
     <Card className={classes.questionCard}>
       <CardContent className={classes.questionCardContent}>
-        <Grid container direction="column" gap={0.8}>
+        <Grid container direction="column" gap={1}>
           <Grid item>
             <Grid container alignItems="center" gap={1}>
               <Grid item>

@@ -44,11 +44,14 @@ const config = {
       author: 'Haris',
       datetime: '03.11.1991'
     }
-  ]
+  ],
+  topUsers: ['Haris1', 'Haris2', 'Haris3', 'Haris4', 'Haris5']
 };
 
 const Home = () => {
-  return <HomeTemplate questions={config.questions} />;
+  return (
+    <HomeTemplate questions={config.questions} topUsers={config.topUsers} />
+  );
 };
 
 export default Home;

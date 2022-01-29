@@ -4,8 +4,7 @@ import { Button as Btn } from '@mui/material';
 
 const useStyles = makeStyles({
   button: {
-    width: '10rem',
-    borderRadius: '20px'
+    width: '10rem'
   }
 });
 

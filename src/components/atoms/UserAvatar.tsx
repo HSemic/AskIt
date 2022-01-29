@@ -46,7 +46,8 @@ const UserAvatar = ({
       {...stringAvatar(username)}
       sx={{
         width: size === 'normal' ? '32px' : '26px',
-        height: size === 'normal' ? '32px' : '26px'
+        height: size === 'normal' ? '32px' : '26px',
+        margin: '0'
       }}
     />
   );
