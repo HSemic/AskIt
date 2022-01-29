@@ -17,13 +17,13 @@ const useStyles = makeStyles({
   }
 });
 
-interface QuestionCommentCountProps {
+interface CommentCountProps {
   commentCount: number;
 }
 
-const QuestionCommentCount = ({
+const CommentCount = ({
   commentCount
-}: QuestionCommentCountProps): React.ReactElement => {
+}: CommentCountProps): React.ReactElement => {
   const classes = useStyles();
   return (
     <Grid container alignItems="center" gap={1}>
@@ -39,4 +39,4 @@ const QuestionCommentCount = ({
   );
 };
 
-export default QuestionCommentCount;
+export default CommentCount;

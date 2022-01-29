@@ -10,7 +10,7 @@ import { ThumbUp, ThumbDown } from '@mui/icons-material';
 import QuestionText from '../atoms/QuestionText';
 import Author from '../atoms/Author';
 import Date from '../atoms/Date';
-import QuestionCommentCount from '../atoms/QuestionCommentCount';
+import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
 import IconButton from '../atoms/IconButton';
@@ -74,7 +74,7 @@ const Question = ({
             <QuestionText text={questionText} variant={variant} />
           </Grid>
           <Grid item>
-            <QuestionCommentCount commentCount={1} />
+            <CommentCount commentCount={1} />
           </Grid>
         </Grid>
       </Grid>
