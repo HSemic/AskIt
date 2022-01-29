@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -53,7 +52,7 @@ const UserAvatar = ({
   size
 }: UserAvatarProps): React.ReactElement => {
   let dimension,
-    fontSize = '1rem';
+    fontSize = '1.5rem';
 
   switch (size) {
     case 'small':
@@ -62,7 +61,7 @@ const UserAvatar = ({
       break;
     case 'large':
       dimension = config.avatarSizes.large;
-      fontSize = '2rem';
+      fontSize = '2.5rem';
       break;
     case 'profile':
       dimension = config.avatarSizes.profile;

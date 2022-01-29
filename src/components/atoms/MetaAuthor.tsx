@@ -11,12 +11,15 @@ const useStyles = makeStyles({
   }
 });
 
-interface MetaAuthor {
+interface MetaAuthorProps {
   author: string;
   variant: QuestionContentVariant | 'profile';
 }
 
-const MetaAuthor = ({ author, variant }: MetaAuthor): React.ReactElement => {
+const MetaAuthor = ({
+  author,
+  variant
+}: MetaAuthorProps): React.ReactElement => {
   const classes = useStyles();
 
   return (

@@ -15,7 +15,7 @@ const App = (): React.ReactElement => {
       <CssBaseline />
       <Navbar />
       <VerticalSpacer />
-      <ProfilePage />
+      <HomePage />
       <VerticalSpacer />
     </>
   );

@@ -1,13 +1,19 @@
 import { questionListTypes } from '../../actiontypes/questionListTypes';
 
+export interface QuestionApiData {
+  id: number;
+  title: string;
+  authorId: number;
+}
+
 export interface QuestionListState {
   pending: boolean;
-  questionList: QuestionData[];
+  questionList: QuestionApiData[];
   error: string | null;
 }
 
 export interface FetchQuestionListSuccessPayload {
-  questionList: QuestionData[];
+  questionList: QuestionApiData[];
 }
 
 export interface FetchQuestionListFailurePayload {
