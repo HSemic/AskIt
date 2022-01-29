@@ -28,7 +28,11 @@ const QuestionCommentCount = ({
   return (
     <Grid container alignItems="center" gap={1}>
       <CommentIcon className={classes.commentIcon} />{' '}
-      <Typography className={classes.commentCount} component="span">
+      <Typography
+        className={classes.commentCount}
+        component="span"
+        variant="body2"
+      >
         {`${commentCount} ${commentCount !== 1 ? 'comments' : 'comment'}`}
       </Typography>
     </Grid>

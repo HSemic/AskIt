@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Grid from '@mui/material/Grid';
-import QuestionCard from '../molecules/QuestionCard';
+import QuestionCard from '../molecules/Question';
 
 interface QuestionListProps {
   questions: QuestionData[];

@@ -20,7 +20,7 @@ const QuestionAuthorDate = ({
   const classes = useStyles();
 
   return (
-    <Typography className={classes.authorDate}>
+    <Typography className={classes.authorDate} variant="body2">
       Posted by {author} at {datetime}
     </Typography>
   );

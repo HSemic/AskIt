@@ -8,7 +8,11 @@ const config = {
 const theme = createTheme({
   typography: {
     fontFamily: 'Roboto, sans-serif', // font family
-    htmlFontSize: 10 // Together with font-size setting in base.css, this sets 1rem to equal 10px
+    htmlFontSize: 10, // Together with font-size setting in base.css, this sets 1rem to equal 10px
+    h1: {
+      fontSize: '3rem',
+      fontWeight: 500
+    }
   },
   components: {
     MuiCssBaseline: {
@@ -25,6 +29,13 @@ const theme = createTheme({
         }
       }
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0
+        }
+      }
+    },
     MuiList: {
       styleOverrides: {
         root: {
@@ -36,6 +47,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: config.borderRadius
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          borderRadius: `${config.borderRadius} ${config.borderRadius} 0 0`
         }
       }
     }

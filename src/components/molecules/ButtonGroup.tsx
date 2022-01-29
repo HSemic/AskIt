@@ -4,12 +4,18 @@ import Grid from '@mui/material/Grid';
 
 interface ButtonGroupProps {
   children: JSX.Element;
+  direction: 'row' | 'column';
+  gap: number;
 }
 
-const ButtonGroup = ({ children }: ButtonGroupProps): React.ReactElement => {
+const ButtonGroup = ({
+  children,
+  direction,
+  gap
+}: ButtonGroupProps): React.ReactElement => {
   return (
     <Grid item>
-      <Grid container gap={1}>
+      <Grid container gap={gap} flexDirection={direction}>
         {children}
       </Grid>
     </Grid>

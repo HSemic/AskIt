@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 
 import Logo from '../atoms/Logo';
-import Button from '../atoms/Button';
+import LinkButton from '../atoms/LinkButton';
 import ButtonGroup from '../molecules/ButtonGroup';
 
 const useStyles = makeStyles({
@@ -29,10 +29,10 @@ const Navbar = (): React.ReactElement => {
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <Logo text={config.logoText} />
-          <ButtonGroup>
+          <ButtonGroup direction="row" gap={1}>
             <>
-              <Button text={config.buttonSignInText} color="primary" />
-              <Button text={config.buttonSignUpText} color="secondary" />
+              <LinkButton text={config.buttonSignInText} color="primary" />
+              <LinkButton text={config.buttonSignUpText} color="secondary" />
             </>
           </ButtonGroup>
         </Toolbar>

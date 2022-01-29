@@ -4,9 +4,7 @@ import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-import UserAvatar from '../atoms/UserAvatar';
 import SideListTitle from '../atoms/SideListTitle';
 
 interface SideListTopPostsProps {

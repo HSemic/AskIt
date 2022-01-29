@@ -8,12 +8,13 @@ const useStyles = makeStyles({
   }
 });
 
-interface ButtonProps {
+interface LinkButtonProps {
   text: string;
   color: 'primary' | 'secondary';
+  href?: 'string';
 }
 
-const Button = ({ text, color }: ButtonProps): React.ReactElement => {
+const LinkButton = ({ text, color }: LinkButtonProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
@@ -23,4 +24,4 @@ const Button = ({ text, color }: ButtonProps): React.ReactElement => {
   );
 };
 
-export default Button;
+export default LinkButton;

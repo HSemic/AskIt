@@ -5,14 +5,18 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-import QuestionCardText from '../atoms/QuestionCardText';
+import { ThumbUp, ThumbDown } from '@mui/icons-material';
+
+import QuestionText from '../atoms/QuestionText';
 import QuestionAuthorDate from '../atoms/QuestionAuthorDate';
 import QuestionCommentCount from '../atoms/QuestionCommentCount';
 import UserAvatar from '../atoms/UserAvatar';
+import ButtonGroup from './ButtonGroup';
+import IconButton from '../atoms/IconButton';
 
 const useStyles = makeStyles({
   questionCard: {
-    padding: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
     boxShadow: 'none !important',
     border: '1px solid lightgrey',
     '&:hover': {
@@ -25,21 +29,37 @@ const useStyles = makeStyles({
   }
 });
 
-const QuestionCard = ({
+const Question = ({
   questionText,
   author,
-  datetime
+  datetime,
+  variant
 }: QuestionData): React.ReactElement => {
   const classes = useStyles();
 
-  return (
-    <Card className={classes.questionCard}>
-      <CardContent className={classes.questionCardContent}>
+  const questionContent = (
+    <Grid container gap={1} alignItems="center">
+      <Grid item>
+        <ButtonGroup direction="column" gap={0}>
+          <>
+            <IconButton>
+              <ThumbUp />
+            </IconButton>
+            <IconButton>
+              <ThumbDown />
+            </IconButton>
+          </>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
         <Grid container direction="column" gap={1}>
           <Grid item>
             <Grid container alignItems="center" gap={1}>
               <Grid item>
-                <UserAvatar username={author} size="small" />
+                <UserAvatar
+                  username={author}
+                  size={variant === 'card' ? 'small' : 'normal'}
+                />
               </Grid>
               <Grid item>
                 <QuestionAuthorDate author={author} datetime={datetime} />
@@ -47,15 +67,25 @@ const QuestionCard = ({
             </Grid>
           </Grid>
           <Grid item>
-            <QuestionCardText text={questionText} />
+            <QuestionText text={questionText} variant={variant} />
           </Grid>
           <Grid item>
             <QuestionCommentCount commentCount={1} />
           </Grid>
         </Grid>
+      </Grid>
+    </Grid>
+  );
+
+  return variant === 'card' ? (
+    <Card className={classes.questionCard}>
+      <CardContent className={classes.questionCardContent}>
+        {questionContent}
       </CardContent>
     </Card>
+  ) : (
+    questionContent
   );
 };
 
-export default QuestionCard;
+export default Question;
