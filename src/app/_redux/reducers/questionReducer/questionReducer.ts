@@ -4,6 +4,7 @@ import { QuestionAction, QuestionState } from './types';
 const initialState: QuestionState = {
   pending: false,
   questionList: [],
+  topQuestions: [],
   currentQuestion: null,
   error: null,
   currentPage: 1
@@ -16,7 +17,8 @@ export default (
   switch (action.type) {
     case questionTypes.FETCH_QUESTIONLIST_REQUEST ||
       questionTypes.FETCH_QUESTIONDETAILS_REQUEST ||
-      questionTypes.POST_QUESTION_REQUEST:
+      questionTypes.POST_QUESTION_REQUEST ||
+      questionTypes.FETCH_TOP_QUESTIONS_REQUEST:
       return {
         ...state,
         pending: true
@@ -63,6 +65,19 @@ export default (
       return {
         ...state,
         pending: false,
+        error: action.payload.error
+      };
+    case questionTypes.FETCH_TOP_QUESTIONS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        topQuestions: action.payload.topQuestions
+      };
+    case questionTypes.FETCH_TOP_QUESTIONS_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        topQuestions: [],
         error: action.payload.error
       };
     default:

@@ -10,13 +10,11 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 interface QuestionListProps {
   questions: QuestionData[];
-  variant: 'newest' | 'my';
   page: number;
 }
 
 const QuestionList = ({
   questions,
-  variant,
   page
 }: QuestionListProps): React.ReactElement => {
   const dispatch = useDispatch();
@@ -24,7 +22,7 @@ const QuestionList = ({
   const { questionList } = useSelector((state: RootState) => state.question);
 
   const onButtonClick = () => {
-    dispatch(fetchQuestionListRequest(page + 1, variant));
+    dispatch(fetchQuestionListRequest(page + 1));
   };
 
   console.log(questionList.length);

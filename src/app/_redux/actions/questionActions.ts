@@ -15,17 +15,19 @@ import {
   PostQuestionRequest,
   PostQuestionSuccess,
   PostQuestionFailure,
-  QuestionApiData,
-  FetchType
+  FetchTopQuestionsSuccessPayload,
+  FetchTopQuestionsFailurePayload,
+  FetchTopQuestionsRequest,
+  FetchTopQuestionsSuccess,
+  FetchTopQuestionsFailure,
+  QuestionApiData
 } from '../reducers/questionReducer/types';
 
 export const fetchQuestionListRequest = (
-  page: number,
-  variant: FetchType
+  page: number
 ): FetchQuestionListRequest => ({
   type: questionTypes.FETCH_QUESTIONLIST_REQUEST,
-  page,
-  variant
+  page
 });
 
 export const fetchQuestionListSuccess = (
@@ -81,5 +83,23 @@ export const postQuestionFailure = (
   payload: PostQuestionFailurePayload
 ): PostQuestionFailure => ({
   type: questionTypes.POST_QUESTION_FAILURE,
+  payload
+});
+
+export const fetchTopQuestionsRequest = (): FetchTopQuestionsRequest => ({
+  type: questionTypes.FETCH_TOP_QUESTIONS_REQUEST
+});
+
+export const fetchTopQuestionsSuccess = (
+  payload: FetchTopQuestionsSuccessPayload
+): FetchTopQuestionsSuccess => ({
+  type: questionTypes.FETCH_TOP_QUESTIONS_SUCCESS,
+  payload
+});
+
+export const fetchTopQuestionsFailure = (
+  payload: FetchTopQuestionsFailurePayload
+): FetchTopQuestionsFailure => ({
+  type: questionTypes.FETCH_TOP_QUESTIONS_FAILURE,
   payload
 });

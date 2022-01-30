@@ -15,20 +15,20 @@ import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 const config = {
   topUsersListTitle: 'Top AskIt-ers',
-  topPostsListTitle: 'Hot posts'
+  topPostsListTitle: 'Hot questions'
 };
 
 interface HomeProps {
   questions: QuestionData[];
   topUsers: UserApiData[];
-  topPosts?: string[];
+  topQuestions: QuestionData[];
   page: number;
 }
 
 const HomeTemplate = ({
   questions,
   topUsers,
-  topPosts,
+  topQuestions,
   page
 }: HomeProps): React.ReactElement => {
   const { loggedIn } = useAuth();
@@ -46,11 +46,7 @@ const HomeTemplate = ({
               )}
             </Grid>
             <Grid item xs={12}>
-              <QuestionList
-                questions={questions}
-                variant="newest"
-                page={page}
-              />
+              <QuestionList questions={questions} page={page} />
             </Grid>
           </Grid>
         </Grid>
@@ -63,10 +59,10 @@ const HomeTemplate = ({
               />
             </Grid>
             <Grid item>
-              {/* <SideListTopPosts
+              <SideListTopPosts
                 title={config.topPostsListTitle}
-                posts={topUsers}
-              /> */}
+                questions={topQuestions}
+              />
             </Grid>
           </Grid>
         </Grid>

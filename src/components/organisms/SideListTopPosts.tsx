@@ -7,24 +7,31 @@ import ListItemText from '@mui/material/ListItemText';
 
 import SideListTitle from '../atoms/SideListTitle';
 
+import { Link } from 'react-router-dom';
+
 interface SideListTopPostsProps {
   title: string;
-  posts: string[];
+  questions: QuestionData[];
 }
 
 const SideListTopPosts = ({
   title,
-  posts
+  questions
 }: SideListTopPostsProps): React.ReactElement => {
   return (
     <Paper>
       <SideListTitle text={title} />
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {posts.map((post, index) => {
+        {questions.map((question, index) => {
           return (
-            <ListItem divider={index < posts.length - 1}>
+            <ListItem divider={index < questions.length - 1}>
               <ListItemText primary={`${index + 1}.`} sx={{ flex: '0.2' }} />
-              <ListItemText primary={post} />
+              <Link
+                to={`question/${question.id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <ListItemText primary={question.questionText} />
+              </Link>
             </ListItem>
           );
         })}

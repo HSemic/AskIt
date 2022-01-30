@@ -27,11 +27,14 @@ const QuestionPage = (): React.ReactElement => {
     dispatch(fetchQuestionDetailsRequest(id));
   }, []);
 
-  return currentQuestion ? (
-    <QuestionTemplate question={currentQuestion} />
-  ) : (
-    <></>
-  );
+  if (!currentQuestion) return <></>;
+
+  const displayedQuestion: QuestionData = {
+    ...currentQuestion,
+    variant: 'page'
+  };
+
+  return <QuestionTemplate question={displayedQuestion} />;
 };
 
 export default QuestionPage;

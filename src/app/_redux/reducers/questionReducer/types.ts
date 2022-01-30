@@ -12,12 +12,11 @@ export interface QuestionApiData {
 export interface QuestionState {
   pending: boolean;
   questionList: QuestionData[];
+  topQuestions: QuestionData[];
   currentQuestion: QuestionData | null;
   currentPage: number;
   error: string | null;
 }
-
-export type FetchType = 'newest' | 'top' | 'my';
 
 export interface FetchQuestionListSuccessPayload {
   questionList: QuestionData[];
@@ -30,7 +29,6 @@ export interface FetchQuestionListFailurePayload {
 export interface FetchQuestionListRequest {
   type: typeof questionTypes.FETCH_QUESTIONLIST_REQUEST;
   page: number;
-  variant: FetchType;
 }
 
 export type FetchQuestionListSuccess = {
@@ -89,6 +87,28 @@ export interface PostQuestionFailure {
   payload: PostQuestionFailurePayload;
 }
 
+export interface FetchTopQuestionsSuccessPayload {
+  topQuestions: QuestionData[];
+}
+
+export interface FetchTopQuestionsFailurePayload {
+  error: string;
+}
+
+export interface FetchTopQuestionsRequest {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_REQUEST;
+}
+
+export interface FetchTopQuestionsSuccess {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_SUCCESS;
+  payload: FetchTopQuestionsSuccessPayload;
+}
+
+export interface FetchTopQuestionsFailure {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_FAILURE;
+  payload: FetchTopQuestionsFailurePayload;
+}
+
 export type QuestionAction =
   | FetchQuestionListRequest
   | FetchQuestionListSuccess
@@ -98,4 +118,7 @@ export type QuestionAction =
   | FetchQuestionDetailsFailure
   | PostQuestionRequest
   | PostQuestionSuccess
-  | PostQuestionFailure;
+  | PostQuestionFailure
+  | FetchTopQuestionsRequest
+  | FetchTopQuestionsSuccess
+  | FetchTopQuestionsFailure;

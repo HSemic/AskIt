@@ -6,7 +6,9 @@ import {
   fetchQuestionDetailsSuccess,
   fetchQuestionDetailsFailure,
   postQuestionSuccess,
-  postQuestionFailure
+  postQuestionFailure,
+  fetchTopQuestionsSuccess,
+  fetchTopQuestionsFailure
 } from '../actions/questionActions';
 import { questionTypes } from '../actiontypes/questionTypes';
 import {
@@ -29,8 +31,11 @@ const getQuestionListNewest = (page: number) =>
     `/questions?_page=${page}&_limit=20&_sort=datetime&_order=desc`
   );
 
-const getQuestionListMy = (page: number, userId: string) =>
+const getQuestionListByUserId = (page: number, userId: string) =>
   askIt.get<QuestionApiData[]>(`/questions?_page=${page}&_limit=20`);
+
+const getTopQuestions = () =>
+  askIt.get<QuestionApiData[]>(`/questions?_sort=likes&_limit=5`);
 
 const getQuestionDetails = (id: string) =>
   askIt.get<QuestionData>(`/questions/${id}`);
@@ -43,12 +48,10 @@ const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
 
 function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
-    let response: Partial<AxiosResponse<QuestionApiData[]>> = {};
-
-    // if (action.variant === 'newest')
-    response = yield call(getQuestionListNewest, action.page);
-    // else if (action.variant === 'my') {
-    // }
+    const response: AxiosResponse<QuestionApiData[]> = yield call(
+      getQuestionListNewest,
+      action.page
+    );
 
     console.log(response);
 
@@ -58,7 +61,7 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
 
     const results: QuestionData[] = [];
 
-    (response as AxiosResponse<QuestionApiData[]>).data.forEach((question) => {
+    response.data.forEach((question) => {
       const user: UserData = users[question.authorId];
 
       results.push({
@@ -85,6 +88,49 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   } catch (e: any) {
     yield put(
       fetchQuestionListFailure({
+        error: e.error
+      })
+    );
+  }
+}
+
+function* fetchTopQuestions() {
+  try {
+    const response: AxiosResponse<QuestionApiData[]> = yield call(
+      getTopQuestions
+    );
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const results: QuestionData[] = [];
+
+    response.data.forEach((question) => {
+      const user: UserData = users[question.authorId];
+
+      results.push({
+        id: question.id,
+        questionText: question.title,
+        author:
+          user.firstName.length > 0 || user.lastName.length > 0
+            ? user.firstName + ' ' + user.lastName
+            : 'Unknown',
+        datetime: localizeDate(question.datetime),
+        likes: question.likes,
+        dislikes: question.dislikes,
+        variant: 'card'
+      });
+    });
+
+    yield put(
+      fetchTopQuestionsSuccess({
+        topQuestions: results
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      fetchTopQuestionsFailure({
         error: e.error
       })
     );
@@ -175,7 +221,8 @@ function* questionSaga() {
       questionTypes.FETCH_QUESTIONDETAILS_REQUEST,
       fetchQuestionDetails
     ),
-    takeLatest(questionTypes.POST_QUESTION_REQUEST, postNewQuestion)
+    takeLatest(questionTypes.POST_QUESTION_REQUEST, postNewQuestion),
+    takeLatest(questionTypes.FETCH_TOP_QUESTIONS_REQUEST, fetchTopQuestions)
   ]);
 }
 
