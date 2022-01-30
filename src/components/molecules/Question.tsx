@@ -81,7 +81,7 @@ const Question = ({
                   variant={variant}
                   {...config.authorDateDivider}
                 />
-                <MetaDate date={datetime} variant="normal" />
+                <MetaDate date={datetime.toString()} variant="normal" />
               </Grid>
             </Grid>
           </Grid>

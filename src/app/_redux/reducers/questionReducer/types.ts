@@ -4,7 +4,7 @@ export interface QuestionApiData {
   id: string;
   title: string;
   authorId: string;
-  datetime: string;
+  datetime: number;
 }
 
 export interface QuestionState {
@@ -60,10 +60,36 @@ export type FetchQuestionDetailsFailure = {
   payload: FetchQuestionDetailsFailurePayload;
 };
 
+export interface PostQuestionSuccessPayload {
+  newQuestion: QuestionApiData;
+}
+
+export interface PostQuestionFailurePayload {
+  error: string;
+}
+
+export interface PostQuestionRequest {
+  type: typeof questionTypes.POST_QUESTION_REQUEST;
+  newQuestion: Omit<QuestionApiData, 'id'>;
+}
+
+export interface PostQuestionSuccess {
+  type: typeof questionTypes.POST_QUESTION_SUCCESS;
+  payload: PostQuestionSuccessPayload;
+}
+
+export interface PostQuestionFailure {
+  type: typeof questionTypes.POST_QUESTION_FAILURE;
+  payload: PostQuestionFailurePayload;
+}
+
 export type QuestionAction =
   | FetchQuestionListRequest
   | FetchQuestionListSuccess
   | FetchQuestionListFailure
   | FetchQuestionDetailsRequest
   | FetchQuestionDetailsSuccess
-  | FetchQuestionDetailsFailure;
+  | FetchQuestionDetailsFailure
+  | PostQuestionRequest
+  | PostQuestionSuccess
+  | PostQuestionFailure;

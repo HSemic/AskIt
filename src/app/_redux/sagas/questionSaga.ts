@@ -4,11 +4,14 @@ import {
   fetchQuestionListSuccess,
   fetchQuestionListFailure,
   fetchQuestionDetailsSuccess,
-  fetchQuestionDetailsFailure
+  fetchQuestionDetailsFailure,
+  postQuestionSuccess,
+  postQuestionFailure
 } from '../actions/questionActions';
 import { questionTypes } from '../actiontypes/questionTypes';
 import {
   FetchQuestionDetailsRequest,
+  PostQuestionRequest,
   QuestionApiData
 } from '../reducers/questionReducer/types';
 
@@ -17,12 +20,19 @@ import { UserData } from '../reducers/userReducer/types';
 import { AxiosResponse } from 'axios';
 
 import * as userSelectors from '../selectors/userSelectors';
+import { generateRandomId } from '../../../services/uuidService';
 
 const getQuestionListNewest = (page: number) =>
   askIt.get<QuestionApiData[]>(`/questions?_page=${page}&_limit=20`);
 
 const getQuestionDetails = (id: string) =>
   askIt.get<QuestionData>(`/questions/${id}`);
+
+const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
+  askIt.post<QuestionApiData>('/questions', {
+    ...question,
+    id: generateRandomId()
+  });
 
 function* fetchNewQuestionList() {
   try {
@@ -88,13 +98,34 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
   }
 }
 
+function* postNewQuestion(action: PostQuestionRequest) {
+  try {
+    const response: AxiosResponse<QuestionApiData> = yield call(() =>
+      addNewQuestion(action.newQuestion)
+    );
+
+    yield put(
+      postQuestionSuccess({
+        newQuestion: response.data
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      postQuestionFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* questionSaga() {
   yield all([
     takeLatest(questionTypes.FETCH_QUESTIONLIST_REQUEST, fetchNewQuestionList),
     takeLatest(
       questionTypes.FETCH_QUESTIONDETAILS_REQUEST,
       fetchQuestionDetails
-    )
+    ),
+    takeLatest(questionTypes.POST_QUESTION_REQUEST, postNewQuestion)
   ]);
 }
 

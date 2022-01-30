@@ -9,7 +9,13 @@ import {
   FetchQuestionDetailsFailurePayload,
   FetchQuestionDetailsRequest,
   FetchQuestionDetailsSuccess,
-  FetchQuestionDetailsSuccessPayload
+  FetchQuestionDetailsSuccessPayload,
+  PostQuestionFailurePayload,
+  PostQuestionSuccessPayload,
+  PostQuestionRequest,
+  PostQuestionSuccess,
+  PostQuestionFailure,
+  QuestionApiData
 } from '../reducers/questionReducer/types';
 
 export const fetchQuestionListRequest = (): FetchQuestionListRequest => ({
@@ -48,5 +54,26 @@ export const fetchQuestionDetailsFailure = (
   payload: FetchQuestionDetailsFailurePayload
 ): FetchQuestionDetailsFailure => ({
   type: questionTypes.FETCH_QUESTIONDETAILS_FAILURE,
+  payload
+});
+
+export const postQuestionRequest = (
+  newQuestion: Omit<QuestionApiData, 'id'>
+): PostQuestionRequest => ({
+  type: questionTypes.POST_QUESTION_REQUEST,
+  newQuestion
+});
+
+export const postQuestionSuccess = (
+  payload: PostQuestionSuccessPayload
+): PostQuestionSuccess => ({
+  type: questionTypes.POST_QUESTION_SUCCESS,
+  payload
+});
+
+export const postQuestionFailure = (
+  payload: PostQuestionFailurePayload
+): PostQuestionFailure => ({
+  type: questionTypes.POST_QUESTION_FAILURE,
   payload
 });

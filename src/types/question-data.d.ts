@@ -4,6 +4,6 @@ interface QuestionData {
   id: string;
   questionText: string;
   author: string;
-  datetime: string;
+  datetime: number;
   variant: QuestionContentVariant;
 }

@@ -1,7 +1,7 @@
 import { userTypes } from '../../actiontypes/userTypes';
 
 export interface UserApiData {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;

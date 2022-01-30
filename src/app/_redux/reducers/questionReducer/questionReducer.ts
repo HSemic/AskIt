@@ -15,7 +15,8 @@ export default (
 ): QuestionState => {
   switch (action.type) {
     case questionTypes.FETCH_QUESTIONLIST_REQUEST ||
-      questionTypes.FETCH_QUESTIONDETAILS_REQUEST:
+      questionTypes.FETCH_QUESTIONDETAILS_REQUEST ||
+      questionTypes.POST_QUESTION_REQUEST:
       return {
         ...state,
         pending: true
@@ -48,6 +49,18 @@ export default (
         ...state,
         pending: false,
         currentQuestion: null,
+        error: action.payload.error
+      };
+    case questionTypes.POST_QUESTION_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        currentQuestion: action.payload.newQuestion
+      };
+    case questionTypes.POST_QUESTION_FAILURE:
+      return {
+        ...state,
+        pending: false,
         error: action.payload.error
       };
     default:
