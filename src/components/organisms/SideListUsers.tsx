@@ -27,7 +27,7 @@ const SideListUsers = ({
         {users.map((user, index) => {
           return (
             <ListItem divider={index < users.length - 1}>
-              <Grid container gap={1}>
+              <Grid container gap={4}>
                 <Grid item>
                   <ListItemText
                     primary={`${index + 1}.`}
@@ -42,16 +42,14 @@ const SideListUsers = ({
                     />
                   </ListItemAvatar>
                 </Grid>
-                <Grid item>
-                  <ListItemText
-                    primary={user.firstName + ' ' + user.lastName}
-                  />
-                </Grid>
-                <Grid item>
-                  <ListItemText
-                    primary={' -  ' + user.comments + ' comments'}
-                  />
-                </Grid>
+                <ListItemText
+                  primary={user.firstName + ' ' + user.lastName}
+                  sx={{ marginLeft: '-40px' }}
+                />
+                <ListItemText
+                  primary={user.comments + ' comments'}
+                  sx={{ marginLeft: '-2px' }}
+                />
               </Grid>
             </ListItem>
           );
