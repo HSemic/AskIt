@@ -109,6 +109,52 @@ export interface FetchTopQuestionsFailure {
   payload: FetchTopQuestionsFailurePayload;
 }
 
+export interface FetchTopQuestionsSuccessPayload {
+  topQuestions: QuestionData[];
+}
+
+export interface FetchTopQuestionsFailurePayload {
+  error: string;
+}
+
+export interface FetchTopQuestionsRequest {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_REQUEST;
+}
+
+export interface FetchTopQuestionsSuccess {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_SUCCESS;
+  payload: FetchTopQuestionsSuccessPayload;
+}
+
+export interface FetchTopQuestionsFailure {
+  type: typeof questionTypes.FETCH_TOP_QUESTIONS_FAILURE;
+  payload: FetchTopQuestionsFailurePayload;
+}
+
+export interface EditQuestionSuccessPayload {
+  editedQuestion: QuestionData;
+}
+
+export interface EditQuestionFailurePayload {
+  error: string;
+}
+
+export interface EditQuestionRequest {
+  type: typeof questionTypes.EDIT_QUESTION_REQUEST;
+  id: string;
+  text: string;
+}
+
+export interface EditQuestionSuccess {
+  type: typeof questionTypes.EDIT_QUESTION_SUCCESS;
+  payload: EditQuestionSuccessPayload;
+}
+
+export interface EditQuestionFailure {
+  type: typeof questionTypes.EDIT_QUESTION_FAILURE;
+  payload: EditQuestionFailurePayload;
+}
+
 export type QuestionAction =
   | FetchQuestionListRequest
   | FetchQuestionListSuccess
@@ -121,4 +167,7 @@ export type QuestionAction =
   | PostQuestionFailure
   | FetchTopQuestionsRequest
   | FetchTopQuestionsSuccess
-  | FetchTopQuestionsFailure;
+  | FetchTopQuestionsFailure
+  | EditQuestionRequest
+  | EditQuestionSuccess
+  | EditQuestionFailure;

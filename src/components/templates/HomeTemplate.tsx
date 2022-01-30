@@ -10,7 +10,6 @@ import SideListTopPosts from '../organisms/SideListTopPosts';
 import AddQuestionForm from '../molecules/AddQuestionForm';
 import LogInToMessage from '../atoms/LogInToMessage';
 
-import { useAuth } from '../providers/AuthProvider';
 import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 const config = {
@@ -18,21 +17,21 @@ const config = {
   topPostsListTitle: 'Hot questions'
 };
 
-interface HomeProps {
+interface HomeTemplateProps {
   questions: QuestionData[];
   topUsers: UserApiData[];
   topQuestions: QuestionData[];
   page: number;
+  loggedIn: boolean;
 }
 
 const HomeTemplate = ({
   questions,
   topUsers,
   topQuestions,
-  page
-}: HomeProps): React.ReactElement => {
-  const { loggedIn } = useAuth();
-
+  page,
+  loggedIn
+}: HomeTemplateProps): React.ReactElement => {
   return (
     <Container>
       <Grid container gap={2}>

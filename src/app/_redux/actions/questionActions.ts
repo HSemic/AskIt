@@ -20,7 +20,12 @@ import {
   FetchTopQuestionsRequest,
   FetchTopQuestionsSuccess,
   FetchTopQuestionsFailure,
-  QuestionApiData
+  QuestionApiData,
+  EditQuestionRequest,
+  EditQuestionSuccessPayload,
+  EditQuestionSuccess,
+  EditQuestionFailurePayload,
+  EditQuestionFailure
 } from '../reducers/questionReducer/types';
 
 export const fetchQuestionListRequest = (
@@ -101,5 +106,28 @@ export const fetchTopQuestionsFailure = (
   payload: FetchTopQuestionsFailurePayload
 ): FetchTopQuestionsFailure => ({
   type: questionTypes.FETCH_TOP_QUESTIONS_FAILURE,
+  payload
+});
+
+export const editQuestionRequest = (
+  id: string,
+  text: string
+): EditQuestionRequest => ({
+  type: questionTypes.EDIT_QUESTION_REQUEST,
+  id,
+  text
+});
+
+export const editQuestionSuccess = (
+  payload: EditQuestionSuccessPayload
+): EditQuestionSuccess => ({
+  type: questionTypes.EDIT_QUESTION_SUCCESS,
+  payload
+});
+
+export const editQuestionFailure = (
+  payload: EditQuestionFailurePayload
+): EditQuestionFailure => ({
+  type: questionTypes.EDIT_QUESTION_FAILURE,
   payload
 });

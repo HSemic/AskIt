@@ -13,7 +13,10 @@ import { validateQuestionText } from '../../services/validationService';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
-import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
+import {
+  editQuestionRequest,
+  postQuestionRequest
+} from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
 
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +42,13 @@ const config = {
   }
 };
 
-const AddQuestionForm = (): React.ReactElement => {
+interface EditQuestionFormProps {
+  questionId: string;
+}
+
+const EditQuestionForm = ({
+  questionId
+}: EditQuestionFormProps): React.ReactElement => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -47,10 +56,11 @@ const AddQuestionForm = (): React.ReactElement => {
   const [questionText, setQuestionText] = useState('');
   const [questionError, setQuestionError] = useState('');
 
-  const { loggedInUser } = useSelector((state: RootState) => state.user);
   const { error, pending, currentQuestion } = useSelector(
     (state: RootState) => state.question
   );
+
+  const { loggedInUser } = useSelector((state: RootState) => state.user);
 
   const onQuestionInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -61,21 +71,13 @@ const AddQuestionForm = (): React.ReactElement => {
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!loggedInUser) return;
+    if (!loggedInUser || loggedInUser.id !== questionId) return;
 
     const validQuestion = validateQuestionText(questionText);
 
     if (!validQuestion) setQuestionError(config.validationErrors.question);
     else {
-      dispatch(
-        postQuestionRequest({
-          title: questionText,
-          authorId: loggedInUser.id,
-          datetime: Date.now(),
-          likes: 0,
-          dislikes: 0
-        })
-      );
+      dispatch(editQuestionRequest(questionId, questionText));
     }
   };
 
@@ -125,4 +127,4 @@ const AddQuestionForm = (): React.ReactElement => {
   );
 };
 
-export default AddQuestionForm;
+export default EditQuestionForm;

@@ -91,10 +91,6 @@ export type FetchUserListFailure = {
   payload: FetchUserListFailurePayload;
 };
 
-export type Logout = {
-  type: typeof userTypes.LOGOUT;
-};
-
 export interface FetchTopUsersSuccessPayload {
   topUsers: UserApiData[];
 }
@@ -107,15 +103,19 @@ export interface FetchTopUsersRequest {
   type: typeof userTypes.FETCH_TOPUSERS_REQUEST;
 }
 
-export interface FetchTopUsersSuccess {
+export type FetchTopUsersSuccess = {
   type: typeof userTypes.FETCH_TOPUSERS_SUCCESS;
   payload: FetchTopUsersSuccessPayload;
-}
+};
 
-export interface FetchTopUsersFailure {
+export type FetchTopUsersFailure = {
   type: typeof userTypes.FETCH_TOPUSERS_FAILURE;
   payload: FetchTopUsersFailurePayload;
-}
+};
+
+export type Logout = {
+  type: typeof userTypes.LOGOUT;
+};
 
 export type UserAction =
   | FetchUserListRequest

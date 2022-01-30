@@ -14,10 +14,14 @@ import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
 import IconButton from '../atoms/IconButton';
+import Button from '@mui/material/Button';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import LikesDislikes from '../atoms/LikesDislikes';
 
 import { useNavigate } from 'react-router-dom';
+
+import { RootState } from '../../app/_redux/reducers/rootReducer';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -48,16 +52,21 @@ const Question = ({
   datetime,
   variant,
   id,
+  authorId,
   likes,
   dislikes
 }: QuestionData): React.ReactElement => {
   const classes = useStyles();
+
+  console.log(id + ' ' + author);
 
   const navigate = useNavigate();
 
   const onQuestionCardClick = () => {
     navigate(`question/${id}`);
   };
+
+  const { loggedInUser } = useSelector((state: RootState) => state.user);
 
   const questionContent = (
     <Grid
@@ -119,6 +128,34 @@ const Question = ({
                       variant="dislikes"
                       text={dislikes.toString()}
                     />
+                  </Grid>
+                </>
+              ) : null}
+              {variant === 'page' &&
+              loggedInUser !== undefined &&
+              loggedInUser !== null &&
+              loggedInUser.id === authorId ? (
+                <>
+                  <Grid
+                    item
+                    gap={1}
+                    sx={{ marginLeft: 'auto', marginRight: '-2rem' }}
+                  >
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      sx={{ height: '3rem' }}
+                    >
+                      Edit
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      sx={{ height: '3rem', marginLeft: '0.5rem' }}
+                    >
+                      Delete
+                    </Button>
                   </Grid>
                 </>
               ) : null}

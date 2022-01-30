@@ -18,7 +18,8 @@ export default (
     case questionTypes.FETCH_QUESTIONLIST_REQUEST ||
       questionTypes.FETCH_QUESTIONDETAILS_REQUEST ||
       questionTypes.POST_QUESTION_REQUEST ||
-      questionTypes.FETCH_TOP_QUESTIONS_REQUEST:
+      questionTypes.FETCH_TOP_QUESTIONS_REQUEST ||
+      questionTypes.EDIT_QUESTION_REQUEST:
       return {
         ...state,
         pending: true
@@ -40,7 +41,8 @@ export default (
         error: action.payload.error,
         currentPage: 1
       };
-    case questionTypes.FETCH_QUESTIONDETAILS_SUCCESS:
+    case questionTypes.FETCH_QUESTIONDETAILS_SUCCESS ||
+      questionTypes.EDIT_QUESTION_SUCCESS:
       return {
         ...state,
         pending: false,
@@ -78,6 +80,12 @@ export default (
         ...state,
         pending: false,
         topQuestions: [],
+        error: action.payload.error
+      };
+    case questionTypes.EDIT_QUESTION_FAILURE:
+      return {
+        ...state,
+        pending: false,
         error: action.payload.error
       };
     default:

@@ -8,10 +8,12 @@ import {
   postQuestionSuccess,
   postQuestionFailure,
   fetchTopQuestionsSuccess,
-  fetchTopQuestionsFailure
+  fetchTopQuestionsFailure,
+  editQuestionSuccess
 } from '../actions/questionActions';
 import { questionTypes } from '../actiontypes/questionTypes';
 import {
+  EditQuestionRequest,
   FetchQuestionDetailsRequest,
   FetchQuestionListRequest,
   PostQuestionRequest,
@@ -25,6 +27,7 @@ import { AxiosResponse } from 'axios';
 import * as userSelectors from '../selectors/userSelectors';
 import { generateRandomId } from '../../../services/uuidService';
 import { localizeDate } from '../../../services/localization';
+import { validateQuestionText } from '../../../services/validationService';
 
 const getQuestionListNewest = (page: number) =>
   askIt.get<QuestionApiData[]>(
@@ -39,6 +42,11 @@ const getTopQuestions = () =>
 
 const getQuestionDetails = (id: string) =>
   askIt.get<QuestionData>(`/questions/${id}`);
+
+const editAQuestion = (id: string, text: string) =>
+  askIt.patch<QuestionApiData>(`/questions/${id}`, {
+    title: text
+  });
 
 const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
   askIt.post<QuestionApiData>('/questions', {
@@ -71,6 +79,7 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
           user.firstName.length > 0 || user.lastName.length > 0
             ? user.firstName + ' ' + user.lastName
             : 'Unknown',
+        authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
         dislikes: question.dislikes,
@@ -116,6 +125,7 @@ function* fetchTopQuestions() {
           user.firstName.length > 0 || user.lastName.length > 0
             ? user.firstName + ' ' + user.lastName
             : 'Unknown',
+        authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
         dislikes: question.dislikes,
@@ -155,6 +165,7 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
         users[response.data.authorId].firstName +
         ' ' +
         users[response.data.authorId].lastName,
+      authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
       dislikes: response.data.dislikes,
@@ -177,6 +188,9 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
 
 function* postNewQuestion(action: PostQuestionRequest) {
   try {
+    if (!validateQuestionText(action.newQuestion.title))
+      throw 'Question text must be between 8 and 150 characters long.';
+
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
       addNewQuestion(action.newQuestion)
     );
@@ -194,6 +208,7 @@ function* postNewQuestion(action: PostQuestionRequest) {
         users[response.data.authorId].firstName +
         ' ' +
         users[response.data.authorId].lastName,
+      authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
       dislikes: response.data.dislikes,
@@ -214,6 +229,49 @@ function* postNewQuestion(action: PostQuestionRequest) {
   }
 }
 
+function* editQuestion(action: EditQuestionRequest) {
+  try {
+    if (!validateQuestionText(action.text))
+      throw 'Question text must be between 8 and 150 characters long.';
+
+    const response: AxiosResponse<QuestionApiData> = yield call(() =>
+      editAQuestion(action.id, action.text)
+    );
+
+    console.log(response);
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const result: QuestionData = {
+      id: response.data.id,
+      questionText: response.data.title,
+      author:
+        users[response.data.authorId].firstName +
+        ' ' +
+        users[response.data.authorId].lastName,
+      authorId: response.data.authorId,
+      datetime: localizeDate(response.data.datetime),
+      likes: response.data.likes,
+      dislikes: response.data.dislikes,
+      variant: 'card'
+    };
+
+    yield put(
+      editQuestionSuccess({
+        editedQuestion: result
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      postQuestionFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* questionSaga() {
   yield all([
     takeLatest(questionTypes.FETCH_QUESTIONLIST_REQUEST, fetchNewQuestionList),
@@ -222,7 +280,8 @@ function* questionSaga() {
       fetchQuestionDetails
     ),
     takeLatest(questionTypes.POST_QUESTION_REQUEST, postNewQuestion),
-    takeLatest(questionTypes.FETCH_TOP_QUESTIONS_REQUEST, fetchTopQuestions)
+    takeLatest(questionTypes.FETCH_TOP_QUESTIONS_REQUEST, fetchTopQuestions),
+    takeLatest(questionTypes.EDIT_QUESTION_REQUEST, editQuestion)
   ]);
 }
 

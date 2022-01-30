@@ -8,6 +8,7 @@ import {
 } from '../app/_redux/actions/questionActions';
 import { fetchTopUsersRequest } from '../app/_redux/actions/userActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
+import { useAuth } from '../components/providers/AuthProvider';
 
 import HomeTemplate from '../components/templates/HomeTemplate';
 
@@ -21,6 +22,8 @@ const HomePage = (): React.ReactElement => {
   );
 
   const { topUsers } = useSelector((state: RootState) => state.user);
+
+  const { loggedIn } = useAuth();
 
   useEffect(() => {
     if (!questionList || questionList.length === 0)
@@ -40,6 +43,7 @@ const HomePage = (): React.ReactElement => {
       topUsers={topUsers}
       topQuestions={topQuestions}
       page={page}
+      loggedIn={loggedIn}
     />
   );
 };
