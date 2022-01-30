@@ -29,7 +29,7 @@ const HomeTemplate = ({
     <Container>
       <Grid container gap={2}>
         <Grid item md={7} xs={12}>
-          <Grid container gap={4}>
+          <Grid container gap={2}>
             <Grid item xs={12}>
               <AddQuestionForm />
             </Grid>
