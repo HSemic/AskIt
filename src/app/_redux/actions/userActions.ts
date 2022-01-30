@@ -9,8 +9,35 @@ import {
   FetchUserListRequest,
   FetchUserListSuccess,
   FetchUserListFailure,
-  FetchUserListSuccessPayload
+  FetchUserListSuccessPayload,
+  RegisterUserSuccessPayload,
+  RegisterUserFailurePayload,
+  RegisterUserRequest,
+  RegisterUserSuccess,
+  RegisterUserFailure,
+  UserApiData
 } from '../reducers/userReducer/types';
+
+export const registerUserRequest = (
+  newUser: Omit<UserApiData, 'id'>
+): RegisterUserRequest => ({
+  type: userTypes.REGISTER_USER_REQUEST,
+  newUser
+});
+
+export const registerUserSuccess = (
+  payload: RegisterUserSuccessPayload
+): RegisterUserSuccess => ({
+  type: userTypes.REGISTER_USER_SUCCESS,
+  payload
+});
+
+export const registerUserFailure = (
+  payload: RegisterUserFailurePayload
+): RegisterUserFailure => ({
+  type: userTypes.REGISTER_USER_FAILURE,
+  payload
+});
 
 export const fetchUserByEmailAndValidateRequest = (
   email: string,

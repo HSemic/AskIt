@@ -11,19 +11,22 @@ const initialState: UserState = {
 export default (state = initialState, action: UserAction): UserState => {
   switch (action.type) {
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST ||
-      userTypes.FETCH_USERLIST_REQUEST:
+      userTypes.FETCH_USERLIST_REQUEST ||
+      userTypes.REGISTER_USER_REQUEST:
       return {
         ...state,
         pending: true
       };
-    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS:
+    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS ||
+      userTypes.REGISTER_USER_SUCCESS:
       return {
         ...state,
         pending: false,
         loggedInUser: action.payload.user,
         error: null
       };
-    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE:
+    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE ||
+      userTypes.REGISTER_USER_FAILURE:
       return {
         ...state,
         pending: false,

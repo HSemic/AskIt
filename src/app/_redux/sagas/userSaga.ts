@@ -4,26 +4,39 @@ import {
   fetchUserListSuccess,
   fetchUserByEmailAndValidateSuccess,
   fetchUserByEmailAndValidateFailure,
-  fetchUserListFailure
+  fetchUserListFailure,
+  registerUserSuccess,
+  registerUserFailure
 } from '../actions/userActions';
 import { userTypes } from '../actiontypes/userTypes';
 import {
   UserApiData,
   UserData,
-  FetchUserByEmailAndValidateRequest
+  FetchUserByEmailAndValidateRequest,
+  RegisterUserRequest
 } from '../reducers/userReducer/types';
+
 import { AxiosResponse } from 'axios';
+
+import { generateRandomId } from '../../../services/uuidService';
 
 // import { verifyPassword } from '../../../services/passwordHashingService';
 
 const config = {
-  userLogInErrorMessage: 'Incorrect username or password'
+  userLogInErrorMessage: 'Incorrect username or password',
+  userExistsMessage: 'User already exists'
 };
 
 const getUserByEmail = (email: string) =>
   askIt.get<UserApiData>(`/users?email=${email}`);
 
 const getAllUsers = () => askIt.get<UserApiData[]>('/users');
+
+const addNewUser = (user: Omit<UserApiData, 'id'>) =>
+  askIt.post<UserApiData>('/users', {
+    ...user,
+    id: generateRandomId()
+  });
 
 function* fetchUserByEmailAndValidate(
   action: FetchUserByEmailAndValidateRequest
@@ -33,6 +46,8 @@ function* fetchUserByEmailAndValidate(
       getUserByEmail,
       action.email
     );
+
+    console.log(generateRandomId());
 
     if (response.data.length === 0) throw config.userLogInErrorMessage;
 
@@ -77,13 +92,41 @@ function* fetchUserList() {
   }
 }
 
+function* registerUser(action: RegisterUserRequest) {
+  try {
+    const possibleExistingUser: AxiosResponse<UserApiData[]> = yield call(
+      getUserByEmail,
+      action.newUser.email
+    );
+
+    if (possibleExistingUser.data.length > 0) throw config.userExistsMessage;
+
+    const response: AxiosResponse<UserApiData> = yield call(() =>
+      addNewUser(action.newUser)
+    );
+
+    yield put(
+      registerUserSuccess({
+        user: response.data
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      fetchUserByEmailAndValidateFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* userSaga() {
   yield all([
     takeLatest(
       userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST,
       fetchUserByEmailAndValidate
     ),
-    takeLatest(userTypes.FETCH_USERLIST_REQUEST, fetchUserList)
+    takeLatest(userTypes.FETCH_USERLIST_REQUEST, fetchUserList),
+    takeLatest(userTypes.REGISTER_USER_REQUEST, registerUser)
   ]);
 }
 

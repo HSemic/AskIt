@@ -15,7 +15,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
 
-import { fetchUserByEmailAndValidateRequest } from '../../app/_redux/actions/userActions';
+import { registerUserRequest } from '../../app/_redux/actions/userActions';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { validateEmail } from '../../services/validationService';
@@ -95,7 +95,14 @@ const RegisterForm = (): React.ReactElement => {
     if (!validPassword) setPasswordError(config.validationErrors.password);
 
     if (validEmail && validPassword)
-      dispatch(fetchUserByEmailAndValidateRequest(email, password));
+      dispatch(
+        registerUserRequest({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
+        })
+      );
   };
 
   const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

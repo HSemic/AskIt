@@ -20,6 +20,29 @@ export interface UserState {
   error: string | null;
 }
 
+export interface RegisterUserSuccessPayload {
+  user: UserApiData;
+}
+
+export interface RegisterUserFailurePayload {
+  error: string;
+}
+
+export interface RegisterUserRequest {
+  type: typeof userTypes.REGISTER_USER_REQUEST;
+  newUser: Omit<UserApiData, 'id'>;
+}
+
+export interface RegisterUserSuccess {
+  type: typeof userTypes.REGISTER_USER_SUCCESS;
+  payload: RegisterUserSuccessPayload;
+}
+
+export interface RegisterUserFailure {
+  type: typeof userTypes.REGISTER_USER_FAILURE;
+  payload: RegisterUserFailurePayload;
+}
+
 export interface FetchUserByEmailAndValidateSuccessPayload {
   user: UserApiData;
 }
@@ -72,4 +95,7 @@ export type UserAction =
   | FetchUserListFailure
   | FetchUserByEmailAndValidateRequest
   | FetchUserByEmailAndValidateSuccess
-  | FetchUserByEmailAndValidateFailure;
+  | FetchUserByEmailAndValidateFailure
+  | RegisterUserRequest
+  | RegisterUserSuccess
+  | RegisterUserFailure;
