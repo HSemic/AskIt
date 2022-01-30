@@ -7,6 +7,8 @@ import Navbar from './components/organisms/Navbar';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import QuestionPage from './pages/QuestionPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 
@@ -29,7 +31,7 @@ const App = (): React.ReactElement => {
       <CssBaseline />
       <Navbar />
       <VerticalSpacer />
-      <HomePage />
+      <RegisterPage />
       <VerticalSpacer />
     </>
   );

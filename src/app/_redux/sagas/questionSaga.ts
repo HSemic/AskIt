@@ -16,7 +16,6 @@ import { UserData } from '../reducers/userReducer/types';
 
 import { AxiosResponse } from 'axios';
 
-import * as questionSelectors from '../selectors/questionSelectors';
 import * as userSelectors from '../selectors/userSelectors';
 
 const getQuestionListNewest = (page: number) =>

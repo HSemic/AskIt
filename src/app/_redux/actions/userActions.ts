@@ -1,33 +1,37 @@
 import { userTypes } from '../actiontypes/userTypes';
 import {
-  FetchUserFailure,
-  FetchUserFailurePayload,
-  FetchUserRequest,
-  FetchUserSuccess,
-  FetchUserSuccessPayload,
-  FetchUserListFailure,
+  FetchUserByEmailAndValidateRequest,
+  FetchUserByEmailAndValidateSuccess,
+  FetchUserByEmailAndValidateFailure,
+  FetchUserByEmailAndValidateSuccessPayload,
+  FetchUserByEmailAndValidateFailurePayload,
   FetchUserListFailurePayload,
   FetchUserListRequest,
   FetchUserListSuccess,
+  FetchUserListFailure,
   FetchUserListSuccessPayload
 } from '../reducers/userReducer/types';
 
-export const fetchUserRequest = (id: string): FetchUserRequest => ({
-  type: userTypes.FETCH_USER_REQUEST,
-  id
+export const fetchUserByEmailAndValidateRequest = (
+  email: string,
+  password: string
+): FetchUserByEmailAndValidateRequest => ({
+  type: userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST,
+  email,
+  password
 });
 
-export const fetchUserSuccess = (
-  payload: FetchUserSuccessPayload
-): FetchUserSuccess => ({
-  type: userTypes.FETCH_USER_SUCCESS,
+export const fetchUserByEmailAndValidateSuccess = (
+  payload: FetchUserByEmailAndValidateSuccessPayload
+): FetchUserByEmailAndValidateSuccess => ({
+  type: userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS,
   payload
 });
 
-export const fetchUserFailure = (
-  payload: FetchUserFailurePayload
-): FetchUserFailure => ({
-  type: userTypes.FETCH_USER_FAILURE,
+export const fetchUserByEmailAndValidateFailure = (
+  payload: FetchUserByEmailAndValidateFailurePayload
+): FetchUserByEmailAndValidateFailure => ({
+  type: userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE,
   payload
 });
 

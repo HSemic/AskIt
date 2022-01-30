@@ -15,33 +15,34 @@ export interface UserData {
 
 export interface UserState {
   pending: boolean;
-  user: UserApiData | null;
+  loggedInUser: UserApiData | null;
   userList: { [id: string]: UserData };
   error: string | null;
 }
 
-export interface FetchUserSuccessPayload {
+export interface FetchUserByEmailAndValidateSuccessPayload {
   user: UserApiData;
 }
 
-export interface FetchUserFailurePayload {
+export interface FetchUserByEmailAndValidateFailurePayload {
   error: string;
 }
 
-export interface FetchUserRequest {
-  type: typeof userTypes.FETCH_USER_REQUEST;
-  id: string;
+export interface FetchUserByEmailAndValidateRequest {
+  type: typeof userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST;
+  email: string;
+  password: string;
 }
 
-export type FetchUserSuccess = {
-  type: typeof userTypes.FETCH_USER_SUCCESS;
-  payload: FetchUserSuccessPayload;
-};
+export interface FetchUserByEmailAndValidateSuccess {
+  type: typeof userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS;
+  payload: FetchUserByEmailAndValidateSuccessPayload;
+}
 
-export type FetchUserFailure = {
-  type: typeof userTypes.FETCH_USER_FAILURE;
-  payload: FetchUserFailurePayload;
-};
+export interface FetchUserByEmailAndValidateFailure {
+  type: typeof userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE;
+  payload: FetchUserByEmailAndValidateFailurePayload;
+}
 
 export interface FetchUserListSuccessPayload {
   userList: { [id: string]: UserData };
@@ -66,9 +67,9 @@ export type FetchUserListFailure = {
 };
 
 export type UserAction =
-  | FetchUserRequest
-  | FetchUserSuccess
-  | FetchUserFailure
   | FetchUserListRequest
   | FetchUserListSuccess
-  | FetchUserListFailure;
+  | FetchUserListFailure
+  | FetchUserByEmailAndValidateRequest
+  | FetchUserByEmailAndValidateSuccess
+  | FetchUserByEmailAndValidateFailure;

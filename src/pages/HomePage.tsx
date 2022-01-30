@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestionListRequest } from '../app/_redux/actions/questionActions';
-import { fetchUserRequest } from '../app/_redux/actions/userActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 
 import HomeTemplate from '../components/templates/HomeTemplate';
@@ -70,13 +69,12 @@ const HomePage = (): React.ReactElement => {
     error: errorQuestions
   } = useSelector((state: RootState) => state.question);
 
-  const { pending, user, userList, error } = useSelector(
+  const { pending, loggedInUser, userList, error } = useSelector(
     (state: RootState) => state.user
   );
 
   useEffect(() => {
     dispatch(fetchQuestionListRequest());
-    dispatch(fetchUserRequest('1'));
   }, [userList]);
 
   return <HomeTemplate questions={questionList} topUsers={config.topUsers} />;
