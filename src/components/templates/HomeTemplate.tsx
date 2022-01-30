@@ -8,6 +8,9 @@ import SideListUsers from '../organisms/SideListUsers';
 import SideListTopPosts from '../organisms/SideListTopPosts';
 
 import AddQuestionForm from '../molecules/AddQuestionForm';
+import LogInToMessage from '../atoms/LogInToMessage';
+
+import { useAuth } from '../providers/AuthProvider';
 
 const config = {
   topUsersListTitle: 'Top AskIt-ers',
@@ -25,13 +28,19 @@ const HomeTemplate = ({
   topUsers,
   topPosts
 }: HomeProps): React.ReactElement => {
+  const { loggedIn } = useAuth();
+
   return (
     <Container>
       <Grid container gap={2}>
         <Grid item md={7} xs={12}>
           <Grid container gap={2}>
             <Grid item xs={12}>
-              <AddQuestionForm />
+              {loggedIn ? (
+                <AddQuestionForm />
+              ) : (
+                <LogInToMessage text="Log in to post questions" />
+              )}
             </Grid>
             <Grid item xs={12}>
               <QuestionList questions={questions} />

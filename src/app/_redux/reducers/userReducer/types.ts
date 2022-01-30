@@ -89,6 +89,10 @@ export type FetchUserListFailure = {
   payload: FetchUserListFailurePayload;
 };
 
+export type Logout = {
+  type: typeof userTypes.LOGOUT;
+};
+
 export type UserAction =
   | FetchUserListRequest
   | FetchUserListSuccess
@@ -98,4 +102,5 @@ export type UserAction =
   | FetchUserByEmailAndValidateFailure
   | RegisterUserRequest
   | RegisterUserSuccess
-  | RegisterUserFailure;
+  | RegisterUserFailure
+  | Logout;

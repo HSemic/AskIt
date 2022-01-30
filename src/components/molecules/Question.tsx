@@ -15,12 +15,16 @@ import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
 import IconButton from '../atoms/IconButton';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
+import LikesDislikes from '../atoms/LikesDislikes';
+
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   questionCard: {
-    padding: '1.5rem 1rem',
+    padding: '1.5rem 2rem',
     boxShadow: 'none !important',
     border: '1px solid lightgrey',
+    minHeight: '12rem',
     '&:hover': {
       border: '1px solid black',
       cursor: 'pointer'
@@ -42,9 +46,18 @@ const Question = ({
   questionText,
   author,
   datetime,
-  variant
+  variant,
+  id,
+  likes,
+  dislikes
 }: QuestionData): React.ReactElement => {
   const classes = useStyles();
+
+  const navigate = useNavigate();
+
+  const onQuestionCardClick = () => {
+    navigate(`question/${id}`);
+  };
 
   const questionContent = (
     <Grid
@@ -52,19 +65,22 @@ const Question = ({
       gap={variant === 'card' ? 1 : 2}
       alignItems="center"
       justifyContent="flex-start"
+      sx={{ overflowWrap: 'break-word' }}
     >
-      <Grid item xs={1}>
-        <ButtonGroup direction="column" gap={0}>
-          <>
-            <IconButton>
-              <ThumbUp />
-            </IconButton>
-            <IconButton>
-              <ThumbDown />
-            </IconButton>
-          </>
-        </ButtonGroup>
-      </Grid>
+      {variant === 'page' && (
+        <Grid item xs={1}>
+          <ButtonGroup direction="column" gap={0}>
+            <>
+              <IconButton>
+                <ThumbUp />
+              </IconButton>
+              <IconButton>
+                <ThumbDown />
+              </IconButton>
+            </>
+          </ButtonGroup>
+        </Grid>
+      )}
       <Grid item xs={10}>
         <Grid container direction="column" gap={variant === 'card' ? 1 : 2}>
           <Grid item>
@@ -89,7 +105,24 @@ const Question = ({
             <QuestionText text={questionText} variant={variant} />
           </Grid>
           <Grid item>
-            <CommentCount commentCount={1} />
+            <Grid container gap={2}>
+              <Grid item>
+                <CommentCount commentCount={1} />
+              </Grid>
+              {variant === 'card' ? (
+                <>
+                  <Grid item>
+                    <LikesDislikes variant="likes" text={likes.toString()} />
+                  </Grid>
+                  <Grid item>
+                    <LikesDislikes
+                      variant="dislikes"
+                      text={dislikes.toString()}
+                    />
+                  </Grid>
+                </>
+              ) : null}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -97,7 +130,7 @@ const Question = ({
   );
 
   return variant === 'card' ? (
-    <Card className={classes.questionCard}>
+    <Card className={classes.questionCard} onClick={onQuestionCardClick}>
       <CardContent className={classes.questionCardContent}>
         {questionContent}
       </CardContent>

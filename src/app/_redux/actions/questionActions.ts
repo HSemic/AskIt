@@ -15,11 +15,17 @@ import {
   PostQuestionRequest,
   PostQuestionSuccess,
   PostQuestionFailure,
-  QuestionApiData
+  QuestionApiData,
+  FetchType
 } from '../reducers/questionReducer/types';
 
-export const fetchQuestionListRequest = (): FetchQuestionListRequest => ({
-  type: questionTypes.FETCH_QUESTIONLIST_REQUEST
+export const fetchQuestionListRequest = (
+  page: number,
+  variant: FetchType
+): FetchQuestionListRequest => ({
+  type: questionTypes.FETCH_QUESTIONLIST_REQUEST,
+  page,
+  variant
 });
 
 export const fetchQuestionListSuccess = (

@@ -15,7 +15,8 @@ import {
   RegisterUserRequest,
   RegisterUserSuccess,
   RegisterUserFailure,
-  UserApiData
+  UserApiData,
+  Logout
 } from '../reducers/userReducer/types';
 
 export const registerUserRequest = (
@@ -78,4 +79,8 @@ export const fetchUserListFailure = (
 ): FetchUserListFailure => ({
   type: userTypes.FETCH_USERLIST_FAILURE,
   payload
+});
+
+export const logout = (): Logout => ({
+  type: userTypes.LOGOUT
 });

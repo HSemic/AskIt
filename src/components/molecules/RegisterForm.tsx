@@ -15,11 +15,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
 
-import { registerUserRequest } from '../../app/_redux/actions/userActions';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { validateEmail } from '../../services/validationService';
 import { validatePassword } from '../../services/validationService';
+
+import { useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -55,15 +58,15 @@ const RegisterForm = (): React.ReactElement => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const dispatch = useDispatch();
+  const { pending, error } = useSelector((state: RootState) => state.user);
 
-  const { pending, loggedInUser, error } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { loggedIn, register } = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loggedInUser);
-  }, [loggedInUser]);
+    console.log(loggedIn);
+  }, [loggedIn]);
 
   useEffect(() => {
     console.log(error);
@@ -82,8 +85,8 @@ const RegisterForm = (): React.ReactElement => {
   }, [password]);
 
   useEffect(() => {
-    console.log(pending);
-  }, [pending]);
+    if (loggedIn) navigate('/');
+  }, [loggedIn]);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -95,14 +98,7 @@ const RegisterForm = (): React.ReactElement => {
     if (!validPassword) setPasswordError(config.validationErrors.password);
 
     if (validEmail && validPassword)
-      dispatch(
-        registerUserRequest({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password
-        })
-      );
+      register(firstName, lastName, email, password);
   };
 
   const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

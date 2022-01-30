@@ -74,7 +74,7 @@ const HomePage = (): React.ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(fetchQuestionListRequest());
+    dispatch(fetchQuestionListRequest(1, 'newest'));
   }, []);
 
   return <HomeTemplate questions={questionList} topUsers={config.topUsers} />;

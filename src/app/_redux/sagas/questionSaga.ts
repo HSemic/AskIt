@@ -11,6 +11,7 @@ import {
 import { questionTypes } from '../actiontypes/questionTypes';
 import {
   FetchQuestionDetailsRequest,
+  FetchQuestionListRequest,
   PostQuestionRequest,
   QuestionApiData
 } from '../reducers/questionReducer/types';
@@ -21,8 +22,14 @@ import { AxiosResponse } from 'axios';
 
 import * as userSelectors from '../selectors/userSelectors';
 import { generateRandomId } from '../../../services/uuidService';
+import { localizeDate } from '../../../services/localization';
 
 const getQuestionListNewest = (page: number) =>
+  askIt.get<QuestionApiData[]>(
+    `/questions?_page=${page}&_limit=20&_sort=datetime&_order=desc`
+  );
+
+const getQuestionListMy = (page: number, userId: string) =>
   askIt.get<QuestionApiData[]>(`/questions?_page=${page}&_limit=20`);
 
 const getQuestionDetails = (id: string) =>
@@ -34,12 +41,16 @@ const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
     id: generateRandomId()
   });
 
-function* fetchNewQuestionList() {
+function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
-    const response: AxiosResponse<QuestionApiData[]> = yield call(
-      getQuestionListNewest,
-      1
-    );
+    let response: Partial<AxiosResponse<QuestionApiData[]>> = {};
+
+    // if (action.variant === 'newest')
+    response = yield call(getQuestionListNewest, action.page);
+    // else if (action.variant === 'my') {
+    // }
+
+    console.log(response);
 
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers
@@ -47,7 +58,7 @@ function* fetchNewQuestionList() {
 
     const results: QuestionData[] = [];
 
-    response.data.forEach((question) => {
+    (response as AxiosResponse<QuestionApiData[]>).data.forEach((question) => {
       const user: UserData = users[question.authorId];
 
       results.push({
@@ -57,7 +68,9 @@ function* fetchNewQuestionList() {
           user.firstName.length > 0 || user.lastName.length > 0
             ? user.firstName + ' ' + user.lastName
             : 'Unknown',
-        datetime: question.datetime,
+        datetime: localizeDate(question.datetime),
+        likes: question.likes,
+        dislikes: question.dislikes,
         variant: 'card'
       });
     });
@@ -103,6 +116,8 @@ function* postNewQuestion(action: PostQuestionRequest) {
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
       addNewQuestion(action.newQuestion)
     );
+
+    console.log(response);
 
     yield put(
       postQuestionSuccess({

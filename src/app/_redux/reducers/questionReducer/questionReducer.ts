@@ -25,7 +25,8 @@ export default (
       return {
         ...state,
         pending: false,
-        questionList: [...state.questionList, ...action.payload.questionList],
+        // questionList: [...state.questionList, ...action.payload.questionList],
+        questionList: action.payload.questionList,
         error: null,
         currentPage: state.currentPage + 1
       };

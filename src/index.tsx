@@ -11,6 +11,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import './styles/base.css';
 import theme from './styles/theme';
 
+import { AuthProvider } from './components/providers/AuthProvider';
+
 import App from './App';
 
 store.dispatch(fetchUserListRequest());
@@ -18,9 +20,11 @@ store.dispatch(fetchUserListRequest());
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root')

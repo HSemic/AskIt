@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { makeStyles } from '@mui/styles';
 
@@ -15,6 +15,8 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
+
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -53,13 +55,23 @@ const AddQuestionForm = (): React.ReactElement => {
   const [questionError, setQuestionError] = useState('');
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
-  const { error, pending } = useSelector((state: RootState) => state.question);
+  const { error, pending, currentQuestion } = useSelector(
+    (state: RootState) => state.question
+  );
+
+  const navigate = useNavigate();
 
   const onQuestionInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setQuestionText(event.currentTarget.value);
   };
+
+  useEffect(() => {
+    if (!currentQuestion) return;
+
+    navigate(`question/${currentQuestion?.id}`);
+  }, [currentQuestion]);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,9 +84,11 @@ const AddQuestionForm = (): React.ReactElement => {
     else {
       dispatch(
         postQuestionRequest({
-          title: questionError,
+          title: questionText,
           authorId: loggedInUser.id,
-          datetime: Date.now()
+          datetime: Date.now(),
+          likes: 0,
+          dislikes: 0
         })
       );
     }
@@ -82,7 +96,7 @@ const AddQuestionForm = (): React.ReactElement => {
 
   return (
     <Paper className={classes.formPaper}>
-      <Box component="form">
+      <Box component="form" onSubmit={onFormSubmit}>
         <Grid container gap={2} direction="column">
           <Grid item xs={12}>
             <TextField

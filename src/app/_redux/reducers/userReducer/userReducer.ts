@@ -17,12 +17,26 @@ export default (state = initialState, action: UserAction): UserState => {
         ...state,
         pending: true
       };
-    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS ||
-      userTypes.REGISTER_USER_SUCCESS:
+    case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_SUCCESS:
       return {
         ...state,
         pending: false,
         loggedInUser: action.payload.user,
+        error: null
+      };
+    case userTypes.REGISTER_USER_SUCCESS:
+      const newUserEntry: {
+        [id: string]: { firstName: string; lastName: string };
+      } = {};
+      newUserEntry[action.payload.user.id] = {
+        firstName: action.payload.user.firstName,
+        lastName: action.payload.user.lastName
+      };
+      return {
+        ...state,
+        pending: false,
+        loggedInUser: action.payload.user,
+        userList: { ...state.userList, ...newUserEntry },
         error: null
       };
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE ||
@@ -46,6 +60,12 @@ export default (state = initialState, action: UserAction): UserState => {
         pending: false,
         error: action.payload.error
       };
+    case userTypes.LOGOUT: {
+      return {
+        ...state,
+        loggedInUser: null
+      };
+    }
     default:
       return {
         ...state

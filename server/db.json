@@ -1,0 +1,37 @@
+{
+  "questions": [
+    {
+      "title": "Hi, whats up",
+      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "datetime": 1643549077434,
+      "likes": 0,
+      "dislikes": 0,
+      "id": "46b4577a-fa15-496f-9963-c39133bed786"
+    },
+    {
+      "title": "dsasaf fdsa f",
+      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "datetime": 1643549288850,
+      "likes": 0,
+      "dislikes": 0,
+      "id": "f69e92d4-ab04-4323-9030-bb72f30c656f"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "commentText": "some comment",
+      "questionId": "1",
+      "authorId": "1"
+    }
+  ],
+  "users": [
+    {
+      "firstName": "Haris",
+      "lastName": "Semic",
+      "email": "hsemic1991@gmail.com",
+      "password": "hehehe",
+      "id": "42bf39c1-49ff-440e-a170-d5a24e77b832"
+    }
+  ]
+}

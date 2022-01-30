@@ -26,7 +26,7 @@ const CommentCount = ({
 }: CommentCountProps): React.ReactElement => {
   const classes = useStyles();
   return (
-    <Grid container alignItems="center" gap={1}>
+    <Grid container alignItems="center" gap={0.4}>
       <CommentIcon className={classes.commentIcon} />{' '}
       <Typography
         className={classes.commentCount}

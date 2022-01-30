@@ -15,11 +15,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
 
-import { fetchUserByEmailAndValidateRequest } from '../../app/_redux/actions/userActions';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { validateEmail } from '../../services/validationService';
 import { validatePassword } from '../../services/validationService';
+
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -53,19 +56,16 @@ const LoginForm = (): React.ReactElement => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const dispatch = useDispatch();
+  const { pending, error } = useSelector((state: RootState) => state.user);
 
-  const { pending, loggedInUser, error } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { login, loggedIn } = useAuth();
 
-  useEffect(() => {
-    console.log(loggedInUser);
-  }, [loggedInUser]);
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
 
   useEffect(() => {
     if (email.length > 0 && !validateEmail(email))
@@ -80,8 +80,8 @@ const LoginForm = (): React.ReactElement => {
   }, [password]);
 
   useEffect(() => {
-    console.log(pending);
-  }, [pending]);
+    if (loggedIn) navigate('/');
+  }, [loggedIn]);
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -92,8 +92,7 @@ const LoginForm = (): React.ReactElement => {
     if (!validEmail) setEmailError(config.validationErrors.email);
     if (!validPassword) setPasswordError(config.validationErrors.password);
 
-    if (validEmail && validPassword)
-      dispatch(fetchUserByEmailAndValidateRequest(email, password));
+    if (validEmail && validPassword) login(email, password);
   };
 
   const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {

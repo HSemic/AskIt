@@ -4,6 +4,8 @@ export interface QuestionApiData {
   id: string;
   title: string;
   authorId: string;
+  likes: number;
+  dislikes: number;
   datetime: number;
 }
 
@@ -15,6 +17,8 @@ export interface QuestionState {
   error: string | null;
 }
 
+export type FetchType = 'newest' | 'top' | 'my';
+
 export interface FetchQuestionListSuccessPayload {
   questionList: QuestionData[];
 }
@@ -25,6 +29,8 @@ export interface FetchQuestionListFailurePayload {
 
 export interface FetchQuestionListRequest {
   type: typeof questionTypes.FETCH_QUESTIONLIST_REQUEST;
+  page: number;
+  variant: FetchType;
 }
 
 export type FetchQuestionListSuccess = {

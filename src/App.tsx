@@ -11,6 +11,7 @@ import QuestionPage from './pages/QuestionPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
+import RequireAuth from './components/molecules/RequireAuth';
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 
 const App = (): React.ReactElement => {
@@ -21,9 +22,17 @@ const App = (): React.ReactElement => {
       <VerticalSpacer />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="profile" element={<ProfilePage />} />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          }
+        />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="question/:id" element={<QuestionPage />} />
         <Route
           path="*"
           element={

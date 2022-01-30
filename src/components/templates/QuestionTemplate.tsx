@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 interface QuestionTemplateProps {
   question: QuestionData;
-  comments: CommentData[];
+  comments?: CommentData[];
 }
 
 const QuestionTemplate = ({
@@ -42,7 +42,7 @@ const QuestionTemplate = ({
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperComments}>
-              <CommentList comments={comments} />
+              {comments && <CommentList comments={comments} />}
             </Paper>
           </Grid>
         </Grid>

@@ -47,8 +47,6 @@ function* fetchUserByEmailAndValidate(
       action.email
     );
 
-    console.log(generateRandomId());
-
     if (response.data.length === 0) throw config.userLogInErrorMessage;
 
     const result = response.data[0];
