@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom';
 
+import { BrowserRouter } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import store from '../src/app/_redux/store';
 import { fetchUserListRequest } from './app/_redux/actions/userActions';
@@ -16,7 +18,9 @@ store.dispatch(fetchUserListRequest());
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root')

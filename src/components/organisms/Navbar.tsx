@@ -33,8 +33,16 @@ const Navbar = (): React.ReactElement => {
           <Logo text={config.logoText} imgSrc={logo} />
           <ButtonGroup direction="row" gap={1}>
             <>
-              <LinkButton text={config.buttonSignInText} color="primary" />
-              <LinkButton text={config.buttonSignUpText} color="secondary" />
+              <LinkButton
+                text={config.buttonSignInText}
+                color="primary"
+                href="login"
+              />
+              <LinkButton
+                text={config.buttonSignUpText}
+                color="secondary"
+                href="register"
+              />
             </>
           </ButtonGroup>
         </Toolbar>

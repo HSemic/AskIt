@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 
 import Typography from '@mui/material/Typography';
 
+import { Link } from 'react-router-dom';
+
 interface LogoProps {
   text: string;
   imgSrc: string;
