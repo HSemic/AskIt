@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
 
-import UserAvatar from '../atoms/UserAvatar';
-
 interface TopPostsListItemProps {
   postTitle: string;
 }

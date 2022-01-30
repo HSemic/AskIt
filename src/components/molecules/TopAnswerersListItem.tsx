@@ -7,10 +7,12 @@ import UserAvatar from '../atoms/UserAvatar';
 
 interface TopAnswerersListItemProps {
   username: string;
+  commentCount: string;
 }
 
 const TopAnswerersListItem = ({
-  username
+  username,
+  commentCount
 }: TopAnswerersListItemProps): React.ReactElement => {
   return (
     <Grid container alignItems="center">
@@ -19,6 +21,9 @@ const TopAnswerersListItem = ({
       </Grid>
       <Grid item>
         <Typography>{username}</Typography>
+      </Grid>
+      <Grid item>
+        <Typography>- {commentCount} comments</Typography>
       </Grid>
     </Grid>
   );

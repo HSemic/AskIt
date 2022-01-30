@@ -1,3 +1,8 @@
-export const localizeDate = (date: number): string => {
-  return new Date(date).toLocaleDateString(navigator.language);
+export const localizeDate = (dateNumber: number): string => {
+  const date = new Date(dateNumber);
+  return (
+    date.toLocaleDateString(navigator.language) +
+    ' - ' +
+    date.toLocaleTimeString(navigator.language)
+  );
 };

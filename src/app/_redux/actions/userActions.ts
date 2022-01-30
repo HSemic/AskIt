@@ -15,12 +15,17 @@ import {
   RegisterUserRequest,
   RegisterUserSuccess,
   RegisterUserFailure,
+  FetchTopUsersSuccessPayload,
+  FetchTopUsersFailurePayload,
+  FetchTopUsersRequest,
+  FetchTopUsersSuccess,
+  FetchTopUsersFailure,
   UserApiData,
   Logout
 } from '../reducers/userReducer/types';
 
 export const registerUserRequest = (
-  newUser: Omit<UserApiData, 'id'>
+  newUser: Omit<UserApiData, 'id' | 'comments'>
 ): RegisterUserRequest => ({
   type: userTypes.REGISTER_USER_REQUEST,
   newUser
@@ -78,6 +83,24 @@ export const fetchUserListFailure = (
   payload: FetchUserListFailurePayload
 ): FetchUserListFailure => ({
   type: userTypes.FETCH_USERLIST_FAILURE,
+  payload
+});
+
+export const fetchTopUsersRequest = (): FetchTopUsersRequest => ({
+  type: userTypes.FETCH_TOPUSERS_REQUEST
+});
+
+export const fetchTopUsersSuccess = (
+  payload: FetchTopUsersSuccessPayload
+): FetchTopUsersSuccess => ({
+  type: userTypes.FETCH_TOPUSERS_SUCCESS,
+  payload
+});
+
+export const fetchTopUsersFailure = (
+  payload: FetchTopUsersFailurePayload
+): FetchTopUsersFailure => ({
+  type: userTypes.FETCH_TOPUSERS_FAILURE,
   payload
 });
 

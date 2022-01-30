@@ -6,7 +6,9 @@ import {
   fetchUserByEmailAndValidateFailure,
   fetchUserListFailure,
   registerUserSuccess,
-  registerUserFailure
+  registerUserFailure,
+  fetchTopUsersSuccess,
+  fetchTopUsersFailure
 } from '../actions/userActions';
 import { userTypes } from '../actiontypes/userTypes';
 import {
@@ -32,10 +34,14 @@ const getUserByEmail = (email: string) =>
 
 const getAllUsers = () => askIt.get<UserApiData[]>('/users');
 
-const addNewUser = (user: Omit<UserApiData, 'id'>) =>
+const getTopUsers = () =>
+  askIt.get<UserApiData[]>('/users?_sort=comments&_order=desc&_limit=5');
+
+const addNewUser = (user: Omit<UserApiData, 'id' | 'comments'>) =>
   askIt.post<UserApiData>('/users', {
     ...user,
-    id: generateRandomId()
+    id: generateRandomId(),
+    comments: 0
   });
 
 function* fetchUserByEmailAndValidate(
@@ -90,6 +96,24 @@ function* fetchUserList() {
   }
 }
 
+function* fetchTopUsers() {
+  try {
+    const response: AxiosResponse<UserApiData[]> = yield call(getTopUsers);
+
+    yield put(
+      fetchTopUsersSuccess({
+        topUsers: response.data
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      fetchTopUsersFailure({
+        error: e.error
+      })
+    );
+  }
+}
+
 function* registerUser(action: RegisterUserRequest) {
   try {
     const possibleExistingUser: AxiosResponse<UserApiData[]> = yield call(
@@ -124,7 +148,8 @@ function* userSaga() {
       fetchUserByEmailAndValidate
     ),
     takeLatest(userTypes.FETCH_USERLIST_REQUEST, fetchUserList),
-    takeLatest(userTypes.REGISTER_USER_REQUEST, registerUser)
+    takeLatest(userTypes.REGISTER_USER_REQUEST, registerUser),
+    takeLatest(userTypes.FETCH_TOPUSERS_REQUEST, fetchTopUsers)
   ]);
 }
 

@@ -8,6 +8,9 @@ import Paper from '@mui/material/Paper';
 import Question from '../molecules/Question';
 import CommentList from '../organisms/CommentList';
 
+import FormMessage from '../atoms/FormMessage';
+import { useAuth } from '../providers/AuthProvider';
+
 const useStyles = makeStyles({
   paperMain: {
     padding: '3rem'
@@ -31,6 +34,8 @@ const QuestionTemplate = ({
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
+  const { loggedIn } = useAuth();
+
   return (
     <Container maxWidth="md">
       <Paper className={classes.paperMain}>
@@ -39,6 +44,11 @@ const QuestionTemplate = ({
             <Paper elevation={3} className={classes.paperQuestion}>
               <Question {...question} />
             </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            {!loggedIn ? (
+              <FormMessage text="Log in to comment" type="info" />
+            ) : null}
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperComments}>

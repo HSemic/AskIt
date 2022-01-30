@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestionListRequest } from '../app/_redux/actions/questionActions';
+import { fetchTopUsersRequest } from '../app/_redux/actions/userActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 
 import HomeTemplate from '../components/templates/HomeTemplate';
@@ -63,21 +64,25 @@ const config: { topUsers: string[] } = {
 
 const HomePage = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {
-    pending: pendingQuestions,
-    questionList,
-    error: errorQuestions
-  } = useSelector((state: RootState) => state.question);
 
-  const { pending, loggedInUser, userList, error } = useSelector(
-    (state: RootState) => state.user
-  );
+  const [page, setPage] = useState(1);
+
+  const { questionList } = useSelector((state: RootState) => state.question);
+
+  const { topUsers } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    dispatch(fetchQuestionListRequest(1, 'newest'));
-  }, []);
+    if (!questionList || questionList.length === 0)
+      dispatch(fetchQuestionListRequest(1, 'newest'));
 
-  return <HomeTemplate questions={questionList} topUsers={config.topUsers} />;
+    if (!topUsers || topUsers.length === 0) dispatch(fetchTopUsersRequest());
+  }, [topUsers]);
+
+  console.log(topUsers);
+
+  return (
+    <HomeTemplate questions={questionList} topUsers={topUsers} page={page} />
+  );
 };
 
 export default HomePage;

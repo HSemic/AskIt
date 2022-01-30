@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,10 +9,11 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 import UserAvatar from '../atoms/UserAvatar';
 import SideListTitle from '../atoms/SideListTitle';
+import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 interface SideListUsersProps {
   title: string;
-  users: string[];
+  users: UserApiData[];
 }
 
 const SideListUsers = ({
@@ -22,14 +24,35 @@ const SideListUsers = ({
     <Paper>
       <SideListTitle text={title} />
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {users.map((username, index) => {
+        {users.map((user, index) => {
           return (
             <ListItem divider={index < users.length - 1}>
-              <ListItemText primary={`${index + 1}.`} sx={{ flex: '0.2' }} />
-              <ListItemAvatar>
-                <UserAvatar username={username} size="normal" />
-              </ListItemAvatar>
-              <ListItemText primary={username} />
+              <Grid container gap={1}>
+                <Grid item>
+                  <ListItemText
+                    primary={`${index + 1}.`}
+                    sx={{ flex: '0.2' }}
+                  />
+                </Grid>
+                <Grid item>
+                  <ListItemAvatar>
+                    <UserAvatar
+                      username={user.firstName + ' ' + user.lastName}
+                      size="normal"
+                    />
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item>
+                  <ListItemText
+                    primary={user.firstName + ' ' + user.lastName}
+                  />
+                </Grid>
+                <Grid item>
+                  <ListItemText
+                    primary={' -  ' + user.comments + ' comments'}
+                  />
+                </Grid>
+              </Grid>
             </ListItem>
           );
         })}

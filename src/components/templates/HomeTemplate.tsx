@@ -11,6 +11,7 @@ import AddQuestionForm from '../molecules/AddQuestionForm';
 import LogInToMessage from '../atoms/LogInToMessage';
 
 import { useAuth } from '../providers/AuthProvider';
+import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 const config = {
   topUsersListTitle: 'Top AskIt-ers',
@@ -19,14 +20,16 @@ const config = {
 
 interface HomeProps {
   questions: QuestionData[];
-  topUsers: string[];
+  topUsers: UserApiData[];
   topPosts?: string[];
+  page: number;
 }
 
 const HomeTemplate = ({
   questions,
   topUsers,
-  topPosts
+  topPosts,
+  page
 }: HomeProps): React.ReactElement => {
   const { loggedIn } = useAuth();
 
@@ -43,7 +46,11 @@ const HomeTemplate = ({
               )}
             </Grid>
             <Grid item xs={12}>
-              <QuestionList questions={questions} />
+              <QuestionList
+                questions={questions}
+                variant="newest"
+                page={page}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -56,10 +63,10 @@ const HomeTemplate = ({
               />
             </Grid>
             <Grid item>
-              <SideListTopPosts
+              {/* <SideListTopPosts
                 title={config.topPostsListTitle}
                 posts={topUsers}
-              />
+              /> */}
             </Grid>
           </Grid>
         </Grid>

@@ -12,7 +12,7 @@ export interface QuestionApiData {
 export interface QuestionState {
   pending: boolean;
   questionList: QuestionData[];
-  currentQuestion: QuestionApiData | null;
+  currentQuestion: QuestionData | null;
   currentPage: number;
   error: string | null;
 }
@@ -44,7 +44,7 @@ export type FetchQuestionListFailure = {
 };
 
 export interface FetchQuestionDetailsSuccessPayload {
-  currentQuestion: QuestionApiData;
+  currentQuestion: QuestionData;
 }
 
 export interface FetchQuestionDetailsFailurePayload {
@@ -67,7 +67,7 @@ export type FetchQuestionDetailsFailure = {
 };
 
 export interface PostQuestionSuccessPayload {
-  newQuestion: QuestionApiData;
+  newQuestion: QuestionData;
 }
 
 export interface PostQuestionFailurePayload {

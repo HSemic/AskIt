@@ -5,6 +5,7 @@ const initialState: UserState = {
   pending: false,
   loggedInUser: null,
   userList: {},
+  topUsers: [],
   error: null
 };
 
@@ -12,7 +13,8 @@ export default (state = initialState, action: UserAction): UserState => {
   switch (action.type) {
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST ||
       userTypes.FETCH_USERLIST_REQUEST ||
-      userTypes.REGISTER_USER_REQUEST:
+      userTypes.REGISTER_USER_REQUEST ||
+      userTypes.FETCH_TOPUSERS_REQUEST:
       return {
         ...state,
         pending: true
@@ -54,7 +56,7 @@ export default (state = initialState, action: UserAction): UserState => {
         userList: action.payload.userList,
         error: null
       };
-    case userTypes.FETCH_USERLIST_FAILURE:
+    case userTypes.FETCH_USERLIST_FAILURE || userTypes.FETCH_TOPUSERS_FAILURE:
       return {
         ...state,
         pending: false,
@@ -66,6 +68,13 @@ export default (state = initialState, action: UserAction): UserState => {
         loggedInUser: null
       };
     }
+    case userTypes.FETCH_TOPUSERS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        topUsers: action.payload.topUsers,
+        error: null
+      };
     default:
       return {
         ...state

@@ -67,12 +67,6 @@ const AddQuestionForm = (): React.ReactElement => {
     setQuestionText(event.currentTarget.value);
   };
 
-  useEffect(() => {
-    if (!currentQuestion) return;
-
-    navigate(`question/${currentQuestion?.id}`);
-  }, [currentQuestion]);
-
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

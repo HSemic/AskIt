@@ -97,9 +97,27 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
       getQuestionDetails,
       action.id
     );
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const addedQuestion: QuestionData = {
+      id: response.data.id,
+      questionText: response.data.title,
+      author:
+        users[response.data.authorId].firstName +
+        ' ' +
+        users[response.data.authorId].lastName,
+      datetime: localizeDate(response.data.datetime),
+      likes: response.data.likes,
+      dislikes: response.data.dislikes,
+      variant: 'card'
+    };
+
     yield put(
       fetchQuestionDetailsSuccess({
-        currentQuestion: response.data
+        currentQuestion: addedQuestion
       })
     );
   } catch (e: any) {
@@ -119,9 +137,26 @@ function* postNewQuestion(action: PostQuestionRequest) {
 
     console.log(response);
 
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const addedQuestion: QuestionData = {
+      id: response.data.id,
+      questionText: response.data.title,
+      author:
+        users[response.data.authorId].firstName +
+        ' ' +
+        users[response.data.authorId].lastName,
+      datetime: localizeDate(response.data.datetime),
+      likes: response.data.likes,
+      dislikes: response.data.dislikes,
+      variant: 'card'
+    };
+
     yield put(
       postQuestionSuccess({
-        newQuestion: response.data
+        newQuestion: addedQuestion
       })
     );
   } catch (e: any) {

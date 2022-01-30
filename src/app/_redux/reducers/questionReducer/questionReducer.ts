@@ -25,8 +25,8 @@ export default (
       return {
         ...state,
         pending: false,
-        // questionList: [...state.questionList, ...action.payload.questionList],
-        questionList: action.payload.questionList,
+        questionList: [...state.questionList, ...action.payload.questionList],
+        // questionList: action.payload.questionList,
         error: null,
         currentPage: state.currentPage + 1
       };
@@ -56,7 +56,8 @@ export default (
       return {
         ...state,
         pending: false,
-        currentQuestion: action.payload.newQuestion
+        currentQuestion: action.payload.newQuestion,
+        questionList: [action.payload.newQuestion, ...state.questionList]
       };
     case questionTypes.POST_QUESTION_FAILURE:
       return {

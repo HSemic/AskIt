@@ -6,6 +6,7 @@ export interface UserApiData {
   lastName: string;
   email: string;
   password: string;
+  comments: number;
 }
 
 export interface UserData {
@@ -17,6 +18,7 @@ export interface UserState {
   pending: boolean;
   loggedInUser: UserApiData | null;
   userList: { [id: string]: UserData };
+  topUsers: UserApiData[];
   error: string | null;
 }
 
@@ -30,7 +32,7 @@ export interface RegisterUserFailurePayload {
 
 export interface RegisterUserRequest {
   type: typeof userTypes.REGISTER_USER_REQUEST;
-  newUser: Omit<UserApiData, 'id'>;
+  newUser: Omit<UserApiData, 'id' | 'comments'>;
 }
 
 export interface RegisterUserSuccess {
@@ -93,6 +95,28 @@ export type Logout = {
   type: typeof userTypes.LOGOUT;
 };
 
+export interface FetchTopUsersSuccessPayload {
+  topUsers: UserApiData[];
+}
+
+export interface FetchTopUsersFailurePayload {
+  error: string;
+}
+
+export interface FetchTopUsersRequest {
+  type: typeof userTypes.FETCH_TOPUSERS_REQUEST;
+}
+
+export interface FetchTopUsersSuccess {
+  type: typeof userTypes.FETCH_TOPUSERS_SUCCESS;
+  payload: FetchTopUsersSuccessPayload;
+}
+
+export interface FetchTopUsersFailure {
+  type: typeof userTypes.FETCH_TOPUSERS_FAILURE;
+  payload: FetchTopUsersFailurePayload;
+}
+
 export type UserAction =
   | FetchUserListRequest
   | FetchUserListSuccess
@@ -103,4 +127,7 @@ export type UserAction =
   | RegisterUserRequest
   | RegisterUserSuccess
   | RegisterUserFailure
+  | FetchTopUsersRequest
+  | FetchTopUsersSuccess
+  | FetchTopUsersFailure
   | Logout;
