@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { makeStyles } from '@mui/styles';
 
@@ -13,10 +13,7 @@ import { validateQuestionText } from '../../services/validationService';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
-import {
-  editQuestionRequest,
-  postQuestionRequest
-} from '../../app/_redux/actions/questionActions';
+import { editQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
 
 import { useNavigate } from 'react-router-dom';
@@ -44,10 +41,14 @@ const config = {
 
 interface EditQuestionFormProps {
   questionId: string;
+  authorId: string;
+  setClose: Dispatch<SetStateAction<boolean>>;
 }
 
 const EditQuestionForm = ({
-  questionId
+  questionId,
+  authorId,
+  setClose
 }: EditQuestionFormProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -71,7 +72,11 @@ const EditQuestionForm = ({
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!loggedInUser || loggedInUser.id !== questionId) return;
+    console.log('hmm');
+
+    if (!loggedInUser || loggedInUser.id !== authorId) return;
+
+    console.log('hmm2');
 
     const validQuestion = validateQuestionText(questionText);
 
@@ -79,6 +84,8 @@ const EditQuestionForm = ({
     else {
       dispatch(editQuestionRequest(questionId, questionText));
     }
+
+    setClose(false);
   };
 
   return (

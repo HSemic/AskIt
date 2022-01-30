@@ -9,6 +9,11 @@ import Typography from '@mui/material/Typography';
 import UserAvatar from '../atoms/UserAvatar';
 import Author from '../atoms/MetaAuthor';
 import MetaDate from '../atoms/MetaDate';
+import {
+  UserApiData,
+  UserData
+} from '../../app/_redux/reducers/userReducer/types';
+import { localizeDate } from '../../services/localization';
 
 const useStyles = makeStyles({
   profilePaper: {
@@ -16,13 +21,14 @@ const useStyles = makeStyles({
   }
 });
 
-const ProfileInfo = ({
-  username,
-  dateJoined,
-  numberOfPosts,
-  numberOfComments
-}: ProfileData): React.ReactElement => {
+interface ProfileInfoProps {
+  user: UserApiData;
+}
+
+const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
   const classes = useStyles();
+
+  const username = user.firstName + ' ' + user.lastName;
 
   return (
     <Container maxWidth="md">
@@ -34,23 +40,35 @@ const ProfileInfo = ({
           <Grid item>
             <Grid container direction="column" gap={2}>
               <Grid item>
-                <Typography variant="body1">Username: </Typography>
-                <Author author={username} variant="profile" />
+                <Grid container gap={1} alignItems="flex-end">
+                  <Grid item>
+                    <Typography variant="body1">Username: </Typography>
+                    <Author author={username} variant="profile" />
+                  </Grid>
+                  <Grid item>fdsafsafs</Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">Email: </Typography>
+                <Author author={user.email} variant="profile" />
               </Grid>
               <Grid item>
                 <Typography variant="body1">Date joined: </Typography>
-                <MetaDate date={dateJoined} variant="profile" />
+                <MetaDate
+                  date={localizeDate(user.dateJoined)}
+                  variant="profile"
+                />
               </Grid>
               <Grid item>
-                <Typography variant="body1">Number of posts: </Typography>
-                <MetaDate date={numberOfPosts} variant="profile" />
-              </Grid>
-              <Grid item>
-                <Typography variant="body1">Number of comments: </Typography>
-                <MetaDate date={numberOfComments} variant="profile" />
+                <Typography variant="body1">Number of answers: </Typography>
+                <MetaDate
+                  date={user.numberOfAnswers.toString()}
+                  variant="profile"
+                />
               </Grid>
             </Grid>
           </Grid>
+          <Grid item></Grid>
         </Grid>
       </Paper>
     </Container>

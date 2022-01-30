@@ -7,6 +7,7 @@ import {
   fetchTopQuestionsRequest
 } from '../app/_redux/actions/questionActions';
 import { fetchTopUsersRequest } from '../app/_redux/actions/userActions';
+import { clearQuestions } from '../app/_redux/actions/questionActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 import { useAuth } from '../components/providers/AuthProvider';
 
@@ -26,13 +27,17 @@ const HomePage = (): React.ReactElement => {
   const { loggedIn } = useAuth();
 
   useEffect(() => {
-    if (!questionList || questionList.length === 0)
-      dispatch(fetchQuestionListRequest(1));
+    // if (!questionList || questionList.length === 0)
+    dispatch(fetchQuestionListRequest(1));
 
     if (!topUsers || topUsers.length === 0) dispatch(fetchTopUsersRequest());
 
     if (!topQuestions || topQuestions.length === 0)
       dispatch(fetchTopQuestionsRequest());
+
+    return function cleanup() {
+      dispatch(clearQuestions());
+    };
   }, []);
 
   console.log(topQuestions);

@@ -9,10 +9,13 @@ import {
   postQuestionFailure,
   fetchTopQuestionsSuccess,
   fetchTopQuestionsFailure,
-  editQuestionSuccess
+  editQuestionSuccess,
+  deleteAQuestionSuccess,
+  deleteAQuestionFailure
 } from '../actions/questionActions';
 import { questionTypes } from '../actiontypes/questionTypes';
 import {
+  DeleteAQuestionRequest,
   EditQuestionRequest,
   FetchQuestionDetailsRequest,
   FetchQuestionListRequest,
@@ -53,6 +56,9 @@ const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
     ...question,
     id: generateRandomId()
   });
+
+const deleteAQuestion = (id: string) =>
+  askIt.delete<QuestionApiData>(`/questions/${id}`);
 
 function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
@@ -272,6 +278,24 @@ function* editQuestion(action: EditQuestionRequest) {
   }
 }
 
+function* deleteQuestion(action: DeleteAQuestionRequest) {
+  try {
+    const response: AxiosResponse<any> = yield call(() =>
+      deleteAQuestion(action.id)
+    );
+
+    console.log(response);
+
+    yield put(deleteAQuestionSuccess());
+  } catch (e: any) {
+    yield put(
+      deleteAQuestionFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* questionSaga() {
   yield all([
     takeLatest(questionTypes.FETCH_QUESTIONLIST_REQUEST, fetchNewQuestionList),
@@ -281,7 +305,8 @@ function* questionSaga() {
     ),
     takeLatest(questionTypes.POST_QUESTION_REQUEST, postNewQuestion),
     takeLatest(questionTypes.FETCH_TOP_QUESTIONS_REQUEST, fetchTopQuestions),
-    takeLatest(questionTypes.EDIT_QUESTION_REQUEST, editQuestion)
+    takeLatest(questionTypes.EDIT_QUESTION_REQUEST, editQuestion),
+    takeLatest(questionTypes.DELETE_A_QUESTION_REQUEST, deleteQuestion)
   ]);
 }
 

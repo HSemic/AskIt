@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import ProfileTemplate from '../components/templates/ProfileTemplate';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/_redux/reducers/rootReducer';
+
 const config: { profileData: ProfileData } = {
   profileData: {
     username: 'HSemic',
@@ -12,7 +15,11 @@ const config: { profileData: ProfileData } = {
 };
 
 const ProfilePage = (): React.ReactElement => {
-  return <ProfileTemplate {...config.profileData} />;
+  const { loggedInUser } = useSelector((state: RootState) => state.user);
+
+  if (!loggedInUser) return <></>;
+
+  return <ProfileTemplate userData={loggedInUser} />;
 };
 
 export default ProfilePage;

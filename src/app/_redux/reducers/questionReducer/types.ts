@@ -16,6 +16,7 @@ export interface QuestionState {
   currentQuestion: QuestionData | null;
   currentPage: number;
   error: string | null;
+  requestStatus: 'success' | 'failure';
 }
 
 export interface FetchQuestionListSuccessPayload {
@@ -155,6 +156,28 @@ export interface EditQuestionFailure {
   payload: EditQuestionFailurePayload;
 }
 
+export interface ClearQuestions {
+  type: typeof questionTypes.CLEAR_QUESTIONS;
+}
+
+export interface DeleteAQuestionFailurePayload {
+  error: string;
+}
+
+export interface DeleteAQuestionRequest {
+  type: typeof questionTypes.DELETE_A_QUESTION_REQUEST;
+  id: string;
+}
+
+export interface DeleteAQuestionSuccess {
+  type: typeof questionTypes.DELETE_A_QUESTION_SUCCESS;
+}
+
+export interface DeleteAQuestionFailure {
+  type: typeof questionTypes.DELETE_A_QUESTION_FAILURE;
+  payload: DeleteAQuestionFailurePayload;
+}
+
 export type QuestionAction =
   | FetchQuestionListRequest
   | FetchQuestionListSuccess
@@ -170,4 +193,8 @@ export type QuestionAction =
   | FetchTopQuestionsFailure
   | EditQuestionRequest
   | EditQuestionSuccess
-  | EditQuestionFailure;
+  | EditQuestionFailure
+  | DeleteAQuestionRequest
+  | DeleteAQuestionSuccess
+  | DeleteAQuestionFailure
+  | ClearQuestions;

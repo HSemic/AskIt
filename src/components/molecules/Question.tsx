@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+
 import { makeStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 
@@ -21,7 +23,10 @@ import LikesDislikes from '../atoms/LikesDislikes';
 import { useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/_redux/reducers/rootReducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAQuestionRequest } from '../../app/_redux/actions/questionActions';
+
+import EditQuestionForm from './EditQuestionForm';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -66,7 +71,21 @@ const Question = ({
     navigate(`question/${id}`);
   };
 
+  const dispatch = useDispatch();
+
   const { loggedInUser } = useSelector((state: RootState) => state.user);
+
+  const { error, pending, requestStatus } = useSelector(
+    (state: RootState) => state.question
+  );
+
+  const [openEditForm, setOpenEditForm] = useState(false);
+
+  const onButtonDeleteClick = () => {
+    dispatch(deleteAQuestionRequest(id));
+
+    if (!pending && requestStatus === 'success') navigate('/');
+  };
 
   const questionContent = (
     <Grid
@@ -145,6 +164,7 @@ const Question = ({
                       variant="outlined"
                       color="primary"
                       sx={{ height: '3rem' }}
+                      onClick={() => setOpenEditForm(true)}
                     >
                       Edit
                     </Button>
@@ -153,6 +173,8 @@ const Question = ({
                       variant="outlined"
                       color="error"
                       sx={{ height: '3rem', marginLeft: '0.5rem' }}
+                      disabled={pending}
+                      onClick={onButtonDeleteClick}
                     >
                       Delete
                     </Button>
@@ -161,6 +183,15 @@ const Question = ({
               ) : null}
             </Grid>
           </Grid>
+          {openEditForm ? (
+            <Grid item>
+              <EditQuestionForm
+                questionId={id}
+                authorId={authorId}
+                setClose={setOpenEditForm}
+              />
+            </Grid>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>

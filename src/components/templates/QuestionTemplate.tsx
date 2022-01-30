@@ -10,6 +10,10 @@ import CommentList from '../organisms/CommentList';
 
 import FormMessage from '../atoms/FormMessage';
 import { useAuth } from '../providers/AuthProvider';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 const useStyles = makeStyles({
   paperMain: {
@@ -35,6 +39,12 @@ const QuestionTemplate = ({
   const classes = useStyles();
 
   const { loggedIn } = useAuth();
+
+  const { currentQuestion } = useSelector((state: RootState) => state.question);
+
+  useEffect(() => {
+    console.log(currentQuestion);
+  }, [currentQuestion]);
 
   return (
     <Container maxWidth="md">

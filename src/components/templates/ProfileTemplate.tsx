@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 
 import ProfileInfo from '../molecules/ProfileInfo';
+import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 const useStyles = makeStyles({
   profilePaper: {
@@ -12,13 +13,19 @@ const useStyles = makeStyles({
   }
 });
 
-const ProfileTemplate = (profileData: ProfileData): React.ReactElement => {
+interface ProfileTemplateProps {
+  userData: UserApiData;
+}
+
+const ProfileTemplate = ({
+  userData
+}: ProfileTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <Container maxWidth="md">
       <Paper className={classes.profilePaper}>
-        <ProfileInfo {...profileData} />
+        <ProfileInfo user={userData} />
       </Paper>
     </Container>
   );

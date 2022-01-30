@@ -199,24 +199,9 @@
       "likes": 0,
       "dislikes": 0,
       "id": "196b82c5-9e99-486c-b86a-2738f997e9aa"
-    },
-    {
-      "title": "Is this working tho",
-      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
-      "datetime": 1643562649011,
-      "likes": 0,
-      "dislikes": 0,
-      "id": "f03546d9-2103-4139-97e4-82133e8490ae"
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "commentText": "some comment",
-      "questionId": "1",
-      "authorId": "1"
-    }
-  ],
+  "comments": [],
   "users": [
     {
       "firstName": "Haris",
@@ -224,7 +209,8 @@
       "email": "hsemic1991@gmail.com",
       "password": "hehehe",
       "id": "42bf39c1-49ff-440e-a170-d5a24e77b832",
-      "comments": 0
+      "numberOfAnswers": 0,
+      "dateJoined": 1643580468524
     },
     {
       "firstName": "Haris",
@@ -232,7 +218,8 @@
       "email": "test@test.com",
       "password": "testtest",
       "id": "4f41bfd8-51f1-4c35-b176-d5a178da510d",
-      "comments": 0
+      "numberOfAnswers": 0,
+      "dateJoined": 1643580468524
     }
   ]
 }

@@ -47,7 +47,7 @@ const SideListUsers = ({
                   sx={{ marginLeft: '-40px' }}
                 />
                 <ListItemText
-                  primary={user.comments + ' comments'}
+                  primary={user.numberOfAnswers + ' comments'}
                   sx={{ marginLeft: '-2px' }}
                 />
               </Grid>

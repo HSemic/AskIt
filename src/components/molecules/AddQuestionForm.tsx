@@ -33,6 +33,13 @@ const useStyles = makeStyles({
   }
 });
 
+export interface QuestionApiData {
+  id: string;
+  title: string;
+  authorId: string;
+  datetime: string;
+}
+
 const config = {
   validationErrors: {
     question: 'Question needs to be between 8 and 150 characters long.'

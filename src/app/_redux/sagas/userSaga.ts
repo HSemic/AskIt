@@ -37,11 +37,14 @@ const getAllUsers = () => askIt.get<UserApiData[]>('/users');
 const getTopUsers = () =>
   askIt.get<UserApiData[]>('/users?_sort=comments&_order=desc&_limit=5');
 
-const addNewUser = (user: Omit<UserApiData, 'id' | 'comments'>) =>
+const addNewUser = (
+  user: Omit<UserApiData, 'id' | 'numberOfAnswers' | 'dateJoined'>
+) =>
   askIt.post<UserApiData>('/users', {
     ...user,
     id: generateRandomId(),
-    comments: 0
+    numberOfAnswers: 0,
+    dateJoined: Date.now()
   });
 
 function* fetchUserByEmailAndValidate(
