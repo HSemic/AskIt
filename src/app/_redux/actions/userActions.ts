@@ -21,7 +21,12 @@ import {
   FetchTopUsersSuccess,
   FetchTopUsersFailure,
   UserApiData,
-  Logout
+  Logout,
+  EditUserRequest,
+  EditUserPayloadSuccess,
+  EditUserSuccess,
+  EditUserPayloadFailure,
+  EditUserFailure
 } from '../reducers/userReducer/types';
 
 export const registerUserRequest = (
@@ -101,6 +106,29 @@ export const fetchTopUsersFailure = (
   payload: FetchTopUsersFailurePayload
 ): FetchTopUsersFailure => ({
   type: userTypes.FETCH_TOPUSERS_FAILURE,
+  payload
+});
+
+export const editUserRequest = (
+  id: string,
+  attribute: 'firstName' | 'lastName' | 'password' | 'email'
+): EditUserRequest => ({
+  type: userTypes.EDIT_USER_REQUEST,
+  id,
+  attribute
+});
+
+export const editUserSuccess = (
+  payload: EditUserPayloadSuccess
+): EditUserSuccess => ({
+  type: userTypes.EDIT_USER_SUCCESS,
+  payload
+});
+
+export const editUserFailure = (
+  payload: EditUserPayloadFailure
+): EditUserFailure => ({
+  type: userTypes.EDIT_USER_FAILURE,
   payload
 });
 

@@ -115,7 +115,8 @@ export default (
       return {
         ...state,
         pending: false,
-        requestStatus: 'success'
+        requestStatus: 'success',
+        currentQuestion: null
       };
     case questionTypes.DELETE_A_QUESTION_FAILURE:
       return {

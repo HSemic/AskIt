@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteAQuestionRequest } from '../../app/_redux/actions/questionActions';
 
 import EditQuestionForm from './EditQuestionForm';
+import FormMessage from '../atoms/FormMessage';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -75,7 +76,7 @@ const Question = ({
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
-  const { error, pending, requestStatus } = useSelector(
+  const { error, pending, requestStatus, currentQuestion } = useSelector(
     (state: RootState) => state.question
   );
 
@@ -84,7 +85,7 @@ const Question = ({
   const onButtonDeleteClick = () => {
     dispatch(deleteAQuestionRequest(id));
 
-    if (!pending && requestStatus === 'success') navigate('/');
+    if (requestStatus === 'success') navigate('/');
   };
 
   const questionContent = (
@@ -190,6 +191,11 @@ const Question = ({
                 authorId={authorId}
                 setClose={setOpenEditForm}
               />
+            </Grid>
+          ) : null}
+          {error && error.length > 0 ? (
+            <Grid item>
+              <FormMessage type="error" text={error} />
             </Grid>
           ) : null}
         </Grid>

@@ -114,6 +114,30 @@ export type FetchTopUsersFailure = {
   payload: FetchTopUsersFailurePayload;
 };
 
+export interface EditUserPayloadSuccess {
+  user: UserApiData;
+}
+
+export interface EditUserPayloadFailure {
+  error: string;
+}
+
+export interface EditUserRequest {
+  type: typeof userTypes.EDIT_USER_REQUEST;
+  id: string;
+  attribute: 'firstName' | 'lastName' | 'email' | 'password';
+}
+
+export interface EditUserSuccess {
+  type: typeof userTypes.EDIT_USER_SUCCESS;
+  payload: EditUserPayloadSuccess;
+}
+
+export interface EditUserFailure {
+  type: typeof userTypes.EDIT_USER_FAILURE;
+  payload: EditUserPayloadFailure;
+}
+
 export type Logout = {
   type: typeof userTypes.LOGOUT;
 };
@@ -131,4 +155,7 @@ export type UserAction =
   | FetchTopUsersRequest
   | FetchTopUsersSuccess
   | FetchTopUsersFailure
+  | EditUserRequest
+  | EditUserSuccess
+  | EditUserFailure
   | Logout;

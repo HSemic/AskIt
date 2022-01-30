@@ -30,10 +30,9 @@ const HomePage = (): React.ReactElement => {
     // if (!questionList || questionList.length === 0)
     dispatch(fetchQuestionListRequest(1));
 
-    if (!topUsers || topUsers.length === 0) dispatch(fetchTopUsersRequest());
+    dispatch(fetchTopUsersRequest());
 
-    if (!topQuestions || topQuestions.length === 0)
-      dispatch(fetchTopQuestionsRequest());
+    dispatch(fetchTopQuestionsRequest());
 
     return function cleanup() {
       dispatch(clearQuestions());

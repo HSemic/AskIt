@@ -14,7 +14,8 @@ export default (state = initialState, action: UserAction): UserState => {
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST ||
       userTypes.FETCH_USERLIST_REQUEST ||
       userTypes.REGISTER_USER_REQUEST ||
-      userTypes.FETCH_TOPUSERS_REQUEST:
+      userTypes.FETCH_TOPUSERS_REQUEST ||
+      userTypes.EDIT_USER_REQUEST:
       return {
         ...state,
         pending: true
@@ -74,6 +75,19 @@ export default (state = initialState, action: UserAction): UserState => {
         pending: false,
         topUsers: action.payload.topUsers,
         error: null
+      };
+    case userTypes.EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        loggedInUser: action.payload.user,
+        error: null
+      };
+    case userTypes.EDIT_USER_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload.error
       };
     default:
       return {

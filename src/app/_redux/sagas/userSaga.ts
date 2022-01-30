@@ -47,6 +47,8 @@ const addNewUser = (
     dateJoined: Date.now()
   });
 
+// const editUser = (id: string, attribute: "username")
+
 function* fetchUserByEmailAndValidate(
   action: FetchUserByEmailAndValidateRequest
 ) {
