@@ -37,10 +37,10 @@ const getQuestionListNewest = (page: number, id: string | null) => {
     return askIt.get<QuestionApiData[]>(
       `/questions?_page=${page}&_limit=20&_sort=datetime&_order=desc`
     );
-
-  return askIt.get<QuestionApiData[]>(
-    `/questions?_authorId=${id}&_page=${page}&_limit=20&_sort=datetime&_order=desc`
-  );
+  else
+    return askIt.get<QuestionApiData[]>(
+      `/questions?authorId=${id}&_page=${page}&_limit=20&_sort=datetime&_order=desc`
+    );
 };
 
 const getTopQuestions = () =>
@@ -69,10 +69,12 @@ const deleteAQuestion = (id: string) =>
 
 function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
+    console.log(action.id);
+
     const response: AxiosResponse<QuestionApiData[]> = yield call(
       getQuestionListNewest,
       action.page,
-      null
+      action.id
     );
 
     const users: { [id: string]: UserData } = yield select(
