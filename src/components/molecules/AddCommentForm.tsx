@@ -16,6 +16,7 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
 import { addCommentRequest } from '../../app/_redux/actions/commentActions';
+import { editUserRequest } from '../../app/_redux/actions/userActions';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -65,6 +66,14 @@ const AddCommentForm = ({
         datetime: Date.now(),
         postId: postId
       })
+    );
+
+    dispatch(
+      editUserRequest(
+        loggedInUser.id,
+        'numberOfAnswers',
+        loggedInUser.numberOfAnswers + 1
+      )
     );
   };
 

@@ -33,6 +33,7 @@ import EditQuestionForm from './EditQuestionForm';
 import FormMessage from '../atoms/FormMessage';
 
 import { useAuth } from '../providers/AuthProvider';
+import { editUserRequest } from '../../app/_redux/actions/userActions';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -89,7 +90,17 @@ const Question = ({
   const [openEditForm, setOpenEditForm] = useState(false);
 
   const onButtonDeleteClick = () => {
+    if (!loggedInUser) return;
+
     dispatch(deleteAQuestionRequest(id));
+
+    dispatch(
+      editUserRequest(
+        loggedInUser.id,
+        'numberOfQuestions',
+        loggedInUser.numberOfQuestions - 1
+      )
+    );
 
     if (requestStatus === 'success') navigate('/');
   };

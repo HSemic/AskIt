@@ -15,6 +15,7 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
+import { editUserRequest } from '../../app/_redux/actions/userActions';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -72,6 +73,14 @@ const AddQuestionForm = (): React.ReactElement => {
           dislikes: 0,
           commentNumber: 0
         })
+      );
+
+      dispatch(
+        editUserRequest(
+          loggedInUser.id,
+          'numberOfQuestions',
+          loggedInUser.numberOfQuestions + 1
+        )
       );
     }
   };

@@ -34,6 +34,14 @@ const App = (): React.ReactElement => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/question/:id" element={<QuestionPage />} />
         <Route
+          path="profile/question/:id"
+          element={
+            <RequireAuth>
+              <QuestionPage />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="*"
           element={
             <main style={{ padding: '1rem' }}>

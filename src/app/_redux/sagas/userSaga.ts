@@ -53,8 +53,14 @@ const addNewUser = (
 
 const editAnUser = (
   id: string,
-  attribute: 'firstName' | 'lastName' | 'email' | 'password',
-  value: string
+  attribute:
+    | 'firstName'
+    | 'lastName'
+    | 'email'
+    | 'password'
+    | 'numberOfQuestions'
+    | 'numberOfAnswers',
+  value: string | number
 ) =>
   askIt.patch<UserApiData>(`/users/${id}`, {
     [attribute]: value

@@ -129,8 +129,14 @@ export interface EditUserPayloadFailure {
 export interface EditUserRequest {
   type: typeof userTypes.EDIT_USER_REQUEST;
   id: string;
-  attribute: 'firstName' | 'lastName' | 'email' | 'password';
-  value: string;
+  attribute:
+    | 'firstName'
+    | 'lastName'
+    | 'email'
+    | 'password'
+    | 'numberOfQuestions'
+    | 'numberOfAnswers';
+  value: string | number;
 }
 
 export interface EditUserSuccess {

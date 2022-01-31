@@ -21,6 +21,7 @@ import FormMessage from '../atoms/FormMessage';
 
 import { useDispatch } from 'react-redux';
 import { deleteACommentRequest } from '../../app/_redux/actions/commentActions';
+import { editUserRequest } from '../../app/_redux/actions/userActions';
 
 const config = {
   authorDateDivider: {
@@ -46,7 +47,17 @@ const Comment = ({
   const dispatch = useDispatch();
 
   const onButtonDeleteClick = () => {
+    if (!loggedInUser) return;
+
     dispatch(deleteACommentRequest(id));
+
+    dispatch(
+      editUserRequest(
+        loggedInUser.id,
+        'numberOfAnswers',
+        loggedInUser.numberOfAnswers - 1
+      )
+    );
   };
 
   return (
