@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 
 import { makeStyles } from '@mui/styles';
 
@@ -9,14 +9,12 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { validateQuestionText } from '../../services/validationService';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
-import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
+import { editCommentRequest } from '../../app/_redux/actions/commentActions';
 import FormMessage from '../atoms/FormMessage';
-
-import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -33,58 +31,39 @@ const useStyles = makeStyles({
   }
 });
 
-export interface QuestionApiData {
-  id: string;
-  title: string;
+interface EditCommentFormProps {
+  commentId: string;
   authorId: string;
-  datetime: string;
+  setClose: Dispatch<SetStateAction<boolean>>;
 }
 
-const config = {
-  validationErrors: {
-    question: 'Question needs to be between 8 and 150 characters long.'
-  }
-};
-
-const AddQuestionForm = (): React.ReactElement => {
+const EditCommentForm = ({
+  commentId,
+  authorId,
+  setClose
+}: EditCommentFormProps): React.ReactElement => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  const [questionText, setQuestionText] = useState('');
-  const [questionError, setQuestionError] = useState('');
+  const [commentText, setCommentText] = useState('');
+
+  const { error, pending } = useSelector((state: RootState) => state.comment);
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
-  const { error, pending, currentQuestion } = useSelector(
-    (state: RootState) => state.question
-  );
 
-  const onQuestionInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setQuestionText(event.currentTarget.value);
+  const onCommentInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCommentText(event.currentTarget.value);
   };
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!loggedInUser) return;
+    if (!loggedInUser || loggedInUser.id !== authorId) return;
 
-    const validQuestion = validateQuestionText(questionText);
+    dispatch(editCommentRequest(commentId, 'text', commentText));
 
-    if (!validQuestion) setQuestionError(config.validationErrors.question);
-    else {
-      dispatch(
-        postQuestionRequest({
-          title: questionText,
-          authorId: loggedInUser.id,
-          datetime: Date.now(),
-          likes: 0,
-          dislikes: 0,
-          commentNumber: 0
-        })
-      );
-    }
+    setClose(false);
   };
 
   return (
@@ -94,11 +73,11 @@ const AddQuestionForm = (): React.ReactElement => {
           <Grid item xs={12}>
             <TextField
               className={classes.formInput}
-              label="Question Text"
+              label="Comment Text"
               multiline
               rows={4}
-              value={questionText}
-              onChange={onQuestionInputChange}
+              value={commentText}
+              onChange={onCommentInputChange}
               variant="outlined"
             />
           </Grid>
@@ -133,4 +112,4 @@ const AddQuestionForm = (): React.ReactElement => {
   );
 };
 
-export default AddQuestionForm;
+export default EditCommentForm;

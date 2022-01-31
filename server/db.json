@@ -4,6 +4,7 @@
       "title": "g sgsd g hs g",
       "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
       "datetime": 1643551187482,
+      "commentNumber": 0,
       "likes": 0,
       "dislikes": 0,
       "id": "0f1a7d94-3eff-4a08-904a-924844532ba2",
@@ -13,6 +14,7 @@
       "title": "fdas gsad ag ",
       "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
       "datetime": 1643551187482,
+      "commentNumber": 0,
       "likes": 0,
       "dislikes": 0,
       "id": "0f1a7d94-3eff-4a08-904a-924844532ba3"
@@ -21,6 +23,7 @@
       "title": "Let's see how this works",
       "authorId": "4f41bfd8-51f1-4c35-b176-d5a178da510d",
       "datetime": 1643553980035,
+      "commentNumber": 1,
       "likes": 0,
       "dislikes": 0,
       "id": "06fd3193-675d-4464-bd30-59dfd36f118a"
@@ -29,7 +32,7 @@
   "comments": [
     {
       "id": "fdsaf",
-      "text": "fdass",
+      "text": "hmm lets try",
       "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
       "postId": "06fd3193-675d-4464-bd30-59dfd36f118a",
       "datetime": 1643588573843
@@ -42,6 +45,7 @@
       "email": "hsemic1991@gmail.com",
       "password": "hehehe",
       "id": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "numberOfQuestions": 0,
       "numberOfAnswers": 0,
       "dateJoined": 1643580468524
     },
@@ -51,6 +55,7 @@
       "email": "test@test.com",
       "password": "testtest",
       "id": "4f41bfd8-51f1-4c35-b176-d5a178da510d",
+      "numberOfQuestions": 0,
       "numberOfAnswers": 0,
       "dateJoined": 1643580468524
     }

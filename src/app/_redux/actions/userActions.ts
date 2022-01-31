@@ -30,7 +30,10 @@ import {
 } from '../reducers/userReducer/types';
 
 export const registerUserRequest = (
-  newUser: Omit<UserApiData, 'id' | 'numberOfAnswers' | 'dateJoined'>
+  newUser: Omit<
+    UserApiData,
+    'id' | 'numberOfAnswers' | 'numberOfQuestions' | 'dateJoined'
+  >
 ): RegisterUserRequest => ({
   type: userTypes.REGISTER_USER_REQUEST,
   newUser

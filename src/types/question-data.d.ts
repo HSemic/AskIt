@@ -8,5 +8,6 @@ interface QuestionData {
   datetime: string;
   likes: number;
   dislikes: number;
+  commentNumber: number;
   variant: QuestionContentVariant;
 }

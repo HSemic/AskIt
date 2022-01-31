@@ -10,7 +10,8 @@ const initialState: CommentState = {
 
 export default (state = initialState, action: CommentAction): CommentState => {
   switch (action.type) {
-    case commentTypes.FETCH_QUESTION_COMMENTS_REQUEST:
+    case commentTypes.FETCH_QUESTION_COMMENTS_REQUEST ||
+      commentTypes.EDIT_COMMENT_REQUEST:
       return {
         ...state,
         pending: true
@@ -27,6 +28,19 @@ export default (state = initialState, action: CommentAction): CommentState => {
         ...state,
         pending: false,
         error: action.payload.error
+      };
+    case commentTypes.EDIT_COMMENT_SUCCESS:
+      const editedQUestionIndex = state.commentList
+        .map((c) => c.id)
+        .indexOf(action.payload.editedComment.id);
+
+      const newCommentList = [...state.commentList];
+      newCommentList[editedQUestionIndex] = action.payload.editedComment;
+
+      return {
+        ...state,
+        pending: false,
+        commentList: newCommentList
       };
 
     default:

@@ -3,12 +3,15 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   fetchQuestionCommentsRequest,
   fetchQuestionCommentsSuccess,
-  fetchQuestionCommentsFailure
+  fetchQuestionCommentsFailure,
+  editCommentSuccess,
+  editCommentFailure
 } from '../actions/commentActions';
 import { commentTypes } from '../actiontypes/commentTypes';
 import {
   CommentApiData,
   CommentData,
+  EditCommentRequest,
   FetchQuestionCommentsRequest
 } from '../reducers/commentReducer/types';
 
@@ -29,6 +32,11 @@ const config = {
 const getCommentsByQuestionId = (id: string) =>
   askIt.get<CommentApiData[]>(`/comments?postId=${id}`);
 
+const editAComment = (id: string, attribute: 'text', value: string) =>
+  askIt.patch<CommentApiData>(`/comments/${id}`, {
+    [attribute]: value
+  });
+
 function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
   try {
     const response: AxiosResponse<CommentApiData[]> = yield call(() =>
@@ -39,24 +47,21 @@ function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
       userSelectors.allUsers
     );
 
-    console.log(response.data);
-
     const results: CommentData[] = [];
 
-    response.data.forEach((question) => {
+    response.data.forEach((comment) => {
       results.push({
-        id: question.id,
-        text: question.text,
-        authorId: question.authorId,
+        id: comment.id,
+        text: comment.text,
+        authorId: comment.authorId,
         authorUsername:
-          users[question.authorId].firstName ||
-          users[question.authorId].lastName
-            ? users[question.authorId].firstName +
+          users[comment.authorId].firstName || users[comment.authorId].lastName
+            ? users[comment.authorId].firstName +
               ' ' +
-              users[question.authorId].lastName
+              users[comment.authorId].lastName
             : 'Anonymous',
-        postId: question.postId,
-        datetime: question.datetime
+        postId: comment.postId,
+        datetime: comment.datetime
       });
     });
 
@@ -74,12 +79,54 @@ function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
   }
 }
 
+function* editComment(action: EditCommentRequest) {
+  try {
+    const response: AxiosResponse<CommentApiData> = yield call(() =>
+      editAComment(action.id, 'text', action.value)
+    );
+
+    console.log(response);
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const result: CommentData = {
+      id: response.data.id,
+      text: response.data.text,
+      authorId: response.data.authorId,
+      authorUsername:
+        users[response.data.authorId].firstName ||
+        users[response.data.authorId].lastName
+          ? users[response.data.authorId].firstName +
+            ' ' +
+            users[response.data.authorId].lastName
+          : 'Anonymous',
+      postId: response.data.postId,
+      datetime: response.data.datetime
+    };
+
+    yield put(
+      editCommentSuccess({
+        editedComment: result
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      editCommentFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* commentSaga() {
   yield all([
     takeLatest(
       commentTypes.FETCH_QUESTION_COMMENTS_REQUEST,
       fetchQuestionCommentList
-    )
+    ),
+    takeLatest(commentTypes.EDIT_COMMENT_REQUEST, editComment)
   ]);
 }
 

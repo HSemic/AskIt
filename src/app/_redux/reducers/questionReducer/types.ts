@@ -7,6 +7,7 @@ export interface QuestionApiData {
   likes: number;
   dislikes: number;
   datetime: number;
+  commentNumber: number;
 }
 
 export interface QuestionState {

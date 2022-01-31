@@ -7,6 +7,7 @@ export interface UserApiData {
   email: string;
   password: string;
   numberOfAnswers: number;
+  numberOfQuestions: number;
   dateJoined: number;
 }
 
@@ -33,7 +34,10 @@ export interface RegisterUserFailurePayload {
 
 export interface RegisterUserRequest {
   type: typeof userTypes.REGISTER_USER_REQUEST;
-  newUser: Omit<UserApiData, 'id' | 'numberOfAnswers' | 'dateJoined'>;
+  newUser: Omit<
+    UserApiData,
+    'id' | 'numberOfAnswers' | 'numberOfQuestions' | 'dateJoined'
+  >;
 }
 
 export interface RegisterUserSuccess {

@@ -39,8 +39,6 @@ const HomePage = (): React.ReactElement => {
     };
   }, []);
 
-  console.log(topQuestions);
-
   return (
     <HomeTemplate
       questions={questionList}

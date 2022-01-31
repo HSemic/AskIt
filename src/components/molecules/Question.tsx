@@ -60,11 +60,10 @@ const Question = ({
   id,
   authorId,
   likes,
-  dislikes
+  dislikes,
+  commentNumber
 }: QuestionData): React.ReactElement => {
   const classes = useStyles();
-
-  console.log(id + ' ' + author);
 
   const navigate = useNavigate();
 
@@ -136,7 +135,7 @@ const Question = ({
           <Grid item>
             <Grid container gap={2}>
               <Grid item>
-                <CommentCount commentCount={1} />
+                <CommentCount commentCount={commentNumber} />
               </Grid>
               {variant === 'card' ? (
                 <>

@@ -64,13 +64,13 @@ const RegisterForm = (): React.ReactElement => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(loggedIn);
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   console.log(loggedIn);
+  // }, [loggedIn]);
 
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
 
   useEffect(() => {
     if (email.length > 0 && !validateEmail(email))

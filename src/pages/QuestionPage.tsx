@@ -33,6 +33,10 @@ const QuestionPage = (): React.ReactElement => {
     dispatch(fetchQuestionCommentsRequest(id));
   }, []);
 
+  useEffect(() => {
+    console.log(commentList);
+  }, [commentList]);
+
   if (!currentQuestion) return <></>;
 
   const displayedQuestion: QuestionData = {

@@ -39,7 +39,10 @@ const getTopUsers = () =>
   askIt.get<UserApiData[]>('/users?_sort=comments&_order=desc&_limit=5');
 
 const addNewUser = (
-  user: Omit<UserApiData, 'id' | 'numberOfAnswers' | 'dateJoined'>
+  user: Omit<
+    UserApiData,
+    'id' | 'numberOfAnswers' | 'numberOfQuestions' | 'dateJoined'
+  >
 ) =>
   askIt.post<UserApiData>('/users', {
     ...user,

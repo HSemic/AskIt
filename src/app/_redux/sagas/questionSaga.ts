@@ -71,8 +71,6 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
       action.page
     );
 
-    console.log(response);
-
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers
     );
@@ -93,11 +91,10 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
         datetime: localizeDate(question.datetime),
         likes: question.likes,
         dislikes: question.dislikes,
+        commentNumber: question.commentNumber,
         variant: 'card'
       });
     });
-
-    console.log(results);
 
     yield put(
       fetchQuestionListSuccess({
@@ -139,6 +136,7 @@ function* fetchTopQuestions() {
         datetime: localizeDate(question.datetime),
         likes: question.likes,
         dislikes: question.dislikes,
+        commentNumber: question.commentNumber,
         variant: 'card'
       });
     });
@@ -179,6 +177,7 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
       dislikes: response.data.dislikes,
+      commentNumber: response.data.commentNumber,
       variant: 'card'
     };
 
@@ -205,8 +204,6 @@ function* postNewQuestion(action: PostQuestionRequest) {
       addNewQuestion(action.newQuestion)
     );
 
-    console.log(response);
-
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers
     );
@@ -222,6 +219,7 @@ function* postNewQuestion(action: PostQuestionRequest) {
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
       dislikes: response.data.dislikes,
+      commentNumber: response.data.commentNumber,
       variant: 'card'
     };
 
@@ -248,8 +246,6 @@ function* editQuestion(action: EditQuestionRequest) {
       editAQuestion(action.id, 'title', action.value)
     );
 
-    console.log(response);
-
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers
     );
@@ -265,6 +261,7 @@ function* editQuestion(action: EditQuestionRequest) {
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
       dislikes: response.data.dislikes,
+      commentNumber: response.data.commentNumber,
       variant: 'card'
     };
 
@@ -287,8 +284,6 @@ function* deleteQuestion(action: DeleteAQuestionRequest) {
     const response: AxiosResponse<any> = yield call(() =>
       deleteAQuestion(action.id)
     );
-
-    console.log(response);
 
     yield put(deleteAQuestionSuccess());
   } catch (e: any) {

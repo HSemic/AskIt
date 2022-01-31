@@ -47,7 +47,35 @@ export type FetchQuestionCommentsFailure = {
   payload: FetchQuestionCommentsFailurePayload;
 };
 
+export interface EditCommentSuccessPayload {
+  editedComment: CommentData;
+}
+
+export interface EditCommentFailurePayload {
+  error: string;
+}
+
+export interface EditCommentRequest {
+  type: typeof commentTypes.EDIT_COMMENT_REQUEST;
+  id: string;
+  attribute: 'text';
+  value: string;
+}
+
+export interface EditCommentSuccess {
+  type: typeof commentTypes.EDIT_COMMENT_SUCCESS;
+  payload: EditCommentSuccessPayload;
+}
+
+export interface EditCommentFailure {
+  type: typeof commentTypes.EDIT_COMMENT_FAILURE;
+  payload: EditCommentFailurePayload;
+}
+
 export type CommentAction =
   | FetchQuestionCommentsRequest
   | FetchQuestionCommentsSuccess
-  | FetchQuestionCommentsFailure;
+  | FetchQuestionCommentsFailure
+  | EditCommentRequest
+  | EditCommentSuccess
+  | EditCommentFailure;
