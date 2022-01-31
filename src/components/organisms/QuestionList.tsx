@@ -25,8 +25,6 @@ const QuestionList = ({
     dispatch(fetchQuestionListRequest(page + 1));
   };
 
-  console.log(questionList.length);
-
   return (
     <Grid
       container

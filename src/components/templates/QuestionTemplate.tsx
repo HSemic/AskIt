@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../app/_redux/reducers/rootReducer';
+import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
 
 const useStyles = makeStyles({
   paperMain: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
 
 interface QuestionTemplateProps {
   question: QuestionData;
-  comments?: CommentData[];
+  comments: CommentData[];
 }
 
 const QuestionTemplate = ({
@@ -40,11 +41,7 @@ const QuestionTemplate = ({
 
   const { loggedIn } = useAuth();
 
-  const { currentQuestion } = useSelector((state: RootState) => state.question);
-
-  useEffect(() => {
-    console.log(currentQuestion);
-  }, [currentQuestion]);
+  // const { currentQuestion } = useSelector((state: RootState) => state.question);
 
   return (
     <Container maxWidth="md">

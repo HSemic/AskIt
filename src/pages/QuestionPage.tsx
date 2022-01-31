@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { fetchQuestionDetailsRequest } from '../app/_redux/actions/questionActions';
+import { fetchQuestionCommentsRequest } from '../app/_redux/actions/commentActions';
+
 import { RootState } from '../app/_redux/reducers/rootReducer';
 
 import QuestionTemplate from '../components/templates/QuestionTemplate';
@@ -19,12 +21,16 @@ const QuestionPage = (): React.ReactElement => {
 
   const { currentQuestion } = useSelector((state: RootState) => state.question);
 
-  const { userList } = useSelector((state: RootState) => state.user);
+  const { commentList } = useSelector((state: RootState) => state.comment);
+
+  // const { userList } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (!id) return;
 
     dispatch(fetchQuestionDetailsRequest(id));
+
+    dispatch(fetchQuestionCommentsRequest(id));
   }, []);
 
   if (!currentQuestion) return <></>;
@@ -34,7 +40,9 @@ const QuestionPage = (): React.ReactElement => {
     variant: 'page'
   };
 
-  return <QuestionTemplate question={displayedQuestion} />;
+  return (
+    <QuestionTemplate question={displayedQuestion} comments={commentList} />
+  );
 };
 
 export default QuestionPage;

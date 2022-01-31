@@ -7,6 +7,8 @@ import Author from '../atoms/MetaAuthor';
 import MetaDate from '../atoms/MetaDate';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import CommentText from '../atoms/CommentText';
+import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
+import { localizeDate } from '../../services/localization';
 
 const config = {
   authorDateDivider: {
@@ -16,24 +18,27 @@ const config = {
 };
 
 const Comment = ({
-  author,
-  datetime,
-  commentText
+  id,
+  text,
+  authorId,
+  authorUsername,
+  postId,
+  datetime
 }: CommentData): React.ReactElement => {
   return (
     <Grid container gap={1}>
       <Grid item>
-        <UserAvatar username={author} size="normal" />
+        <UserAvatar username={authorUsername} size="normal" />
       </Grid>
       <Grid item>
         <Grid container direction="column" gap={1}>
           <Grid item>
-            <Author author={author} variant="page" />
+            <Author author={authorUsername} variant="page" />
             <AuthorDateDivider variant="page" {...config.authorDateDivider} />
-            <MetaDate date={datetime} variant="normal" />
+            <MetaDate date={localizeDate(datetime)} variant="normal" />
           </Grid>
           <Grid item>
-            <CommentText text={commentText} />
+            <CommentText text={text} />
           </Grid>
         </Grid>
       </Grid>
