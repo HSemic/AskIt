@@ -5,8 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
 
-import { fetchQuestionDetailsRequest } from '../app/_redux/actions/questionActions';
-import { fetchQuestionCommentsRequest } from '../app/_redux/actions/commentActions';
+import {
+  clearCurrentQuestion,
+  fetchQuestionDetailsRequest
+} from '../app/_redux/actions/questionActions';
+import {
+  clearComments,
+  fetchQuestionCommentsRequest
+} from '../app/_redux/actions/commentActions';
 
 import { RootState } from '../app/_redux/reducers/rootReducer';
 
@@ -31,6 +37,11 @@ const QuestionPage = (): React.ReactElement => {
     dispatch(fetchQuestionDetailsRequest(id));
 
     dispatch(fetchQuestionCommentsRequest(id));
+
+    return function cleanup() {
+      dispatch(clearCurrentQuestion());
+      dispatch(clearComments());
+    };
   }, []);
 
   useEffect(() => {

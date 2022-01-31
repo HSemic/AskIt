@@ -28,7 +28,7 @@ const HomePage = (): React.ReactElement => {
 
   useEffect(() => {
     // if (!questionList || questionList.length === 0)
-    dispatch(fetchQuestionListRequest(1));
+    dispatch(fetchQuestionListRequest(1, null));
 
     dispatch(fetchTopUsersRequest());
 

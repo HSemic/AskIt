@@ -30,13 +30,16 @@ import {
   DeleteAQuestionRequest,
   DeleteAQuestionSuccess,
   DeleteAQuestionFailurePayload,
-  DeleteAQuestionFailure
+  DeleteAQuestionFailure,
+  ClearCurrentQuestion
 } from '../reducers/questionReducer/types';
 
 export const fetchQuestionListRequest = (
-  page: number
+  page: number,
+  id: string | null
 ): FetchQuestionListRequest => ({
   type: questionTypes.FETCH_QUESTIONLIST_REQUEST,
+  id,
   page
 });
 
@@ -141,6 +144,10 @@ export const editQuestionFailure = (
 
 export const clearQuestions = (): ClearQuestions => ({
   type: questionTypes.CLEAR_QUESTIONS
+});
+
+export const clearCurrentQuestion = (): ClearCurrentQuestion => ({
+  type: questionTypes.CLEAR_CURRENT_QUESTION
 });
 
 export const deleteAQuestionRequest = (id: string): DeleteAQuestionRequest => ({

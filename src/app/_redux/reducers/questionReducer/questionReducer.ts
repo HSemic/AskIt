@@ -111,6 +111,12 @@ export default (
         questionList: [],
         requestStatus: 'success'
       };
+    case questionTypes.CLEAR_CURRENT_QUESTION:
+      return {
+        ...state,
+        currentQuestion: null,
+        requestStatus: 'success'
+      };
     case questionTypes.DELETE_A_QUESTION_SUCCESS:
       return {
         ...state,

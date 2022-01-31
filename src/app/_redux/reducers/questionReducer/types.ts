@@ -30,6 +30,7 @@ export interface FetchQuestionListFailurePayload {
 
 export interface FetchQuestionListRequest {
   type: typeof questionTypes.FETCH_QUESTIONLIST_REQUEST;
+  id: string | null;
   page: number;
 }
 
@@ -162,6 +163,10 @@ export interface ClearQuestions {
   type: typeof questionTypes.CLEAR_QUESTIONS;
 }
 
+export interface ClearCurrentQuestion {
+  type: typeof questionTypes.CLEAR_CURRENT_QUESTION;
+}
+
 export interface DeleteAQuestionFailurePayload {
   error: string;
 }
@@ -199,4 +204,5 @@ export type QuestionAction =
   | DeleteAQuestionRequest
   | DeleteAQuestionSuccess
   | DeleteAQuestionFailure
+  | ClearCurrentQuestion
   | ClearQuestions;

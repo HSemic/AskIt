@@ -22,7 +22,7 @@
   "comments": [
     {
       "text": "Let's see brah ",
-      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "authorId": "4f41bfd8-51f1-4c35-b176-d5a178da510d",
       "datetime": 1643605577301,
       "postId": "06fd3193-675d-4464-bd30-59dfd36f118a",
       "id": "b5be058f-87b5-46b7-a17d-36cf109e04e8"
@@ -37,8 +37,8 @@
   ],
   "users": [
     {
-      "firstName": "test",
-      "lastName": "testerino",
+      "firstName": "Harry",
+      "lastName": "Dev",
       "email": "hsemic1991@gmail.com",
       "password": "hehehe",
       "id": "42bf39c1-49ff-440e-a170-d5a24e77b832",

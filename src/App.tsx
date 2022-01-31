@@ -30,9 +30,9 @@ const App = (): React.ReactElement => {
             </RequireAuth>
           }
         />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="question/:id" element={<QuestionPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/question/:id" element={<QuestionPage />} />
         <Route
           path="*"
           element={

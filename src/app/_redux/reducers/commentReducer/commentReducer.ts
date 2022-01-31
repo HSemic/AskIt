@@ -74,6 +74,13 @@ export default (state = initialState, action: CommentAction): CommentState => {
         error: action.payload.error,
         requestStatus: 'failure'
       };
+    case commentTypes.CLEAR_COMMENTS:
+      return {
+        ...state,
+        pending: false,
+        commentList: [],
+        requestStatus: 'success'
+      };
     default:
       return {
         ...state

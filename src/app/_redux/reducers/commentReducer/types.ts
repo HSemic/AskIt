@@ -118,6 +118,10 @@ export interface AddCommentFailure {
   payload: AddCommentFailurePayload;
 }
 
+export interface ClearComments {
+  type: typeof commentTypes.CLEAR_COMMENTS;
+}
+
 export type CommentAction =
   | FetchQuestionCommentsRequest
   | FetchQuestionCommentsSuccess
@@ -130,4 +134,5 @@ export type CommentAction =
   | DeleteACommentFailure
   | AddCommentRequest
   | AddCommentSuccess
-  | AddCommentFailure;
+  | AddCommentFailure
+  | ClearComments;

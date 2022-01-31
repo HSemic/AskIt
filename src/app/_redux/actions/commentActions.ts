@@ -20,7 +20,8 @@ import {
   AddCommentSuccessPayload,
   AddCommentSuccess,
   AddCommentFailurePayload,
-  AddCommentFailure
+  AddCommentFailure,
+  ClearComments
 } from '../reducers/commentReducer/types';
 
 export const fetchQuestionCommentsRequest = (
@@ -107,4 +108,8 @@ export const addCommentFailure = (
 ): AddCommentFailure => ({
   type: commentTypes.ADD_COMMENT_FAILURE,
   payload
+});
+
+export const clearComments = (): ClearComments => ({
+  type: commentTypes.CLEAR_COMMENTS
 });

@@ -32,13 +32,16 @@ import { generateRandomId } from '../../../services/uuidService';
 import { localizeDate } from '../../../services/localization';
 import { validateQuestionText } from '../../../services/validationService';
 
-const getQuestionListNewest = (page: number) =>
-  askIt.get<QuestionApiData[]>(
-    `/questions?_page=${page}&_limit=20&_sort=datetime&_order=desc`
-  );
+const getQuestionListNewest = (page: number, id: string | null) => {
+  if (id === null)
+    return askIt.get<QuestionApiData[]>(
+      `/questions?_page=${page}&_limit=20&_sort=datetime&_order=desc`
+    );
 
-const getQuestionListByUserId = (page: number, userId: string) =>
-  askIt.get<QuestionApiData[]>(`/questions?_page=${page}&_limit=20`);
+  return askIt.get<QuestionApiData[]>(
+    `/questions?_authorId=${id}&_page=${page}&_limit=20&_sort=datetime&_order=desc`
+  );
+};
 
 const getTopQuestions = () =>
   askIt.get<QuestionApiData[]>(`/questions?_sort=likes&_limit=5`);
@@ -68,7 +71,8 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
     const response: AxiosResponse<QuestionApiData[]> = yield call(
       getQuestionListNewest,
-      action.page
+      action.page,
+      null
     );
 
     const users: { [id: string]: UserData } = yield select(
