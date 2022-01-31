@@ -15,19 +15,24 @@ import MetaDate from '../atoms/MetaDate';
 import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
-import IconButton from '../atoms/IconButton';
 import Button from '@mui/material/Button';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import LikesDislikes from '../atoms/LikesDislikes';
+import IconButton from '@mui/material/IconButton';
 
 import { useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAQuestionRequest } from '../../app/_redux/actions/questionActions';
+import {
+  deleteAQuestionRequest,
+  editQuestionRequest
+} from '../../app/_redux/actions/questionActions';
 
 import EditQuestionForm from './EditQuestionForm';
 import FormMessage from '../atoms/FormMessage';
+
+import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -73,6 +78,8 @@ const Question = ({
 
   const dispatch = useDispatch();
 
+  const { loggedIn } = useAuth();
+
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
   const { error, pending, requestStatus } = useSelector(
@@ -87,6 +94,18 @@ const Question = ({
     if (requestStatus === 'success') navigate('/');
   };
 
+  const onThumbsUpClick = () => {
+    if (!loggedIn) return;
+
+    dispatch(editQuestionRequest(id, 'likes', likes + 1));
+  };
+
+  const onThumbsDownClick = () => {
+    if (!loggedIn) return;
+
+    dispatch(editQuestionRequest(id, 'dislikes', dislikes + 1));
+  };
+
   const questionContent = (
     <Grid
       container
@@ -98,14 +117,35 @@ const Question = ({
       {variant === 'page' && (
         <Grid item xs={1}>
           <ButtonGroup direction="column" gap={0}>
-            <>
-              <IconButton>
-                <ThumbUp />
-              </IconButton>
-              <IconButton>
-                <ThumbDown />
-              </IconButton>
-            </>
+            <Grid container direction="column">
+              <Grid item>
+                <Grid container direction="column" gap={0} alignItems="center">
+                  <Grid item>
+                    <IconButton onClick={onThumbsUpClick}>
+                      <ThumbUp />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>{likes}</Grid>
+                </Grid>
+              </Grid>
+              <Grid container direction="column">
+                <Grid item>
+                  <Grid
+                    container
+                    direction="column"
+                    gap={0}
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <IconButton onClick={onThumbsDownClick}>
+                        <ThumbDown />
+                      </IconButton>
+                    </Grid>
+                    <Grid item>{dislikes}</Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </ButtonGroup>
         </Grid>
       )}

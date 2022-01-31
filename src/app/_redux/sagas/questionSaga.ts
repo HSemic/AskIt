@@ -49,7 +49,7 @@ const getQuestionDetails = (id: string) =>
 const editAQuestion = (
   id: string,
   attribute: 'likes' | 'dislikes' | 'title',
-  value: string
+  value: string | number
 ) =>
   askIt.patch<QuestionApiData>(`/questions/${id}`, {
     [attribute]: value
@@ -239,11 +239,14 @@ function* postNewQuestion(action: PostQuestionRequest) {
 
 function* editQuestion(action: EditQuestionRequest) {
   try {
-    if (!validateQuestionText(action.value))
-      throw 'Question text must be between 8 and 150 characters long.';
+    if (action.attribute === 'title')
+      if (!validateQuestionText(action.value as string))
+        throw 'Question text must be between 8 and 150 characters long.';
+
+    console.log(action.value);
 
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
-      editAQuestion(action.id, 'title', action.value)
+      editAQuestion(action.id, action.attribute, action.value)
     );
 
     const users: { [id: string]: UserData } = yield select(
