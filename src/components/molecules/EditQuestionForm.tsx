@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 
 import { makeStyles } from '@mui/styles';
 
@@ -15,8 +15,6 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { editQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
-
-import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -57,9 +55,7 @@ const EditQuestionForm = ({
   const [questionText, setQuestionText] = useState('');
   const [questionError, setQuestionError] = useState('');
 
-  const { error, pending, currentQuestion } = useSelector(
-    (state: RootState) => state.question
-  );
+  const { error, pending } = useSelector((state: RootState) => state.question);
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
@@ -72,11 +68,7 @@ const EditQuestionForm = ({
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log('hmm');
-
     if (!loggedInUser || loggedInUser.id !== authorId) return;
-
-    console.log('hmm2');
 
     const validQuestion = validateQuestionText(questionText);
 

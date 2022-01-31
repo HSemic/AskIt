@@ -111,11 +111,13 @@ export const fetchTopUsersFailure = (
 
 export const editUserRequest = (
   id: string,
-  attribute: 'firstName' | 'lastName' | 'password' | 'email'
+  attribute: 'firstName' | 'lastName' | 'password' | 'email',
+  value: string
 ): EditUserRequest => ({
   type: userTypes.EDIT_USER_REQUEST,
   id,
-  attribute
+  attribute,
+  value
 });
 
 export const editUserSuccess = (

@@ -23,13 +23,21 @@
       "likes": 0,
       "dislikes": 0,
       "id": "06fd3193-675d-4464-bd30-59dfd36f118a"
+    },
+    {
+      "title": "I actually write small code\n",
+      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "datetime": 1643588573843,
+      "likes": 0,
+      "dislikes": 0,
+      "id": "e063957f-d467-4b71-a9db-af7fd0fe2ba4"
     }
   ],
   "comments": [],
   "users": [
     {
-      "firstName": "Haris",
-      "lastName": "Semic",
+      "firstName": "test",
+      "lastName": "testerino",
       "email": "hsemic1991@gmail.com",
       "password": "hehehe",
       "id": "42bf39c1-49ff-440e-a170-d5a24e77b832",

@@ -20,10 +20,10 @@ const TopAnswerersListItem = ({
         <UserAvatar username={username} size="normal" />
       </Grid>
       <Grid item>
-        <Typography>{username}</Typography>
+        <Typography variant="body2">{username}</Typography>
       </Grid>
       <Grid item>
-        <Typography>- {commentCount} comments</Typography>
+        <Typography variant="body2">- {commentCount} comments</Typography>
       </Grid>
     </Grid>
   );

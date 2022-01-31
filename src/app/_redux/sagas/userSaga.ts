@@ -15,7 +15,8 @@ import {
   UserApiData,
   UserData,
   FetchUserByEmailAndValidateRequest,
-  RegisterUserRequest
+  RegisterUserRequest,
+  EditUserRequest
 } from '../reducers/userReducer/types';
 
 import { AxiosResponse } from 'axios';
@@ -47,7 +48,14 @@ const addNewUser = (
     dateJoined: Date.now()
   });
 
-// const editUser = (id: string, attribute: "username")
+const editAnUser = (
+  id: string,
+  attribute: 'firstName' | 'lastName' | 'email' | 'password',
+  value: string
+) =>
+  askIt.patch<UserApiData>(`/users/${id}`, {
+    [attribute]: value
+  });
 
 function* fetchUserByEmailAndValidate(
   action: FetchUserByEmailAndValidateRequest
@@ -146,6 +154,28 @@ function* registerUser(action: RegisterUserRequest) {
   }
 }
 
+function* editUser(action: EditUserRequest) {
+  try {
+    const response: AxiosResponse<UserApiData> = yield call(() =>
+      editAnUser(action.id, action.attribute, action.value)
+    );
+
+    console.log(response);
+
+    yield put(
+      registerUserSuccess({
+        user: response.data
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      fetchUserByEmailAndValidateFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* userSaga() {
   yield all([
     takeLatest(
@@ -154,7 +184,8 @@ function* userSaga() {
     ),
     takeLatest(userTypes.FETCH_USERLIST_REQUEST, fetchUserList),
     takeLatest(userTypes.REGISTER_USER_REQUEST, registerUser),
-    takeLatest(userTypes.FETCH_TOPUSERS_REQUEST, fetchTopUsers)
+    takeLatest(userTypes.FETCH_TOPUSERS_REQUEST, fetchTopUsers),
+    takeLatest(userTypes.EDIT_USER_REQUEST, editUser)
   ]);
 }
 

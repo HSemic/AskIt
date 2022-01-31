@@ -126,6 +126,7 @@ export interface EditUserRequest {
   type: typeof userTypes.EDIT_USER_REQUEST;
   id: string;
   attribute: 'firstName' | 'lastName' | 'email' | 'password';
+  value: string;
 }
 
 export interface EditUserSuccess {

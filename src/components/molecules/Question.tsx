@@ -76,7 +76,7 @@ const Question = ({
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
-  const { error, pending, requestStatus, currentQuestion } = useSelector(
+  const { error, pending, requestStatus } = useSelector(
     (state: RootState) => state.question
   );
 
