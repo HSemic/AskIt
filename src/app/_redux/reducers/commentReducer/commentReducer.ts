@@ -11,7 +11,8 @@ const initialState: CommentState = {
 export default (state = initialState, action: CommentAction): CommentState => {
   switch (action.type) {
     case commentTypes.FETCH_QUESTION_COMMENTS_REQUEST ||
-      commentTypes.EDIT_COMMENT_REQUEST:
+      commentTypes.EDIT_COMMENT_REQUEST ||
+      commentTypes.DELETE_A_COMMENT_REQUEST:
       return {
         ...state,
         pending: true
@@ -41,6 +42,18 @@ export default (state = initialState, action: CommentAction): CommentState => {
         ...state,
         pending: false,
         commentList: newCommentList
+      };
+    case commentTypes.DELETE_A_COMMENT_SUCCESS:
+      const newCommentListDeleted = state.commentList.filter(function (
+        comment
+      ) {
+        return comment.id !== action.payload.deletedId;
+      });
+      console.log(action.payload.deletedId);
+      return {
+        ...state,
+        pending: false,
+        commentList: newCommentListDeleted
       };
 
     default:

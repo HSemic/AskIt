@@ -5,12 +5,15 @@ import {
   fetchQuestionCommentsSuccess,
   fetchQuestionCommentsFailure,
   editCommentSuccess,
-  editCommentFailure
+  editCommentFailure,
+  deleteACommentSuccess,
+  deleteACommentFailure
 } from '../actions/commentActions';
 import { commentTypes } from '../actiontypes/commentTypes';
 import {
   CommentApiData,
   CommentData,
+  DeleteACommentRequest,
   EditCommentRequest,
   FetchQuestionCommentsRequest
 } from '../reducers/commentReducer/types';
@@ -30,12 +33,15 @@ const config = {
 };
 
 const getCommentsByQuestionId = (id: string) =>
-  askIt.get<CommentApiData[]>(`/comments?postId=${id}`);
+  askIt.get<CommentApiData[]>(`/comments?postId=${id}&_sort=datetime`);
 
 const editAComment = (id: string, attribute: 'text', value: string) =>
   askIt.patch<CommentApiData>(`/comments/${id}`, {
     [attribute]: value
   });
+
+const deleteAComment = (id: string) =>
+  askIt.delete<CommentApiData>(`/comments/${id}`);
 
 function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
   try {
@@ -120,13 +126,34 @@ function* editComment(action: EditCommentRequest) {
   }
 }
 
+function* deleteComment(action: DeleteACommentRequest) {
+  try {
+    const response: AxiosResponse<CommentApiData> = yield call(() =>
+      deleteAComment(action.id)
+    );
+
+    yield put(
+      deleteACommentSuccess({
+        deletedId: action.id
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      deleteACommentFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* commentSaga() {
   yield all([
     takeLatest(
       commentTypes.FETCH_QUESTION_COMMENTS_REQUEST,
       fetchQuestionCommentList
     ),
-    takeLatest(commentTypes.EDIT_COMMENT_REQUEST, editComment)
+    takeLatest(commentTypes.EDIT_COMMENT_REQUEST, editComment),
+    takeLatest(commentTypes.DELETE_A_COMMENT_REQUEST, deleteComment)
   ]);
 }
 

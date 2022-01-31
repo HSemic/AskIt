@@ -72,10 +72,36 @@ export interface EditCommentFailure {
   payload: EditCommentFailurePayload;
 }
 
+export interface DeleteACommentSuccessPayload {
+  deletedId: string;
+}
+
+export interface DeleteACommentFailurePayload {
+  error: string;
+}
+
+export interface DeleteACommentRequest {
+  type: typeof commentTypes.DELETE_A_COMMENT_REQUEST;
+  id: string;
+}
+
+export interface DeleteACommentSuccess {
+  type: typeof commentTypes.DELETE_A_COMMENT_SUCCESS;
+  payload: DeleteACommentSuccessPayload;
+}
+
+export interface DeleteACommentFailure {
+  type: typeof commentTypes.DELETE_A_COMMENT_FAILURE;
+  payload: DeleteACommentFailurePayload;
+}
+
 export type CommentAction =
   | FetchQuestionCommentsRequest
   | FetchQuestionCommentsSuccess
   | FetchQuestionCommentsFailure
   | EditCommentRequest
   | EditCommentSuccess
-  | EditCommentFailure;
+  | EditCommentFailure
+  | DeleteACommentRequest
+  | DeleteACommentSuccess
+  | DeleteACommentFailure;

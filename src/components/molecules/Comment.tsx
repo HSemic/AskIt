@@ -19,6 +19,9 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 import EditCommentForm from './EditCommentForm';
 import FormMessage from '../atoms/FormMessage';
 
+import { useDispatch } from 'react-redux';
+import { deleteACommentRequest } from '../../app/_redux/actions/commentActions';
+
 const config = {
   authorDateDivider: {
     cardDivider: ' at ',
@@ -39,6 +42,12 @@ const Comment = ({
   const { error, pending } = useSelector((state: RootState) => state.comment);
 
   const [openEditForm, setOpenEditForm] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const onButtonDeleteClick = () => {
+    dispatch(deleteACommentRequest(id));
+  };
 
   return (
     <Grid container direction="column">
@@ -84,8 +93,8 @@ const Comment = ({
                   variant="outlined"
                   color="error"
                   sx={{ height: '3rem', marginLeft: '0.5rem' }}
-                  // disabled={pending}
-                  // onClick={onButtonDeleteClick}
+                  disabled={pending}
+                  onClick={onButtonDeleteClick}
                 >
                   Delete
                 </Button>

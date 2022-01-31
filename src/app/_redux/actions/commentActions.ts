@@ -9,7 +9,12 @@ import {
   EditCommentFailurePayload,
   EditCommentRequest,
   EditCommentSuccess,
-  EditCommentFailure
+  EditCommentFailure,
+  DeleteACommentRequest,
+  DeleteACommentSuccess,
+  DeleteACommentFailurePayload,
+  DeleteACommentFailure,
+  DeleteACommentSuccessPayload
 } from '../reducers/commentReducer/types';
 
 export const fetchQuestionCommentsRequest = (
@@ -55,5 +60,24 @@ export const editCommentFailure = (
   payload: EditCommentFailurePayload
 ): EditCommentFailure => ({
   type: commentTypes.EDIT_COMMENT_FAILURE,
+  payload
+});
+
+export const deleteACommentRequest = (id: string): DeleteACommentRequest => ({
+  type: commentTypes.DELETE_A_COMMENT_REQUEST,
+  id
+});
+
+export const deleteACommentSuccess = (
+  payload: DeleteACommentSuccessPayload
+): DeleteACommentSuccess => ({
+  type: commentTypes.DELETE_A_COMMENT_SUCCESS,
+  payload
+});
+
+export const deleteACommentFailure = (
+  payload: DeleteACommentFailurePayload
+): DeleteACommentFailure => ({
+  type: commentTypes.DELETE_A_COMMENT_FAILURE,
   payload
 });
