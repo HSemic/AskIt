@@ -95,6 +95,29 @@ export interface DeleteACommentFailure {
   payload: DeleteACommentFailurePayload;
 }
 
+export interface AddCommentSuccessPayload {
+  newComment: CommentData;
+}
+
+export interface AddCommentFailurePayload {
+  error: string;
+}
+
+export interface AddCommentRequest {
+  type: typeof commentTypes.ADD_COMMENT_REQUEST;
+  newComment: Omit<CommentApiData, 'id'>;
+}
+
+export interface AddCommentSuccess {
+  type: typeof commentTypes.ADD_COMMENT_SUCCESS;
+  payload: AddCommentSuccessPayload;
+}
+
+export interface AddCommentFailure {
+  type: typeof commentTypes.ADD_COMMENT_FAILURE;
+  payload: AddCommentFailurePayload;
+}
+
 export type CommentAction =
   | FetchQuestionCommentsRequest
   | FetchQuestionCommentsSuccess
@@ -104,4 +127,7 @@ export type CommentAction =
   | EditCommentFailure
   | DeleteACommentRequest
   | DeleteACommentSuccess
-  | DeleteACommentFailure;
+  | DeleteACommentFailure
+  | AddCommentRequest
+  | AddCommentSuccess
+  | AddCommentFailure;

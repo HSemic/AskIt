@@ -7,10 +7,13 @@ import {
   editCommentSuccess,
   editCommentFailure,
   deleteACommentSuccess,
-  deleteACommentFailure
+  deleteACommentFailure,
+  addCommentSuccess,
+  addCommentFailure
 } from '../actions/commentActions';
 import { commentTypes } from '../actiontypes/commentTypes';
 import {
+  AddCommentRequest,
   CommentApiData,
   CommentData,
   DeleteACommentRequest,
@@ -34,6 +37,12 @@ const config = {
 
 const getCommentsByQuestionId = (id: string) =>
   askIt.get<CommentApiData[]>(`/comments?postId=${id}&_sort=datetime`);
+
+const addANewComment = (comment: Omit<CommentApiData, 'id'>) =>
+  askIt.post<CommentApiData>('/comments', {
+    ...comment,
+    id: generateRandomId()
+  });
 
 const editAComment = (id: string, attribute: 'text', value: string) =>
   askIt.patch<CommentApiData>(`/comments/${id}`, {
@@ -80,6 +89,45 @@ function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
     yield put(
       fetchQuestionCommentsFailure({
         error: e.error
+      })
+    );
+  }
+}
+
+function* addNewComment(action: AddCommentRequest) {
+  try {
+    const response: AxiosResponse<CommentApiData> = yield call(() =>
+      addANewComment(action.newComment)
+    );
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const result: CommentData = {
+      id: response.data.id,
+      text: response.data.text,
+      authorId: response.data.authorId,
+      authorUsername:
+        users[response.data.authorId].firstName ||
+        users[response.data.authorId].lastName
+          ? users[response.data.authorId].firstName +
+            ' ' +
+            users[response.data.authorId].lastName
+          : 'Anonymous',
+      postId: response.data.postId,
+      datetime: response.data.datetime
+    };
+
+    yield put(
+      addCommentSuccess({
+        newComment: result
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      addCommentFailure({
+        error: e
       })
     );
   }
@@ -153,7 +201,8 @@ function* commentSaga() {
       fetchQuestionCommentList
     ),
     takeLatest(commentTypes.EDIT_COMMENT_REQUEST, editComment),
-    takeLatest(commentTypes.DELETE_A_COMMENT_REQUEST, deleteComment)
+    takeLatest(commentTypes.DELETE_A_COMMENT_REQUEST, deleteComment),
+    takeLatest(commentTypes.ADD_COMMENT_REQUEST, addNewComment)
   ]);
 }
 

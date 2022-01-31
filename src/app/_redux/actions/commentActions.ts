@@ -14,7 +14,13 @@ import {
   DeleteACommentSuccess,
   DeleteACommentFailurePayload,
   DeleteACommentFailure,
-  DeleteACommentSuccessPayload
+  DeleteACommentSuccessPayload,
+  AddCommentRequest,
+  CommentApiData,
+  AddCommentSuccessPayload,
+  AddCommentSuccess,
+  AddCommentFailurePayload,
+  AddCommentFailure
 } from '../reducers/commentReducer/types';
 
 export const fetchQuestionCommentsRequest = (
@@ -79,5 +85,26 @@ export const deleteACommentFailure = (
   payload: DeleteACommentFailurePayload
 ): DeleteACommentFailure => ({
   type: commentTypes.DELETE_A_COMMENT_FAILURE,
+  payload
+});
+
+export const addCommentRequest = (
+  newComment: Omit<CommentApiData, 'id'>
+): AddCommentRequest => ({
+  type: commentTypes.ADD_COMMENT_REQUEST,
+  newComment
+});
+
+export const addCommentSuccess = (
+  payload: AddCommentSuccessPayload
+): AddCommentSuccess => ({
+  type: commentTypes.ADD_COMMENT_SUCCESS,
+  payload
+});
+
+export const addCommentFailure = (
+  payload: AddCommentFailurePayload
+): AddCommentFailure => ({
+  type: commentTypes.ADD_COMMENT_FAILURE,
   payload
 });

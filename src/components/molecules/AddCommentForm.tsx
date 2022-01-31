@@ -15,6 +15,7 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 import { postQuestionRequest } from '../../app/_redux/actions/questionActions';
 import FormMessage from '../atoms/FormMessage';
+import { addCommentRequest } from '../../app/_redux/actions/commentActions';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -31,27 +32,25 @@ const useStyles = makeStyles({
   }
 });
 
-const config = {
-  validationErrors: {
-    question: 'Question needs to be between 8 and 150 characters long.'
-  }
-};
+interface AddCommentFormProps {
+  postId: string;
+}
 
-const AddQuestionForm = (): React.ReactElement => {
+const AddCommentForm = ({
+  postId
+}: AddCommentFormProps): React.ReactElement => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  const [questionText, setQuestionText] = useState('');
-  const [questionError, setQuestionError] = useState('');
+  const [commentText, setCommentText] = useState('');
+  const [commentError, setCommentError] = useState('');
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
   const { error, pending } = useSelector((state: RootState) => state.question);
 
-  const onQuestionInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setQuestionText(event.currentTarget.value);
+  const onCommentInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCommentText(event.currentTarget.value);
   };
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,21 +58,14 @@ const AddQuestionForm = (): React.ReactElement => {
 
     if (!loggedInUser) return;
 
-    const validQuestion = validateQuestionText(questionText);
-
-    if (!validQuestion) setQuestionError(config.validationErrors.question);
-    else {
-      dispatch(
-        postQuestionRequest({
-          title: questionText,
-          authorId: loggedInUser.id,
-          datetime: Date.now(),
-          likes: 0,
-          dislikes: 0,
-          commentNumber: 0
-        })
-      );
-    }
+    dispatch(
+      addCommentRequest({
+        text: commentText,
+        authorId: loggedInUser.id,
+        datetime: Date.now(),
+        postId: postId
+      })
+    );
   };
 
   return (
@@ -83,11 +75,11 @@ const AddQuestionForm = (): React.ReactElement => {
           <Grid item xs={12}>
             <TextField
               className={classes.formInput}
-              label="Question Text"
+              label="Add a comment"
               multiline
               rows={4}
-              value={questionText}
-              onChange={onQuestionInputChange}
+              value={commentText}
+              onChange={onCommentInputChange}
               variant="outlined"
             />
           </Grid>
@@ -122,4 +114,4 @@ const AddQuestionForm = (): React.ReactElement => {
   );
 };
 
-export default AddQuestionForm;
+export default AddCommentForm;

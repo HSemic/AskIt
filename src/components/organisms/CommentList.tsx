@@ -16,7 +16,7 @@ const CommentList = ({ comments }: CommentListProps): React.ReactElement => {
       <Grid item>
         <Typography variant="h5">Comments</Typography>
       </Grid>
-      <Grid item>
+      <Grid item container direction="column" rowGap={4}>
         {comments.map((comment) => {
           return (
             <Grid item>

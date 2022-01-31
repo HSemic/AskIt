@@ -5,8 +5,8 @@
       "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
       "datetime": 1643551187482,
       "commentNumber": 0,
-      "likes": 0,
-      "dislikes": 0,
+      "likes": 5,
+      "dislikes": 1,
       "id": "0f1a7d94-3eff-4a08-904a-924844532ba3"
     },
     {
@@ -21,11 +21,18 @@
   ],
   "comments": [
     {
-      "id": "fdsaf",
-      "text": "hmm lets try",
+      "text": "Let's see brah ",
       "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "datetime": 1643605577301,
       "postId": "06fd3193-675d-4464-bd30-59dfd36f118a",
-      "datetime": 1643588573843
+      "id": "b5be058f-87b5-46b7-a17d-36cf109e04e8"
+    },
+    {
+      "text": "Let's see brah  asgfdag ",
+      "authorId": "42bf39c1-49ff-440e-a170-d5a24e77b832",
+      "datetime": 1643605580815,
+      "postId": "06fd3193-675d-4464-bd30-59dfd36f118a",
+      "id": "220a2f43-c4d7-43bb-a500-0573ec6dfdc3"
     }
   ],
   "users": [

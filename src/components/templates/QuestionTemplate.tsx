@@ -10,11 +10,9 @@ import CommentList from '../organisms/CommentList';
 
 import FormMessage from '../atoms/FormMessage';
 import { useAuth } from '../providers/AuthProvider';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
+import AddCommentForm from '../molecules/AddCommentForm';
 
 const useStyles = makeStyles({
   paperMain: {
@@ -55,7 +53,9 @@ const QuestionTemplate = ({
           <Grid item xs={12}>
             {!loggedIn ? (
               <FormMessage text="Log in to comment" type="info" />
-            ) : null}
+            ) : (
+              <AddCommentForm postId={question.id} />
+            )}
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperComments}>
