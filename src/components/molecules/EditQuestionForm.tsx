@@ -74,7 +74,7 @@ const EditQuestionForm = ({
 
     if (!validQuestion) setQuestionError(config.validationErrors.question);
     else {
-      dispatch(editQuestionRequest(questionId, questionText));
+      dispatch(editQuestionRequest(questionId, 'title', questionText));
     }
 
     setClose(false);

@@ -143,7 +143,8 @@ export interface EditQuestionFailurePayload {
 export interface EditQuestionRequest {
   type: typeof questionTypes.EDIT_QUESTION_REQUEST;
   id: string;
-  text: string;
+  attribute: 'title' | 'likes' | 'dislikes';
+  value: string;
 }
 
 export interface EditQuestionSuccess {

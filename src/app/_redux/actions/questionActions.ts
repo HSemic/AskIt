@@ -116,11 +116,13 @@ export const fetchTopQuestionsFailure = (
 
 export const editQuestionRequest = (
   id: string,
-  text: string
+  attribute: 'title' | 'likes' | 'dislikes',
+  value: string
 ): EditQuestionRequest => ({
   type: questionTypes.EDIT_QUESTION_REQUEST,
   id,
-  text
+  attribute,
+  value
 });
 
 export const editQuestionSuccess = (
