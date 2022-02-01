@@ -69,7 +69,6 @@ const HomeTemplate = ({
               <QuestionList
                 questions={questions}
                 incrementPage={incrementPage}
-                page={1}
               />
             </Grid>
           </Grid>

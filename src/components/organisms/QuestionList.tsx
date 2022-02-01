@@ -2,21 +2,19 @@ import * as React from 'react';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Question from '../molecules/Question';
+import QuestionCard from '../molecules/QuestionCard';
 import Button from '@mui/material/Button';
 
 interface QuestionListProps {
   questions: QuestionData[];
   incrementPage?: () => void;
   title?: string;
-  page: number;
 }
 
 const QuestionList = ({
   questions,
   incrementPage,
-  title,
-  page
+  title
 }: QuestionListProps): React.ReactElement => {
   const onButtonClick = () => {
     if (incrementPage) incrementPage();
@@ -38,7 +36,7 @@ const QuestionList = ({
       {questions.map((question) => {
         return (
           <Grid item>
-            <Question question={question} />
+            <QuestionCard question={question} />
           </Grid>
         );
       })}

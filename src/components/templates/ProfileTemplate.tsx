@@ -102,7 +102,6 @@ const ProfileTemplate = ({
           <Paper className={classes.profilePaper}>
             <QuestionList
               questions={questions}
-              page={page}
               title="My questions"
               incrementPage={incrementPage}
             />
