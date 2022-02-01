@@ -37,11 +37,14 @@ const QuestionPage = (): React.ReactElement => {
   const {
     currentQuestion,
     pending: pendingQuestion,
-    error
+    error: questionApiError
   } = useSelector((state: RootState) => state.question);
-  const { commentList, pending: pendingComment } = useSelector(
-    (state: RootState) => state.comment
-  );
+
+  const {
+    commentList,
+    pending: pendingComment,
+    error: commentApiError
+  } = useSelector((state: RootState) => state.comment);
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
@@ -82,7 +85,7 @@ const QuestionPage = (): React.ReactElement => {
 
     dispatch(deleteAQuestionRequest(currentQuestion.id));
 
-    if (error) return;
+    if (questionApiError) return;
 
     dispatch(
       editUserRequest(
@@ -92,7 +95,7 @@ const QuestionPage = (): React.ReactElement => {
       )
     );
 
-    if (error) return;
+    if (questionApiError) return;
 
     setDeleted(true);
     // if (requestStatus === 'success' && pending === false) navigate('/');
@@ -112,7 +115,7 @@ const QuestionPage = (): React.ReactElement => {
       dispatch(editQuestionRequest(currentQuestion.id, 'title', questionText));
     }
 
-    if (error) return;
+    if (questionApiError) return;
 
     setEditFormOpen(false);
   };
@@ -136,7 +139,7 @@ const QuestionPage = (): React.ReactElement => {
       })
     );
 
-    if (error) return;
+    if (questionApiError) return;
 
     dispatch(
       editUserRequest(
@@ -146,7 +149,7 @@ const QuestionPage = (): React.ReactElement => {
       )
     );
 
-    if (error) return;
+    if (questionApiError) return;
   };
 
   const onThumbsUpClick = () => {
@@ -199,6 +202,8 @@ const QuestionPage = (): React.ReactElement => {
       onThumbsDownClick={onThumbsDownClick}
       loggedInUserId={loggedInUser?.id}
       loggedInUserNumberOfAnswers={loggedInUser?.numberOfAnswers}
+      questionApiError={questionApiError}
+      commentApiError={commentApiError}
     />
   );
 };

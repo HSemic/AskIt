@@ -28,6 +28,7 @@ interface HomeTemplateProps {
   questionText: string;
   setQuestionText: React.Dispatch<React.SetStateAction<string>>;
   questionError: string;
+  questionApiError: string | null;
   pendingAddQuestion: boolean;
 }
 
@@ -41,6 +42,7 @@ const HomeTemplate = ({
   questionText,
   setQuestionText,
   questionError,
+  questionApiError,
   pendingAddQuestion
 }: HomeTemplateProps): React.ReactElement => {
   return (
@@ -55,6 +57,7 @@ const HomeTemplate = ({
                   inputText={questionText}
                   setInputText={setQuestionText}
                   errorMessage={questionError}
+                  fetchErrorMessage={questionApiError}
                   pending={pendingAddQuestion}
                   inputLabel={config.addQuestionInputLabel}
                 />

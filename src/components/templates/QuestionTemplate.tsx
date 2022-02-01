@@ -62,6 +62,8 @@ interface QuestionTemplateProps {
   onThumbsDownClick: () => void;
   loggedInUserId: string | undefined;
   loggedInUserNumberOfAnswers: number | undefined;
+  questionApiError: string | null;
+  commentApiError: string | null;
 }
 
 const QuestionTemplate = ({
@@ -83,7 +85,9 @@ const QuestionTemplate = ({
   onThumbsUpClick,
   onThumbsDownClick,
   loggedInUserId,
-  loggedInUserNumberOfAnswers
+  loggedInUserNumberOfAnswers,
+  questionApiError,
+  commentApiError
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -177,6 +181,7 @@ const QuestionTemplate = ({
                   errorMessage={questionError}
                   pending={pendingQuestion}
                   inputLabel={config.editQuestionInputLabel}
+                  fetchErrorMessage={questionApiError}
                 />
               )}
             </Paper>
@@ -193,6 +198,7 @@ const QuestionTemplate = ({
                 errorMessage={commentError}
                 pending={pendingComment}
                 inputLabel={config.addCommentLabel}
+                fetchErrorMessage={commentApiError}
               />
             )}
           </Grid>

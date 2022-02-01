@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 interface OneInputFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   errorMessage?: string;
+  fetchErrorMessage: string | null;
   pending: boolean;
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
@@ -35,6 +36,7 @@ interface OneInputFormProps {
 const OneInputForm = ({
   onSubmit,
   errorMessage,
+  fetchErrorMessage,
   pending,
   inputText,
   setInputText,
@@ -61,9 +63,9 @@ const OneInputForm = ({
               onChange={onInputChange}
             />
           </Grid>
-          {errorMessage && errorMessage.length > 0 ? (
+          {fetchErrorMessage !== null && fetchErrorMessage.length > 0 ? (
             <Grid item>
-              <FormMessage type="error" text={errorMessage} />
+              <FormMessage type="error" text={fetchErrorMessage} />
             </Grid>
           ) : null}
           <Grid item>

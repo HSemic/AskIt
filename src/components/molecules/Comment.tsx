@@ -156,6 +156,7 @@ const Comment = ({
             errorMessage={commentError}
             pending={pending}
             inputLabel={config.edditCommentFormInputLabel}
+            fetchErrorMessage={error}
           />
         </Grid>
       ) : null}

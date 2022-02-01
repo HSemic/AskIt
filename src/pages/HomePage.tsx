@@ -105,6 +105,7 @@ const HomePage = (): React.ReactElement => {
       questionText={questionText}
       setQuestionText={setQuestionText}
       questionError={questionError}
+      questionApiError={error}
       pendingAddQuestion={pending}
     />
   );
