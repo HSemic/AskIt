@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   clearCurrentQuestion,
   deleteAQuestionRequest,
+  editQuestionRequest,
   fetchQuestionDetailsRequest
 } from '../app/_redux/actions/questionActions';
 import {
@@ -19,6 +20,11 @@ import { RootState } from '../app/_redux/reducers/rootReducer';
 
 import QuestionTemplate from '../components/templates/QuestionTemplate';
 import { editUserRequest } from '../app/_redux/actions/userActions';
+import { validateQuestionText } from '../services/validationService';
+
+const config = {
+  questionError: 'Question needs to be between 8 and 150 characters long.'
+};
 
 const QuestionPage = (): React.ReactElement => {
   const { id } = useParams();
@@ -27,14 +33,22 @@ const QuestionPage = (): React.ReactElement => {
 
   const navigate = useNavigate();
 
-  const { currentQuestion, requestStatus } = useSelector(
+  const { currentQuestion, requestStatus, pending } = useSelector(
     (state: RootState) => state.question
   );
   const { commentList } = useSelector((state: RootState) => state.comment);
 
-  const { loggedInUser, userList } = useSelector(
-    (state: RootState) => state.user
+  const { loggedInUser } = useSelector((state: RootState) => state.user);
+
+  const [questionText, setQuestionText] = useState(
+    currentQuestion?.questionText || ''
   );
+
+  const [questionError, setQuestionError] = useState('');
+
+  const [editFormOpen, setEditFormOpen] = useState(false);
+
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -48,6 +62,10 @@ const QuestionPage = (): React.ReactElement => {
       dispatch(clearComments());
     };
   }, []);
+
+  useEffect(() => {
+    if (!currentQuestion && deleted) navigate('/');
+  }, [currentQuestion]);
 
   if (!currentQuestion) return <></>;
 
@@ -64,7 +82,25 @@ const QuestionPage = (): React.ReactElement => {
       )
     );
 
-    if (requestStatus === 'success') navigate('/');
+    setDeleted(true);
+    // if (requestStatus === 'success' && pending === false) navigate('/');
+  };
+
+  const onEditQuestionFormSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    if (!loggedInUser || loggedInUser.id !== currentQuestion.authorId) return;
+
+    const validQuestion = validateQuestionText(questionText);
+
+    if (!validQuestion) setQuestionError(config.questionError);
+    else {
+      dispatch(editQuestionRequest(currentQuestion.id, 'title', questionText));
+    }
+
+    setEditFormOpen(false);
   };
 
   const displayedQuestion: QuestionData = {
