@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 
 import { makeStyles } from '@mui/styles';
 
@@ -7,26 +6,16 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+
+import Button from '../atoms/Button';
 
 import UserAvatar from '../atoms/UserAvatar';
 import Author from '../atoms/MetaAuthor';
 import MetaDate from '../atoms/MetaDate';
-import {
-  UserApiData,
-  UserData
-} from '../../app/_redux/reducers/userReducer/types';
+import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 import { localizeDate } from '../../services/localization';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/_redux/reducers/rootReducer';
-import { editUserRequest } from '../../app/_redux/actions/userActions';
-import {
-  validateEmail,
-  validatePassword
-} from '../../services/validationService';
 
 const useStyles = makeStyles({
   profilePaper: {
@@ -39,99 +28,58 @@ const useStyles = makeStyles({
 
 interface ProfileInfoProps {
   user: UserApiData;
+  firstName: string;
+  setFirstName: React.Dispatch<React.SetStateAction<string>>;
+  lastName: string;
+  setLastName: React.Dispatch<React.SetStateAction<string>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  passwordFirst: string;
+  setPasswordFirst: React.Dispatch<React.SetStateAction<string>>;
+  passwordSecond: string;
+  setPasswordSecond: React.Dispatch<React.SetStateAction<string>>;
+  emailError: string;
+  passwordFirstError: string;
+  passwordSecondError: string;
+  pending: boolean;
+  apiError: string | null;
+  onFirstNameEditSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onLastNameEditSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onEmailEditSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onPasswordEditSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
+const ProfileInfo = ({
+  user,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  email,
+  setEmail,
+  passwordFirst,
+  setPasswordFirst,
+  passwordSecond,
+  setPasswordSecond,
+  emailError,
+  passwordFirstError,
+  passwordSecondError,
+  pending,
+  apiError,
+  onFirstNameEditSubmit,
+  onLastNameEditSubmit,
+  onEmailEditSubmit,
+  onPasswordEditSubmit
+}: ProfileInfoProps): React.ReactElement => {
   const classes = useStyles();
 
-  const username = user.firstName + ' ' + user.lastName;
+  const username = user.firstName + ' ' + user.lastName || 'Anonymous';
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [passwordFirst, setPasswordFirst] = useState('');
-  const [passwordSecond, setPasswordSecond] = useState('');
-
-  const [emailError, setEmailError] = useState('');
-  const [passwordFirstError, setPasswordFirstError] = useState('');
-  const [passwordSecondError, setPasswordSecondError] = useState('');
-
-  const dispatch = useDispatch();
-
-  const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(event.currentTarget.value);
-  };
-
-  const onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.currentTarget.value);
-  };
-
-  const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.currentTarget.value);
-  };
-
-  const onPasswordFirstChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+  const onInputValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    setPasswordFirst(event.currentTarget.value);
-  };
-
-  const onPasswordSecondChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPasswordSecond(event.currentTarget.value);
-  };
-
-  const onFirstNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    dispatch(editUserRequest(user.id, 'firstName', firstName));
-
-    setFirstName('');
-  };
-
-  const onLastNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    dispatch(editUserRequest(user.id, 'lastName', lastName));
-
-    setLastName('');
-  };
-
-  const onEmailSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const validEmail = validateEmail(email);
-
-    if (!validEmail) {
-      setEmailError('Incorrect email address');
-      return;
-    }
-
-    dispatch(editUserRequest(user.id, 'email', email));
-
-    setEmail('');
-  };
-
-  const onPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const validPassword = validatePassword(passwordFirst);
-
-    if (!validPassword) {
-      setPasswordSecondError('Password needs to be longer that 5 characters');
-      return;
-    }
-
-    if (passwordFirst !== passwordSecond) {
-      setPasswordSecondError('Passwords do not match');
-      return;
-    }
-
-    dispatch(editUserRequest(user.id, 'password', passwordFirst));
-
-    setPasswordFirst('');
-    setPasswordSecond('');
+    setValue(event.currentTarget.value);
   };
 
   return (
@@ -193,23 +141,33 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item>
-            <Grid container direction="row" gap={12}>
+          <Grid item container>
+            <Grid
+              item
+              container
+              justifyContent="center"
+              direction="row"
+              gap={10}
+            >
               <Grid item>
                 <Grid container gap={4} direction="column">
                   <Grid item>
-                    <Box component="form" onSubmit={onFirstNameSubmit}>
+                    <Box component="form" onSubmit={onFirstNameEditSubmit}>
                       <Grid item container alignItems={'flex-end'} gap={1}>
                         <TextField
                           variant="standard"
                           label="Edit first name"
                           value={firstName}
-                          onChange={onFirstNameChange}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => onInputValueChange(event, setFirstName)}
                         />
                         <Button
                           variant="outlined"
                           className={classes.button}
                           type="submit"
+                          color="primary"
+                          pending={pending}
                         >
                           Edit
                         </Button>
@@ -217,18 +175,22 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                     </Box>
                   </Grid>
                   <Grid item>
-                    <Box component="form" onSubmit={onLastNameSubmit}>
+                    <Box component="form" onSubmit={onLastNameEditSubmit}>
                       <Grid item container alignItems={'flex-end'} gap={1}>
                         <TextField
                           variant="standard"
                           label="Edit last name"
                           value={lastName}
-                          onChange={onLastNameChange}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => onInputValueChange(event, setLastName)}
                         />
                         <Button
                           variant="outlined"
                           className={classes.button}
                           type="submit"
+                          color="primary"
+                          pending={pending}
                         >
                           Edit
                         </Button>
@@ -236,13 +198,15 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                     </Box>
                   </Grid>
                   <Grid item>
-                    <Box component="form" onSubmit={onEmailSubmit}>
+                    <Box component="form" onSubmit={onEmailEditSubmit}>
                       <Grid item container alignItems={'flex-end'} gap={1}>
                         <TextField
                           variant="standard"
                           label="Edit email"
                           value={email}
-                          onChange={onEmailChange}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => onInputValueChange(event, setEmail)}
                           error={emailError.length > 0}
                           helperText={emailError}
                         />
@@ -250,6 +214,8 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                           variant="outlined"
                           className={classes.button}
                           type="submit"
+                          color="primary"
+                          pending={pending}
                         >
                           Edit
                         </Button>
@@ -259,7 +225,7 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                 </Grid>
               </Grid>
               <Grid item>
-                <Box component="form" onSubmit={onPasswordSubmit}>
+                <Box component="form" onSubmit={onPasswordEditSubmit}>
                   <Grid container gap={4} direction="column">
                     <Grid item>
                       <TextField
@@ -267,7 +233,9 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                         label="New password"
                         type="password"
                         value={passwordFirst}
-                        onChange={onPasswordFirstChange}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => onInputValueChange(event, setPasswordFirst)}
                         error={passwordFirstError.length > 0}
                         helperText={passwordFirstError}
                       />
@@ -278,7 +246,9 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                         label="Repeat new password"
                         type="password"
                         value={passwordSecond}
-                        onChange={onPasswordSecondChange}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => onInputValueChange(event, setPasswordSecond)}
                         error={passwordSecondError.length > 0}
                         helperText={passwordSecondError}
                       />
@@ -286,6 +256,8 @@ const ProfileInfo = ({ user }: ProfileInfoProps): React.ReactElement => {
                         variant="outlined"
                         className={classes.button}
                         type="submit"
+                        color="primary"
+                        pending={pending}
                       >
                         Edit
                       </Button>

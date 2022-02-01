@@ -78,10 +78,8 @@ const QuestionPage = (): React.ReactElement => {
     if (!currentQuestion && deleted && !pendingQuestion) navigate('/');
   }, [currentQuestion, navigate, deleted, pendingQuestion]);
 
-  if (!currentQuestion) return <></>;
-
   const onQuestionDelete = () => {
-    if (!loggedInUser) return;
+    if (!loggedInUser || !currentQuestion) return;
 
     dispatch(deleteAQuestionRequest(currentQuestion.id));
 
@@ -106,6 +104,8 @@ const QuestionPage = (): React.ReactElement => {
   ) => {
     event.preventDefault();
 
+    if (!currentQuestion) return;
+
     if (!loggedInUser || loggedInUser.id !== currentQuestion.authorId) return;
 
     const validQuestion = validateQuestionText(questionText);
@@ -123,7 +123,7 @@ const QuestionPage = (): React.ReactElement => {
   const onAddCommentFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!loggedInUser) return;
+    if (!loggedInUser || !currentQuestion) return;
 
     if (!commentText) {
       setCommentError('Comment is empty');
@@ -153,7 +153,7 @@ const QuestionPage = (): React.ReactElement => {
   };
 
   const onThumbsUpClick = () => {
-    if (!loggedInUser) return;
+    if (!loggedInUser || !currentQuestion) return;
 
     dispatch(
       editQuestionRequest(
@@ -165,7 +165,7 @@ const QuestionPage = (): React.ReactElement => {
   };
 
   const onThumbsDownClick = () => {
-    if (!loggedInUser) return;
+    if (!loggedInUser || !currentQuestion) return;
 
     dispatch(
       editQuestionRequest(
@@ -175,6 +175,8 @@ const QuestionPage = (): React.ReactElement => {
       )
     );
   };
+
+  if (!currentQuestion) return <></>;
 
   const displayedQuestion: QuestionData = {
     ...currentQuestion,
