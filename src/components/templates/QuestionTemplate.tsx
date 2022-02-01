@@ -13,6 +13,7 @@ import { useAuth } from '../providers/AuthProvider';
 
 import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
 import AddCommentForm from '../molecules/AddCommentForm';
+import OneInputForm from '../molecules/OneInputForm';
 
 const useStyles = makeStyles({
   paperMain: {
@@ -30,12 +31,26 @@ interface QuestionTemplateProps {
   question: QuestionData;
   comments: CommentData[];
   onQuestionDelete: () => void;
+  onEditQuestionFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  questionText: string;
+  setQuestionText: React.Dispatch<React.SetStateAction<string>>;
+  questionError: string;
+  pending: boolean;
+  editFormOpen: boolean;
+  setEditFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const QuestionTemplate = ({
   question,
   comments,
-  onQuestionDelete
+  onQuestionDelete,
+  onEditQuestionFormSubmit,
+  questionText,
+  setQuestionText,
+  questionError,
+  pending,
+  editFormOpen,
+  setEditFormOpen
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -52,7 +67,17 @@ const QuestionTemplate = ({
               <Question
                 question={question}
                 onQuestionDelete={onQuestionDelete}
+                setEditFormOpen={setEditFormOpen}
               />
+              {editFormOpen && (
+                <OneInputForm
+                  onSubmit={onEditQuestionFormSubmit}
+                  inputText={questionText}
+                  setInputText={setQuestionText}
+                  errorMessage={questionError}
+                  pending={pending}
+                />
+              )}
             </Paper>
           </Grid>
           <Grid item xs={12}>

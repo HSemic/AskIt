@@ -64,7 +64,7 @@ const QuestionPage = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (!currentQuestion && deleted) navigate('/');
+    if (!currentQuestion && deleted && !pending) navigate('/');
   }, [currentQuestion]);
 
   if (!currentQuestion) return <></>;
@@ -103,6 +103,30 @@ const QuestionPage = (): React.ReactElement => {
     setEditFormOpen(false);
   };
 
+  const onThumbsUpClick = () => {
+    if (!currentQuestion) return;
+
+    dispatch(
+      editQuestionRequest(
+        currentQuestion.id,
+        'likes',
+        currentQuestion.likes + 1
+      )
+    );
+  };
+
+  const onThumbsDownClick = () => {
+    if (!currentQuestion) return;
+
+    dispatch(
+      editQuestionRequest(
+        currentQuestion.id,
+        'dislikes',
+        currentQuestion.dislikes + 1
+      )
+    );
+  };
+
   const displayedQuestion: QuestionData = {
     ...currentQuestion,
     variant: 'page'
@@ -113,6 +137,13 @@ const QuestionPage = (): React.ReactElement => {
       question={displayedQuestion}
       comments={commentList}
       onQuestionDelete={onQuestionDelete}
+      onEditQuestionFormSubmit={onEditQuestionFormSubmit}
+      questionText={questionText}
+      setQuestionText={setQuestionText}
+      questionError={questionError}
+      pending={pending}
+      editFormOpen={editFormOpen}
+      setEditFormOpen={setEditFormOpen}
     />
   );
 };

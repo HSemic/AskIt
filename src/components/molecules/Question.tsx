@@ -63,11 +63,13 @@ const config = {
 interface QuestionProps {
   question: QuestionData;
   onQuestionDelete?: () => void;
+  setEditFormOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Question = ({
   question,
-  onQuestionDelete
+  onQuestionDelete,
+  setEditFormOpen
 }: QuestionProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -86,8 +88,6 @@ const Question = ({
   const { error, pending, requestStatus } = useSelector(
     (state: RootState) => state.question
   );
-
-  const [openEditForm, setOpenEditForm] = useState(false);
 
   const onButtonDeleteClick = () => {
     if (!onQuestionDelete) return;
@@ -221,7 +221,9 @@ const Question = ({
                       variant="outlined"
                       color="primary"
                       pending={pending}
-                      onClick={() => setOpenEditForm(true)}
+                      onClick={() => {
+                        if (setEditFormOpen) setEditFormOpen(true);
+                      }}
                     >
                       Edit
                     </Button>
@@ -240,15 +242,6 @@ const Question = ({
               ) : null}
             </Grid>
           </Grid>
-          {openEditForm ? (
-            <Grid item>
-              <EditQuestionForm
-                questionId={question.id}
-                authorId={question.authorId}
-                setClose={setOpenEditForm}
-              />
-            </Grid>
-          ) : null}
           {error && error.length > 0 ? (
             <Grid item>
               <FormMessage type="error" text={error} />

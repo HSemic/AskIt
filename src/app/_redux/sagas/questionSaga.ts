@@ -208,9 +208,6 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
 
 function* postNewQuestion(action: PostQuestionRequest) {
   try {
-    if (!validateQuestionText(action.newQuestion.title))
-      throw 'Question text must be between 8 and 150 characters long.';
-
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
       addNewQuestion(action.newQuestion)
     );
@@ -256,11 +253,7 @@ function* postNewQuestion(action: PostQuestionRequest) {
 
 function* editQuestion(action: EditQuestionRequest) {
   try {
-    if (action.attribute === 'title')
-      if (!validateQuestionText(action.value as string))
-        throw 'Question text must be between 8 and 150 characters long.';
-
-    console.log(action.value);
+    if (action.attribute === 'title') console.log(action.value);
 
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
       editAQuestion(action.id, action.attribute, action.value)
