@@ -5,27 +5,21 @@ import Typography from '@mui/material/Typography';
 import QuestionCard from '../molecules/Question';
 import Button from '@mui/material/Button';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuestionListRequest } from '../../app/_redux/actions/questionActions';
-import { RootState } from '../../app/_redux/reducers/rootReducer';
-
 interface QuestionListProps {
   questions: QuestionData[];
-  page: number;
+  incrementPage?: () => void;
   title?: string;
+  page: number;
 }
 
 const QuestionList = ({
   questions,
-  page,
-  title
+  incrementPage,
+  title,
+  page
 }: QuestionListProps): React.ReactElement => {
-  const dispatch = useDispatch();
-
-  const { questionList } = useSelector((state: RootState) => state.question);
-
   const onButtonClick = () => {
-    dispatch(fetchQuestionListRequest(page + 1, null));
+    if (incrementPage) incrementPage();
   };
 
   return (
@@ -49,7 +43,7 @@ const QuestionList = ({
         );
       })}
       <Grid item>
-        {questionList.length > 0 && questionList.length % 20 === 0 ? (
+        {questions.length > 0 && questions.length % 20 === 0 ? (
           <Button variant="outlined" color="primary" onClick={onButtonClick}>
             See more
           </Button>

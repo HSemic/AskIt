@@ -8,11 +8,9 @@ import { makeStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import LoadingButton from '@mui/lab/LoadingButton';
 import ControlledInput from '../atoms/ControlledInput';
 
+import Button from '../atoms/Button';
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
 
@@ -21,16 +19,13 @@ import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { validateEmail } from '../../services/validationService';
 import { validatePassword } from '../../services/validationService';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   formPaper: {
     padding: '4rem 2rem'
-  },
-  formBox: {
-    // width: '50%'
   },
   formInput: {
     width: '100%'
@@ -107,11 +102,7 @@ const LoginForm = (): React.ReactElement => {
         alignItems="center"
       >
         <Grid item xs={6}>
-          <Box
-            component="form"
-            className={classes.formBox}
-            onSubmit={onFormSubmit}
-          >
+          <Box component="form" onSubmit={onFormSubmit}>
             <Grid container direction="column" gap={2}>
               <Grid item>
                 <FormTitle text={config.formTitle} />
@@ -141,24 +132,15 @@ const LoginForm = (): React.ReactElement => {
                 </Grid>
               ) : null}
               <Grid item>
-                {!pending ? (
-                  <Button
-                    className={`${classes.formInput} ${classes.formButton}`}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <LoadingButton
-                    className={`${classes.formInput} ${classes.formButton}`}
-                    loading
-                    variant="outlined"
-                  >
-                    Submit
-                  </LoadingButton>
-                )}
+                <Button
+                  className={`${classes.formInput} ${classes.formButton}`}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  pending={pending}
+                >
+                  Submit
+                </Button>
               </Grid>
             </Grid>
           </Box>

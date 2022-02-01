@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://mop-react-backend.herokuapp.com/'
+  baseURL: 'http://localhost:3001/'
+  // baseURL: 'https://mop-react-backend.herokuapp.com/'
   // headers: { Pragma: 'no-cache' }
 });
