@@ -54,6 +54,7 @@ const OneInputForm = ({
               label="Question Text"
               multiline
               rowNumber={4}
+              errorMessage={errorMessage}
               value={inputText}
               onChange={onInputChange}
             />
