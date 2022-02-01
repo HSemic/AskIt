@@ -29,11 +29,13 @@ const useStyles = makeStyles({
 interface QuestionTemplateProps {
   question: QuestionData;
   comments: CommentData[];
+  onQuestionDelete: () => void;
 }
 
 const QuestionTemplate = ({
   question,
-  comments
+  comments,
+  onQuestionDelete
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -47,7 +49,10 @@ const QuestionTemplate = ({
         <Grid container direction="column" gap={4}>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperQuestion}>
-              <Question {...question} />
+              <Question
+                question={question}
+                onQuestionDelete={onQuestionDelete}
+              />
             </Paper>
           </Grid>
           <Grid item xs={12}>

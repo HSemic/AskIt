@@ -6,9 +6,10 @@ interface ButtonProps {
   className: string;
   type?: 'button' | 'reset' | 'submit';
   variant?: 'contained' | 'outlined' | 'text';
-  color: 'primary' | 'secondary';
+  color: 'primary' | 'secondary' | 'error';
   pending: boolean;
   children: string;
+  onClick?: () => void;
 }
 
 const Button = ({
@@ -17,7 +18,8 @@ const Button = ({
   variant,
   color,
   pending,
-  children
+  children,
+  onClick
 }: ButtonProps): React.ReactElement => {
   return !pending ? (
     <Btn
@@ -25,6 +27,7 @@ const Button = ({
       type={type || 'button'}
       variant={variant || 'outlined'}
       color={color}
+      onClick={onClick}
     >
       {children}
     </Btn>

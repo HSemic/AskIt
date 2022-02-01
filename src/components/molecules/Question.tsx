@@ -15,7 +15,7 @@ import MetaDate from '../atoms/MetaDate';
 import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import ButtonGroup from './ButtonGroup';
-import Button from '@mui/material/Button';
+import Button from '../atoms/Button';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import LikesDislikes from '../atoms/LikesDislikes';
 import IconButton from '@mui/material/IconButton';
@@ -24,16 +24,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteAQuestionRequest,
-  editQuestionRequest
-} from '../../app/_redux/actions/questionActions';
+import { editQuestionRequest } from '../../app/_redux/actions/questionActions';
 
 import EditQuestionForm from './EditQuestionForm';
 import FormMessage from '../atoms/FormMessage';
 
 import { useAuth } from '../providers/AuthProvider';
-import { editUserRequest } from '../../app/_redux/actions/userActions';
 
 const useStyles = makeStyles({
   questionCard: {
@@ -48,6 +44,12 @@ const useStyles = makeStyles({
   },
   questionCardContent: {
     padding: '0 !important'
+  },
+  button: {
+    height: '3rem'
+  },
+  buttonEdit: {
+    marginLeft: '0.5rem !important'
   }
 });
 
@@ -58,23 +60,21 @@ const config = {
   }
 };
 
+interface QuestionProps {
+  question: QuestionData;
+  onQuestionDelete?: () => void;
+}
+
 const Question = ({
-  questionText,
-  author,
-  datetime,
-  variant,
-  id,
-  authorId,
-  likes,
-  dislikes,
-  commentNumber
-}: QuestionData): React.ReactElement => {
+  question,
+  onQuestionDelete
+}: QuestionProps): React.ReactElement => {
   const classes = useStyles();
 
   const navigate = useNavigate();
 
   const onQuestionCardClick = () => {
-    navigate(`question/${id}`);
+    navigate(`question/${question.id}`);
   };
 
   const dispatch = useDispatch();
@@ -90,42 +90,34 @@ const Question = ({
   const [openEditForm, setOpenEditForm] = useState(false);
 
   const onButtonDeleteClick = () => {
-    if (!loggedInUser) return;
+    if (!onQuestionDelete) return;
 
-    dispatch(deleteAQuestionRequest(id));
-
-    dispatch(
-      editUserRequest(
-        loggedInUser.id,
-        'numberOfQuestions',
-        loggedInUser.numberOfQuestions - 1
-      )
-    );
-
-    if (requestStatus === 'success') navigate('/');
+    onQuestionDelete();
   };
 
   const onThumbsUpClick = () => {
     if (!loggedIn) return;
 
-    dispatch(editQuestionRequest(id, 'likes', likes + 1));
+    dispatch(editQuestionRequest(question.id, 'likes', question.likes + 1));
   };
 
   const onThumbsDownClick = () => {
     if (!loggedIn) return;
 
-    dispatch(editQuestionRequest(id, 'dislikes', dislikes + 1));
+    dispatch(
+      editQuestionRequest(question.id, 'dislikes', question.dislikes + 1)
+    );
   };
 
   const questionContent = (
     <Grid
       container
-      gap={variant === 'card' ? 1 : 2}
+      gap={question.variant === 'card' ? 1 : 2}
       alignItems="center"
       justifyContent="flex-start"
       sx={{ overflowWrap: 'break-word' }}
     >
-      {variant === 'page' && (
+      {question.variant === 'page' && (
         <Grid item xs={1}>
           <ButtonGroup direction="column" gap={0}>
             <Grid container direction="column">
@@ -136,7 +128,7 @@ const Question = ({
                       <ThumbUp />
                     </IconButton>
                   </Grid>
-                  <Grid item>{likes}</Grid>
+                  <Grid item>{question.likes}</Grid>
                 </Grid>
               </Grid>
               <Grid container direction="column">
@@ -152,7 +144,7 @@ const Question = ({
                         <ThumbDown />
                       </IconButton>
                     </Grid>
-                    <Grid item>{dislikes}</Grid>
+                    <Grid item>{question.dislikes}</Grid>
                   </Grid>
                 </Grid>
               </Grid>
@@ -161,50 +153,63 @@ const Question = ({
         </Grid>
       )}
       <Grid item xs={10}>
-        <Grid container direction="column" gap={variant === 'card' ? 1 : 2}>
+        <Grid
+          container
+          direction="column"
+          gap={question.variant === 'card' ? 1 : 2}
+        >
           <Grid item>
             <Grid container alignItems="center" gap={1}>
               <Grid item>
                 <UserAvatar
-                  username={author}
-                  size={variant === 'card' ? 'small' : 'normal'}
+                  username={question.author}
+                  size={question.variant === 'card' ? 'small' : 'normal'}
                 />
               </Grid>
               <Grid item>
-                <Author author={author} variant={variant} />
+                <Author author={question.author} variant={question.variant} />
                 <AuthorDateDivider
-                  variant={variant}
+                  variant={question.variant}
                   {...config.authorDateDivider}
                 />
-                <MetaDate date={datetime.toString()} variant="normal" />
+                <MetaDate
+                  date={question.datetime.toString()}
+                  variant="normal"
+                />
               </Grid>
             </Grid>
           </Grid>
           <Grid item>
-            <QuestionText text={questionText} variant={variant} />
+            <QuestionText
+              text={question.questionText}
+              variant={question.variant}
+            />
           </Grid>
           <Grid item>
             <Grid container gap={2}>
               <Grid item>
-                <CommentCount commentCount={commentNumber} />
+                <CommentCount commentCount={question.commentNumber} />
               </Grid>
-              {variant === 'card' ? (
+              {question.variant === 'card' ? (
                 <>
                   <Grid item>
-                    <LikesDislikes variant="likes" text={likes.toString()} />
+                    <LikesDislikes
+                      variant="likes"
+                      text={question.likes.toString()}
+                    />
                   </Grid>
                   <Grid item>
                     <LikesDislikes
                       variant="dislikes"
-                      text={dislikes.toString()}
+                      text={question.dislikes.toString()}
                     />
                   </Grid>
                 </>
               ) : null}
-              {variant === 'page' &&
+              {question.variant === 'page' &&
               loggedInUser !== undefined &&
               loggedInUser !== null &&
-              loggedInUser.id === authorId ? (
+              loggedInUser.id === question.authorId ? (
                 <>
                   <Grid
                     item
@@ -212,9 +217,10 @@ const Question = ({
                     sx={{ marginLeft: 'auto', marginRight: '-2rem' }}
                   >
                     <Button
+                      className={classes.button}
                       variant="outlined"
                       color="primary"
-                      sx={{ height: '3rem' }}
+                      pending={pending}
                       onClick={() => setOpenEditForm(true)}
                     >
                       Edit
@@ -223,8 +229,8 @@ const Question = ({
                     <Button
                       variant="outlined"
                       color="error"
-                      sx={{ height: '3rem', marginLeft: '0.5rem' }}
-                      disabled={pending}
+                      className={`${classes.button} ${classes.buttonEdit}`}
+                      pending={pending}
                       onClick={onButtonDeleteClick}
                     >
                       Delete
@@ -237,8 +243,8 @@ const Question = ({
           {openEditForm ? (
             <Grid item>
               <EditQuestionForm
-                questionId={id}
-                authorId={authorId}
+                questionId={question.id}
+                authorId={question.authorId}
                 setClose={setOpenEditForm}
               />
             </Grid>
@@ -253,7 +259,7 @@ const Question = ({
     </Grid>
   );
 
-  return variant === 'card' ? (
+  return question.variant === 'card' ? (
     <Card className={classes.questionCard} onClick={onQuestionCardClick}>
       <CardContent className={classes.questionCardContent}>
         {questionContent}

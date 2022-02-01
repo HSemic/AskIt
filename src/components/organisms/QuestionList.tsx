@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import QuestionCard from '../molecules/Question';
+import Question from '../molecules/Question';
 import Button from '@mui/material/Button';
 
 interface QuestionListProps {
@@ -38,7 +38,7 @@ const QuestionList = ({
       {questions.map((question) => {
         return (
           <Grid item>
-            <QuestionCard {...question} />
+            <Question question={question} />
           </Grid>
         );
       })}
