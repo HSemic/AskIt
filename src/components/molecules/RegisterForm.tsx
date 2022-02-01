@@ -1,29 +1,16 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
 
 import { makeStyles } from '@mui/styles';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 import Button from '../atoms/Button';
 import ControlledInput from '../atoms/ControlledInput';
 
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
-
-import { RootState } from '../../app/_redux/reducers/rootReducer';
-
-import { validateEmail } from '../../services/validationService';
-import { validatePassword } from '../../services/validationService';
-
-import { useNavigate } from 'react-router-dom';
-
-import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -45,65 +32,44 @@ const config = {
   }
 };
 
-const RegisterForm = (): React.ReactElement => {
+interface RegisterFormProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  emailError: string;
+  passwordError: string;
+  firstName: string;
+  setFirstName: React.Dispatch<React.SetStateAction<string>>;
+  lastName: string;
+  setLastName: React.Dispatch<React.SetStateAction<string>>;
+  pending: boolean;
+  apiError: string | null;
+  onRegisterFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const RegisterForm = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  emailError,
+  passwordError,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  pending,
+  apiError,
+  onRegisterFormSubmit
+}: RegisterFormProps): React.ReactElement => {
   const classes = useStyles();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const { pending, error } = useSelector((state: RootState) => state.user);
-
-  const { loggedIn, register } = useAuth();
-
-  const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(loggedIn);
-  // }, [loggedIn]);
-
-  // useEffect(() => {
-  //   console.log(error);
-  // }, [error]);
-
-  useEffect(() => {
-    if (email.length > 0 && !validateEmail(email))
-      setEmailError(config.validationErrors.email);
-    else setEmailError('');
-  }, [email]);
-
-  useEffect(() => {
-    if (password.length > 0 && !validatePassword(password))
-      setPasswordError(config.validationErrors.password);
-    else setPasswordError('');
-  }, [password]);
-
-  useEffect(() => {
-    if (loggedIn) navigate('/');
-  }, [loggedIn]);
 
   const onInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     setValue: React.Dispatch<React.SetStateAction<string>>
   ) => {
     setValue(event.currentTarget.value);
-  };
-
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const validEmail = validateEmail(email);
-    const validPassword = validatePassword(password);
-
-    if (!validEmail) setEmailError(config.validationErrors.email);
-    if (!validPassword) setPasswordError(config.validationErrors.password);
-
-    if (validEmail && validPassword)
-      register(firstName, lastName, email, password);
   };
 
   return (
@@ -115,7 +81,7 @@ const RegisterForm = (): React.ReactElement => {
         alignItems="center"
       >
         <Grid item xs={6}>
-          <Box component="form" onSubmit={onFormSubmit}>
+          <Box component="form" onSubmit={onRegisterFormSubmit}>
             <Grid container direction="column" gap={2}>
               <Grid item>
                 <FormTitle text={config.formTitle} />
@@ -154,9 +120,9 @@ const RegisterForm = (): React.ReactElement => {
                   onChange={(event) => onInputValueChange(event, setPassword)}
                 />
               </Grid>
-              {error && error.length > 0 ? (
+              {apiError && apiError.length > 0 ? (
                 <Grid item>
-                  <FormMessage type="error" text={error} />
+                  <FormMessage type="error" text={apiError} />
                 </Grid>
               ) : null}
               <Grid item>

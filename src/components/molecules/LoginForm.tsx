@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
 
 import { makeStyles } from '@mui/styles';
 
@@ -13,15 +10,6 @@ import ControlledInput from '../atoms/ControlledInput';
 import Button from '../atoms/Button';
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
-
-import { RootState } from '../../app/_redux/reducers/rootReducer';
-
-import { validateEmail } from '../../services/validationService';
-import { validatePassword } from '../../services/validationService';
-
-import { useNavigate } from 'react-router-dom';
-
-import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   formPaper: {
@@ -43,48 +31,30 @@ const config = {
   }
 };
 
-const LoginForm = (): React.ReactElement => {
+interface LoginFormProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  emailError: string;
+  passwordError: string;
+  pending: boolean;
+  apiError: string | null;
+  onLoginFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const LoginForm = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  emailError,
+  passwordError,
+  pending,
+  apiError,
+  onLoginFormSubmit
+}: LoginFormProps): React.ReactElement => {
   const classes = useStyles();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const { pending, error } = useSelector((state: RootState) => state.user);
-
-  const { login, loggedIn } = useAuth();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (email.length > 0 && !validateEmail(email))
-      setEmailError(config.validationErrors.email);
-    else setEmailError('');
-  }, [email]);
-
-  useEffect(() => {
-    if (password.length > 0 && !validatePassword(password))
-      setPasswordError(config.validationErrors.password);
-    else setPasswordError('');
-  }, [password]);
-
-  useEffect(() => {
-    if (loggedIn) navigate('/');
-  }, [loggedIn]);
-
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const validEmail = validateEmail(email);
-    const validPassword = validatePassword(password);
-
-    if (!validEmail) setEmailError(config.validationErrors.email);
-    if (!validPassword) setPasswordError(config.validationErrors.password);
-
-    if (validEmail && validPassword) login(email, password);
-  };
 
   const onInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -102,7 +72,7 @@ const LoginForm = (): React.ReactElement => {
         alignItems="center"
       >
         <Grid item xs={6}>
-          <Box component="form" onSubmit={onFormSubmit}>
+          <Box component="form" onSubmit={onLoginFormSubmit}>
             <Grid container direction="column" gap={2}>
               <Grid item>
                 <FormTitle text={config.formTitle} />
@@ -126,9 +96,9 @@ const LoginForm = (): React.ReactElement => {
                   onChange={(event) => onInputValueChange(event, setPassword)}
                 />
               </Grid>
-              {error && error.length > 0 ? (
+              {apiError !== null && apiError.length > 0 ? (
                 <Grid item>
-                  <FormMessage type="error" text={error} />
+                  <FormMessage type="error" text={apiError} />
                 </Grid>
               ) : null}
               <Grid item>
