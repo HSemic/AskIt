@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
 import Button from '../atoms/Button';
+import FormMessage from '../atoms/FormMessage';
 
 import UserAvatar from '../atoms/UserAvatar';
 import Author from '../atoms/MetaAuthor';
@@ -19,7 +20,7 @@ import { localizeDate } from '../../services/localization';
 
 const useStyles = makeStyles({
   profilePaper: {
-    padding: '2rem'
+    padding: '3rem 7rem'
   },
   button: {
     height: '3rem'
@@ -91,11 +92,16 @@ const ProfileInfo = ({
               <Grid item>
                 <UserAvatar username={username} size="profile" />
               </Grid>
-              <Grid item>
-                <Grid container direction="column" gap={2}>
-                  <Grid item>
-                    <Grid container gap={5}>
-                      <Grid item>
+              <Grid item flexGrow={1}>
+                <Grid container direction="column" gap={3}>
+                  <Grid item container>
+                    <Grid
+                      item
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                    >
+                      <Grid item flexGrow={1}>
                         <Grid item>
                           <Typography variant="body1">First name: </Typography>
                         </Grid>
@@ -106,7 +112,7 @@ const ProfileInfo = ({
                           />
                         </Grid>
                       </Grid>
-                      <Grid item>
+                      <Grid item flexGrow={1}>
                         <Grid item>
                           <Typography variant="body1">Last name: </Typography>
                         </Grid>
@@ -130,12 +136,25 @@ const ProfileInfo = ({
                       variant="profile"
                     />
                   </Grid>
-                  <Grid item>
-                    <Typography variant="body1">Number of answers: </Typography>
-                    <MetaDate
-                      date={user.numberOfAnswers.toString()}
-                      variant="profile"
-                    />
+                  <Grid item container justifyContent="space-between">
+                    <Grid item flexGrow={1}>
+                      <Typography variant="body1">
+                        Number of questions:{' '}
+                      </Typography>
+                      <MetaDate
+                        date={user.numberOfQuestions.toString()}
+                        variant="profile"
+                      />
+                    </Grid>
+                    <Grid item flexGrow={1}>
+                      <Typography variant="body1">
+                        Number of answers:{' '}
+                      </Typography>
+                      <MetaDate
+                        date={user.numberOfAnswers.toString()}
+                        variant="profile"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
@@ -145,7 +164,7 @@ const ProfileInfo = ({
             <Grid
               item
               container
-              justifyContent="center"
+              justifyContent="space-between"
               direction="row"
               gap={10}
             >
@@ -267,6 +286,11 @@ const ProfileInfo = ({
               </Grid>
             </Grid>
           </Grid>
+          {apiError && (
+            <Grid item>
+              <FormMessage type="error" text={apiError} />
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </Container>
