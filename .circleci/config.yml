@@ -231,7 +231,9 @@ jobs:
 
       - run: npm run build
 
-      - run: npm netlify deploy -p
+      # - run: npm install netlify-cli -g
+
+      - run: netlify deploy -p
 
 workflows:
   build_and_deploy:
