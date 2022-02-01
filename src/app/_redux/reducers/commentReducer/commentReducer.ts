@@ -8,7 +8,10 @@ const initialState: CommentState = {
   requestStatus: 'failure'
 };
 
-export default (state = initialState, action: CommentAction): CommentState => {
+const commentReducer = (
+  state = initialState,
+  action: CommentAction
+): CommentState => {
   switch (action.type) {
     case commentTypes.FETCH_QUESTION_COMMENTS_REQUEST ||
       commentTypes.EDIT_COMMENT_REQUEST ||
@@ -87,3 +90,5 @@ export default (state = initialState, action: CommentAction): CommentState => {
       };
   }
 };
+
+export default commentReducer;

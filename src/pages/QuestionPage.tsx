@@ -33,7 +33,7 @@ const QuestionPage = (): React.ReactElement => {
 
   const navigate = useNavigate();
 
-  const { currentQuestion, requestStatus, pending } = useSelector(
+  const { currentQuestion, pending } = useSelector(
     (state: RootState) => state.question
   );
   const { commentList } = useSelector((state: RootState) => state.comment);
@@ -61,11 +61,11 @@ const QuestionPage = (): React.ReactElement => {
       dispatch(clearCurrentQuestion());
       dispatch(clearComments());
     };
-  }, []);
+  }, [id, dispatch]);
 
   useEffect(() => {
     if (!currentQuestion && deleted && !pending) navigate('/');
-  }, [currentQuestion]);
+  }, [currentQuestion, navigate, deleted, pending]);
 
   if (!currentQuestion) return <></>;
 
@@ -103,29 +103,29 @@ const QuestionPage = (): React.ReactElement => {
     setEditFormOpen(false);
   };
 
-  const onThumbsUpClick = () => {
-    if (!currentQuestion) return;
+  // const onThumbsUpClick = () => {
+  //   if (!currentQuestion) return;
 
-    dispatch(
-      editQuestionRequest(
-        currentQuestion.id,
-        'likes',
-        currentQuestion.likes + 1
-      )
-    );
-  };
+  //   dispatch(
+  //     editQuestionRequest(
+  //       currentQuestion.id,
+  //       'likes',
+  //       currentQuestion.likes + 1
+  //     )
+  //   );
+  // };
 
-  const onThumbsDownClick = () => {
-    if (!currentQuestion) return;
+  // const onThumbsDownClick = () => {
+  //   if (!currentQuestion) return;
 
-    dispatch(
-      editQuestionRequest(
-        currentQuestion.id,
-        'dislikes',
-        currentQuestion.dislikes + 1
-      )
-    );
-  };
+  //   dispatch(
+  //     editQuestionRequest(
+  //       currentQuestion.id,
+  //       'dislikes',
+  //       currentQuestion.dislikes + 1
+  //     )
+  //   );
+  // };
 
   const displayedQuestion: QuestionData = {
     ...currentQuestion,

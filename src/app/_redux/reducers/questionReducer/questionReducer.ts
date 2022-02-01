@@ -11,7 +11,7 @@ const initialState: QuestionState = {
   requestStatus: 'failure'
 };
 
-export default (
+const questionReducer = (
   state = initialState,
   action: QuestionAction
 ): QuestionState => {
@@ -137,3 +137,5 @@ export default (
       };
   }
 };
+
+export default questionReducer;
