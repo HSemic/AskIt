@@ -10,7 +10,6 @@ import CommentList from '../organisms/CommentList';
 import { useAuth } from '../providers/AuthProvider';
 
 import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
-import AddCommentForm from '../molecules/AddCommentForm';
 import OneInputForm from '../molecules/OneInputForm';
 
 import QuestionCard from '../molecules/QuestionCard';
@@ -39,7 +38,8 @@ const useStyles = makeStyles({
 });
 
 const config = {
-  editQuestionInputLabel: 'Question text'
+  editQuestionInputLabel: 'Question text',
+  addCommentLabel: 'Comment text'
 };
 
 interface QuestionTemplateProps {
@@ -47,10 +47,15 @@ interface QuestionTemplateProps {
   comments: CommentData[];
   onQuestionDelete: () => void;
   onEditQuestionFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onAddCommentFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   questionText: string;
   setQuestionText: React.Dispatch<React.SetStateAction<string>>;
   questionError: string;
-  pending: boolean;
+  commentText: string;
+  setCommentText: React.Dispatch<React.SetStateAction<string>>;
+  commentError: string;
+  pendingQuestion: boolean;
+  pendingComment: boolean;
   editFormOpen: boolean;
   setEditFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onThumbsUpClick: () => void;
@@ -64,10 +69,15 @@ const QuestionTemplate = ({
   comments,
   onQuestionDelete,
   onEditQuestionFormSubmit,
+  onAddCommentFormSubmit,
   questionText,
   setQuestionText,
   questionError,
-  pending,
+  commentText,
+  setCommentText,
+  commentError,
+  pendingQuestion,
+  pendingComment,
   editFormOpen,
   setEditFormOpen,
   onThumbsUpClick,
@@ -138,7 +148,7 @@ const QuestionTemplate = ({
                           className={classes.button}
                           variant="outlined"
                           color="primary"
-                          pending={pending}
+                          pending={pendingQuestion}
                           onClick={() => setEditFormOpen(!editFormOpen)}
                         >
                           Edit
@@ -148,7 +158,7 @@ const QuestionTemplate = ({
                           variant="outlined"
                           color="error"
                           className={`${classes.button} ${classes.buttonEdit}`}
-                          pending={pending}
+                          pending={pendingQuestion}
                           onClick={onQuestionDelete}
                         >
                           Delete
@@ -165,7 +175,7 @@ const QuestionTemplate = ({
                   inputText={questionText}
                   setInputText={setQuestionText}
                   errorMessage={questionError}
-                  pending={pending}
+                  pending={pendingQuestion}
                   inputLabel={config.editQuestionInputLabel}
                 />
               )}
@@ -176,7 +186,14 @@ const QuestionTemplate = ({
             {!loggedIn ? (
               <LogInToMessage text="Log in to comment" />
             ) : (
-              <AddCommentForm postId={question.id} />
+              <OneInputForm
+                onSubmit={onAddCommentFormSubmit}
+                inputText={commentText}
+                setInputText={setCommentText}
+                errorMessage={commentError}
+                pending={pendingComment}
+                inputLabel={config.addCommentLabel}
+              />
             )}
           </Grid>
           <Grid item xs={12}>

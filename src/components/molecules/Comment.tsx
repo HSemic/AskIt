@@ -80,6 +80,11 @@ const Comment = ({
 
     if (!loggedInUserId || loggedInUserId !== comment.authorId) return;
 
+    if (!commentText) {
+      setCommentError('Comment is empty!');
+      return;
+    }
+
     dispatch(editCommentRequest(comment.id, 'text', commentText));
 
     if (error) return;

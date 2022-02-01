@@ -12,6 +12,7 @@ import {
   fetchQuestionDetailsRequest
 } from '../app/_redux/actions/questionActions';
 import {
+  addCommentRequest,
   clearComments,
   fetchQuestionCommentsRequest
 } from '../app/_redux/actions/commentActions';
@@ -33,10 +34,14 @@ const QuestionPage = (): React.ReactElement => {
 
   const navigate = useNavigate();
 
-  const { currentQuestion, pending } = useSelector(
-    (state: RootState) => state.question
+  const {
+    currentQuestion,
+    pending: pendingQuestion,
+    error
+  } = useSelector((state: RootState) => state.question);
+  const { commentList, pending: pendingComment } = useSelector(
+    (state: RootState) => state.comment
   );
-  const { commentList } = useSelector((state: RootState) => state.comment);
 
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
@@ -47,6 +52,9 @@ const QuestionPage = (): React.ReactElement => {
   const [questionError, setQuestionError] = useState('');
 
   const [editFormOpen, setEditFormOpen] = useState(false);
+
+  const [commentText, setCommentText] = useState('');
+  const [commentError, setCommentError] = useState('');
 
   const [deleted, setDeleted] = useState(false);
 
@@ -64,12 +72,8 @@ const QuestionPage = (): React.ReactElement => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    console.log(pending);
-  }, [pending]);
-
-  useEffect(() => {
-    if (!currentQuestion && deleted && !pending) navigate('/');
-  }, [currentQuestion, navigate, deleted, pending]);
+    if (!currentQuestion && deleted && !pendingQuestion) navigate('/');
+  }, [currentQuestion, navigate, deleted, pendingQuestion]);
 
   if (!currentQuestion) return <></>;
 
@@ -78,6 +82,8 @@ const QuestionPage = (): React.ReactElement => {
 
     dispatch(deleteAQuestionRequest(currentQuestion.id));
 
+    if (error) return;
+
     dispatch(
       editUserRequest(
         loggedInUser.id,
@@ -85,6 +91,8 @@ const QuestionPage = (): React.ReactElement => {
         loggedInUser.numberOfQuestions - 1
       )
     );
+
+    if (error) return;
 
     setDeleted(true);
     // if (requestStatus === 'success' && pending === false) navigate('/');
@@ -104,7 +112,41 @@ const QuestionPage = (): React.ReactElement => {
       dispatch(editQuestionRequest(currentQuestion.id, 'title', questionText));
     }
 
+    if (error) return;
+
     setEditFormOpen(false);
+  };
+
+  const onAddCommentFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!loggedInUser) return;
+
+    if (!commentText) {
+      setCommentError('Comment is empty');
+      return;
+    }
+
+    dispatch(
+      addCommentRequest({
+        text: commentText,
+        authorId: loggedInUser.id,
+        datetime: Date.now(),
+        postId: currentQuestion.id
+      })
+    );
+
+    if (error) return;
+
+    dispatch(
+      editUserRequest(
+        loggedInUser.id,
+        'numberOfAnswers',
+        loggedInUser.numberOfAnswers + 1
+      )
+    );
+
+    if (error) return;
   };
 
   const onThumbsUpClick = () => {
@@ -142,10 +184,15 @@ const QuestionPage = (): React.ReactElement => {
       comments={commentList}
       onQuestionDelete={onQuestionDelete}
       onEditQuestionFormSubmit={onEditQuestionFormSubmit}
+      onAddCommentFormSubmit={onAddCommentFormSubmit}
       questionText={questionText}
       setQuestionText={setQuestionText}
       questionError={questionError}
-      pending={pending}
+      commentText={commentText}
+      setCommentText={setCommentText}
+      commentError={commentError}
+      pendingQuestion={pendingQuestion}
+      pendingComment={pendingComment}
       editFormOpen={editFormOpen}
       setEditFormOpen={setEditFormOpen}
       onThumbsUpClick={onThumbsUpClick}

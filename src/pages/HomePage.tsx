@@ -26,7 +26,7 @@ const HomePage = (): React.ReactElement => {
 
   const [page, setPage] = useState(1);
 
-  const { pending, questionList, topQuestions } = useSelector(
+  const { pending, questionList, topQuestions, error } = useSelector(
     (state: RootState) => state.question
   );
 
@@ -77,6 +77,8 @@ const HomePage = (): React.ReactElement => {
           commentNumber: 0
         })
       );
+
+      if (error) return;
 
       dispatch(
         editUserRequest(
