@@ -54,6 +54,10 @@ const HomePage = (): React.ReactElement => {
     dispatch(fetchQuestionListRequest(page, null));
   }, [page]);
 
+  useEffect(() => {
+    console.log(pending);
+  }, [pending]);
+
   const onAddQuestionFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

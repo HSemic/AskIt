@@ -3,10 +3,14 @@ import { IconButton as IcnBtn } from '@mui/material';
 
 interface IconButtonProps {
   children: JSX.Element;
+  onClick?: () => void;
 }
 
-const IconButton = ({ children }: IconButtonProps): React.ReactElement => {
-  return <IcnBtn>{children}</IcnBtn>;
+const IconButton = ({
+  children,
+  onClick
+}: IconButtonProps): React.ReactElement => {
+  return <IcnBtn onClick={onClick}>{children}</IcnBtn>;
 };
 
 export default IconButton;

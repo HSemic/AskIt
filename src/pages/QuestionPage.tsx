@@ -64,6 +64,10 @@ const QuestionPage = (): React.ReactElement => {
   }, [id, dispatch]);
 
   useEffect(() => {
+    console.log(pending);
+  }, [pending]);
+
+  useEffect(() => {
     if (!currentQuestion && deleted && !pending) navigate('/');
   }, [currentQuestion, navigate, deleted, pending]);
 
@@ -103,29 +107,29 @@ const QuestionPage = (): React.ReactElement => {
     setEditFormOpen(false);
   };
 
-  // const onThumbsUpClick = () => {
-  //   if (!currentQuestion) return;
+  const onThumbsUpClick = () => {
+    if (!loggedInUser) return;
 
-  //   dispatch(
-  //     editQuestionRequest(
-  //       currentQuestion.id,
-  //       'likes',
-  //       currentQuestion.likes + 1
-  //     )
-  //   );
-  // };
+    dispatch(
+      editQuestionRequest(
+        currentQuestion.id,
+        'likes',
+        currentQuestion.likes + 1
+      )
+    );
+  };
 
-  // const onThumbsDownClick = () => {
-  //   if (!currentQuestion) return;
+  const onThumbsDownClick = () => {
+    if (!loggedInUser) return;
 
-  //   dispatch(
-  //     editQuestionRequest(
-  //       currentQuestion.id,
-  //       'dislikes',
-  //       currentQuestion.dislikes + 1
-  //     )
-  //   );
-  // };
+    dispatch(
+      editQuestionRequest(
+        currentQuestion.id,
+        'dislikes',
+        currentQuestion.dislikes + 1
+      )
+    );
+  };
 
   const displayedQuestion: QuestionData = {
     ...currentQuestion,
@@ -144,6 +148,11 @@ const QuestionPage = (): React.ReactElement => {
       pending={pending}
       editFormOpen={editFormOpen}
       setEditFormOpen={setEditFormOpen}
+      onThumbsUpClick={onThumbsUpClick}
+      onThumbsDownClick={onThumbsDownClick}
+      isCurrentUserOwner={
+        loggedInUser !== null && currentQuestion.authorId === loggedInUser.id
+      }
     />
   );
 };

@@ -5,15 +5,20 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 
-import Question from '../molecules/Question';
 import CommentList from '../organisms/CommentList';
 
-import FormMessage from '../atoms/FormMessage';
 import { useAuth } from '../providers/AuthProvider';
 
 import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
 import AddCommentForm from '../molecules/AddCommentForm';
 import OneInputForm from '../molecules/OneInputForm';
+
+import QuestionCard from '../molecules/QuestionCard';
+import IconButton from '../atoms/IconButton';
+
+import { ThumbUp, ThumbDown } from '@mui/icons-material';
+import LogInToMessage from '../atoms/LogInToMessage';
+import Button from '../atoms/Button';
 
 const useStyles = makeStyles({
   paperMain: {
@@ -24,6 +29,12 @@ const useStyles = makeStyles({
   },
   paperComments: {
     padding: '2rem'
+  },
+  button: {
+    height: '3rem'
+  },
+  buttonEdit: {
+    marginLeft: '0.5rem !important'
   }
 });
 
@@ -38,6 +49,9 @@ interface QuestionTemplateProps {
   pending: boolean;
   editFormOpen: boolean;
   setEditFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onThumbsUpClick: () => void;
+  onThumbsDownClick: () => void;
+  isCurrentUserOwner: boolean;
 }
 
 const QuestionTemplate = ({
@@ -50,13 +64,14 @@ const QuestionTemplate = ({
   questionError,
   pending,
   editFormOpen,
-  setEditFormOpen
+  setEditFormOpen,
+  onThumbsUpClick,
+  onThumbsDownClick,
+  isCurrentUserOwner
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
   const { loggedIn } = useAuth();
-
-  // const { currentQuestion } = useSelector((state: RootState) => state.question);
 
   return (
     <Container maxWidth="md">
@@ -64,11 +79,77 @@ const QuestionTemplate = ({
         <Grid container direction="column" gap={4}>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperQuestion}>
-              <Question
-                question={question}
-                onQuestionDelete={onQuestionDelete}
-                setEditFormOpen={setEditFormOpen}
-              />
+              <Grid container gap={2}>
+                <Grid item>
+                  <Grid container direction="column">
+                    <Grid item>
+                      <Grid
+                        container
+                        direction="column"
+                        gap={0}
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <IconButton onClick={onThumbsUpClick}>
+                            <ThumbUp />
+                          </IconButton>
+                        </Grid>
+                        <Grid item>{question.likes}</Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid container direction="column">
+                      <Grid item>
+                        <Grid
+                          container
+                          direction="column"
+                          gap={0}
+                          alignItems="center"
+                        >
+                          <Grid item>
+                            <IconButton onClick={onThumbsDownClick}>
+                              <ThumbDown />
+                            </IconButton>
+                          </Grid>
+                          <Grid item>{question.dislikes}</Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item flexGrow={1}>
+                  <QuestionCard question={question} />
+                </Grid>
+              </Grid>
+              {isCurrentUserOwner && (
+                <Grid item container justifyContent="flex-end">
+                  <Grid item>
+                    <>
+                      <Grid item gap={1}>
+                        <Button
+                          className={classes.button}
+                          variant="outlined"
+                          color="primary"
+                          pending={pending}
+                          onClick={() => setEditFormOpen(!editFormOpen)}
+                        >
+                          Edit
+                        </Button>
+
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          className={`${classes.button} ${classes.buttonEdit}`}
+                          pending={pending}
+                          onClick={onQuestionDelete}
+                        >
+                          Delete
+                        </Button>
+                      </Grid>
+                    </>
+                  </Grid>
+                </Grid>
+              )}
+
               {editFormOpen && (
                 <OneInputForm
                   onSubmit={onEditQuestionFormSubmit}
@@ -80,9 +161,10 @@ const QuestionTemplate = ({
               )}
             </Paper>
           </Grid>
+
           <Grid item xs={12}>
             {!loggedIn ? (
-              <FormMessage text="Log in to comment" type="info" />
+              <LogInToMessage text="Log in to comment" />
             ) : (
               <AddCommentForm postId={question.id} />
             )}
