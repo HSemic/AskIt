@@ -1,34 +1,34 @@
-version: 2.1
+# version: 2.1
 
-orbs:
-  node: circleci/node@4.1
-  heroku: circleci/heroku@1.2.6
+# orbs:
+#   node: circleci/node@4.1
+#   heroku: circleci/heroku@1.2.6
 
-jobs:
-  build:
-    docker:
-      - image: circleci/node:16.13.0
-    working_directory: ~/repo
-    steps:
-      - checkout
-      # install dependencies
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: Run tests
-          command: npm run test
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/node:16.13.0
+#     working_directory: ~/repo
+#     steps:
+#       - checkout
+#       # install dependencies
+#       - run:
+#           name: Install Dependencies
+#           command: npm install
+#       - run:
+#           name: Run tests
+#           command: npm run test
 
-workflows:
-  heroku_deploy:
-    jobs:
-      - build
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
+# workflows:
+#   heroku_deploy:
+#     jobs:
+#       - build
+#       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: main
 # version: 2.1
 # orbs:
 #   heroku: circleci/heroku@1.2.6
@@ -68,3 +68,89 @@ workflows:
 #             branches:
 #               # This sample config runs this job on any branch matching the regex below, however, it's more likely you want to only run this job on master.
 #               only: master # Uncomment this line
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:14
+
+aliases:
+  restore_cache: &restore_cache
+    restore_cache:
+      name: Restore Npm Package Cache
+      keys:
+        - yarn-cache-netlify-{{ checksum "yarn.lock" }}
+
+  install_node_modules: &install_node_modules
+    run:
+      name: Install dependencies
+      command: yarn
+
+  save_cache: &save_cache
+    save_cache:
+      name: Save NPM package cache
+      key: yarn-cache-netlify-{{ checksum "yarn.lock" }}
+      paths:
+        - ./node_modules
+
+version: 2.1
+
+jobs:
+  test:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *save_cache
+      - run:
+          name: Test
+          command: yarn test
+
+  build:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Build
+          command: yarn build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - public
+
+  deploy:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Install netlify-cli
+          command: sudo npm install --unsafe-perm=true -g --silent netlify-cli
+      - run:
+          name: Deploy to Netlify
+          command: netlify deploy --dir=./public -p
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
