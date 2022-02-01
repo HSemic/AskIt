@@ -29,6 +29,7 @@ interface OneInputFormProps {
   pending: boolean;
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
+  inputLabel: string;
 }
 
 const OneInputForm = ({
@@ -36,7 +37,8 @@ const OneInputForm = ({
   errorMessage,
   pending,
   inputText,
-  setInputText
+  setInputText,
+  inputLabel
 }: OneInputFormProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -51,7 +53,7 @@ const OneInputForm = ({
           <Grid item xs={12}>
             <ControlledInput
               className={classes.formInput}
-              label="Question Text"
+              label={inputLabel}
               multiline
               rowNumber={4}
               errorMessage={errorMessage}

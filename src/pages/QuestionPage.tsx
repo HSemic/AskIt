@@ -150,9 +150,8 @@ const QuestionPage = (): React.ReactElement => {
       setEditFormOpen={setEditFormOpen}
       onThumbsUpClick={onThumbsUpClick}
       onThumbsDownClick={onThumbsDownClick}
-      isCurrentUserOwner={
-        loggedInUser !== null && currentQuestion.authorId === loggedInUser.id
-      }
+      loggedInUserId={loggedInUser?.id}
+      loggedInUserNumberOfAnswers={loggedInUser?.numberOfAnswers}
     />
   );
 };

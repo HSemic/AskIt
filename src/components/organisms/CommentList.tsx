@@ -8,9 +8,15 @@ import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
 
 interface CommentListProps {
   comments: CommentData[];
+  loggedInUserId: string | undefined;
+  loggedInUserNumberOfAnswers: number | undefined;
 }
 
-const CommentList = ({ comments }: CommentListProps): React.ReactElement => {
+const CommentList = ({
+  comments,
+  loggedInUserId,
+  loggedInUserNumberOfAnswers
+}: CommentListProps): React.ReactElement => {
   return (
     <Grid container direction="column" gap={4}>
       <Grid item>
@@ -20,7 +26,11 @@ const CommentList = ({ comments }: CommentListProps): React.ReactElement => {
         {comments.map((comment) => {
           return (
             <Grid item>
-              <Comment {...comment} />
+              <Comment
+                comment={comment}
+                loggedInUserId={loggedInUserId}
+                loggedInUserNumberOfAnswers={loggedInUserNumberOfAnswers}
+              />
             </Grid>
           );
         })}

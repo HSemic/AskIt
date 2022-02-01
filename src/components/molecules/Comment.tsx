@@ -20,44 +20,72 @@ import EditCommentForm from './EditCommentForm';
 import FormMessage from '../atoms/FormMessage';
 
 import { useDispatch } from 'react-redux';
-import { deleteACommentRequest } from '../../app/_redux/actions/commentActions';
+import {
+  deleteACommentRequest,
+  editCommentRequest
+} from '../../app/_redux/actions/commentActions';
 import { editUserRequest } from '../../app/_redux/actions/userActions';
+import OneInputForm from './OneInputForm';
 
 const config = {
   authorDateDivider: {
     cardDivider: ' at ',
     pageDivider: ' - '
-  }
+  },
+  notLoggedInError: 'You are not logged in.',
+  edditCommentFormInputLabel: 'Comment text'
 };
 
+interface CommentProps {
+  comment: CommentData;
+  loggedInUserId: string | undefined;
+  loggedInUserNumberOfAnswers: number | undefined;
+}
+
 const Comment = ({
-  id,
-  text,
-  authorId,
-  authorUsername,
-  postId,
-  datetime
-}: CommentData): React.ReactElement => {
-  const { loggedInUser } = useSelector((state: RootState) => state.user);
-
-  const { error, pending } = useSelector((state: RootState) => state.comment);
-
+  comment,
+  loggedInUserId,
+  loggedInUserNumberOfAnswers
+}: CommentProps): React.ReactElement => {
   const [openEditForm, setOpenEditForm] = useState(false);
 
   const dispatch = useDispatch();
 
-  const onButtonDeleteClick = () => {
-    if (!loggedInUser) return;
+  const { error, pending } = useSelector((state: RootState) => state.comment);
 
-    dispatch(deleteACommentRequest(id));
+  const [commentText, setCommentText] = useState(comment.text);
+  const [commentError, setCommentError] = useState('');
+
+  const isCurrentUserOwner =
+    loggedInUserId && loggedInUserId === comment.authorId;
+
+  const onButtonDeleteClick = () => {
+    if (!loggedInUserId || !loggedInUserNumberOfAnswers) {
+      setCommentError(config.notLoggedInError);
+      return;
+    }
+
+    dispatch(deleteACommentRequest(comment.id));
 
     dispatch(
       editUserRequest(
-        loggedInUser.id,
+        loggedInUserId,
         'numberOfAnswers',
-        loggedInUser.numberOfAnswers - 1
+        loggedInUserNumberOfAnswers - 1
       )
     );
+  };
+
+  const onEditCommentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!loggedInUserId || loggedInUserId !== comment.authorId) return;
+
+    dispatch(editCommentRequest(comment.id, 'text', commentText));
+
+    if (error) return;
+
+    setOpenEditForm(false);
   };
 
   return (
@@ -65,26 +93,27 @@ const Comment = ({
       <Grid item>
         <Grid container gap={1} sx={{ paddingRight: '2rem' }}>
           <Grid item>
-            <UserAvatar username={authorUsername} size="normal" />
+            <UserAvatar username={comment.authorUsername} size="normal" />
           </Grid>
           <Grid item>
             <Grid container direction="column" gap={1}>
               <Grid item>
-                <Author author={authorUsername} variant="page" />
+                <Author author={comment.authorUsername} variant="page" />
                 <AuthorDateDivider
                   variant="page"
                   {...config.authorDateDivider}
                 />
-                <MetaDate date={localizeDate(datetime)} variant="normal" />
+                <MetaDate
+                  date={localizeDate(comment.datetime)}
+                  variant="normal"
+                />
               </Grid>
               <Grid item>
-                <CommentText text={text} />
+                <CommentText text={comment.text} />
               </Grid>
             </Grid>
           </Grid>
-          {loggedInUser !== undefined &&
-          loggedInUser !== null &&
-          loggedInUser.id === authorId ? (
+          {isCurrentUserOwner ? (
             <>
               <Grid
                 item
@@ -95,7 +124,7 @@ const Comment = ({
                   variant="outlined"
                   color="primary"
                   sx={{ height: '3rem' }}
-                  onClick={() => setOpenEditForm(true)}
+                  onClick={() => setOpenEditForm(!openEditForm)}
                 >
                   Edit
                 </Button>
@@ -116,10 +145,13 @@ const Comment = ({
       </Grid>
       {openEditForm ? (
         <Grid item>
-          <EditCommentForm
-            commentId={id}
-            authorId={authorId}
-            setClose={setOpenEditForm}
+          <OneInputForm
+            onSubmit={onEditCommentSubmit}
+            inputText={commentText}
+            setInputText={setCommentText}
+            errorMessage={commentError}
+            pending={pending}
+            inputLabel={config.edditCommentFormInputLabel}
           />
         </Grid>
       ) : null}

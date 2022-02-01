@@ -38,6 +38,10 @@ const useStyles = makeStyles({
   }
 });
 
+const config = {
+  editQuestionInputLabel: 'Question text'
+};
+
 interface QuestionTemplateProps {
   question: QuestionData;
   comments: CommentData[];
@@ -51,7 +55,8 @@ interface QuestionTemplateProps {
   setEditFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onThumbsUpClick: () => void;
   onThumbsDownClick: () => void;
-  isCurrentUserOwner: boolean;
+  loggedInUserId: string | undefined;
+  loggedInUserNumberOfAnswers: number | undefined;
 }
 
 const QuestionTemplate = ({
@@ -67,11 +72,15 @@ const QuestionTemplate = ({
   setEditFormOpen,
   onThumbsUpClick,
   onThumbsDownClick,
-  isCurrentUserOwner
+  loggedInUserId,
+  loggedInUserNumberOfAnswers
 }: QuestionTemplateProps): React.ReactElement => {
   const classes = useStyles();
 
   const { loggedIn } = useAuth();
+
+  const isCurrentUserOwner =
+    loggedInUserId && loggedInUserId === question.authorId;
 
   return (
     <Container maxWidth="md">
@@ -157,6 +166,7 @@ const QuestionTemplate = ({
                   setInputText={setQuestionText}
                   errorMessage={questionError}
                   pending={pending}
+                  inputLabel={config.editQuestionInputLabel}
                 />
               )}
             </Paper>
@@ -171,7 +181,13 @@ const QuestionTemplate = ({
           </Grid>
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperComments}>
-              {comments && <CommentList comments={comments} />}
+              {comments && (
+                <CommentList
+                  comments={comments}
+                  loggedInUserId={loggedInUserId}
+                  loggedInUserNumberOfAnswers={loggedInUserNumberOfAnswers}
+                />
+              )}
             </Paper>
           </Grid>
         </Grid>

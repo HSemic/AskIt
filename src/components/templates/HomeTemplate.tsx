@@ -14,7 +14,8 @@ import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 
 const config = {
   topUsersListTitle: 'Top AskIt-ers',
-  topPostsListTitle: 'Hot questions'
+  topPostsListTitle: 'Hot questions',
+  addQuestionInputLabel: 'Question text'
 };
 
 interface HomeTemplateProps {
@@ -55,6 +56,7 @@ const HomeTemplate = ({
                   setInputText={setQuestionText}
                   errorMessage={questionError}
                   pending={pendingAddQuestion}
+                  inputLabel={config.addQuestionInputLabel}
                 />
               ) : (
                 <LogInToMessage text="Log in to post questions" />
