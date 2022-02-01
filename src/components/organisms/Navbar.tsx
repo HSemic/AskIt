@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 const config = {
-  logoText: 'AskIttt',
+  logoText: 'AskIt',
   buttonSignInText: 'Log In',
   buttonSignUpText: 'Sign Up'
 };
