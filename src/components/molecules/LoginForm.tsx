@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import ControlledInput from '../atoms/ControlledInput';
 
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
@@ -61,11 +62,6 @@ const LoginForm = (): React.ReactElement => {
   const { login, loggedIn } = useAuth();
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-
-  // useEffect(() => {
-  //   console.log(error);
-  // }, [error]);
 
   useEffect(() => {
     if (email.length > 0 && !validateEmail(email))
@@ -95,12 +91,11 @@ const LoginForm = (): React.ReactElement => {
     if (validEmail && validPassword) login(email, password);
   };
 
-  const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.currentTarget.value);
-  };
-
-  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.currentTarget.value);
+  const onInputValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setValue(event.currentTarget.value);
   };
 
   return (
@@ -122,26 +117,22 @@ const LoginForm = (): React.ReactElement => {
                 <FormTitle text={config.formTitle} />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
                   label="Email*"
-                  variant="outlined"
-                  error={emailError.length > 0}
-                  helperText={emailError}
+                  errorMessage={emailError}
                   value={email}
-                  onChange={onEmailChange}
+                  onChange={(event) => onInputValueChange(event, setEmail)}
                 />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
                   label="Password*"
                   type="password"
-                  variant="outlined"
-                  error={passwordError.length > 0}
-                  helperText={passwordError}
+                  errorMessage={passwordError}
                   value={password}
-                  onChange={onPasswordChange}
+                  onChange={(event) => onInputValueChange(event, setPassword)}
                 />
               </Grid>
               {error && error.length > 0 ? (

@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+import ControlledInput from '../atoms/ControlledInput';
+
 import FormTitle from '../atoms/FormTitle';
 import FormMessage from '../atoms/FormMessage';
 
@@ -88,6 +90,13 @@ const RegisterForm = (): React.ReactElement => {
     if (loggedIn) navigate('/');
   }, [loggedIn]);
 
+  const onInputValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setValue(event.currentTarget.value);
+  };
+
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -99,22 +108,6 @@ const RegisterForm = (): React.ReactElement => {
 
     if (validEmail && validPassword)
       register(firstName, lastName, email, password);
-  };
-
-  const onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(event.currentTarget.value);
-  };
-
-  const onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.currentTarget.value);
-  };
-
-  const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.currentTarget.value);
-  };
-
-  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.currentTarget.value);
   };
 
   return (
@@ -136,44 +129,37 @@ const RegisterForm = (): React.ReactElement => {
                 <FormTitle text={config.formTitle} />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
                   label="First Name"
-                  variant="outlined"
                   value={firstName}
-                  onChange={onFirstNameChange}
+                  onChange={(event) => onInputValueChange(event, setFirstName)}
                 />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
                   label="Last Name"
-                  variant="outlined"
                   value={lastName}
-                  onChange={onLastNameChange}
+                  onChange={(event) => onInputValueChange(event, setLastName)}
                 />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
                   label="Email*"
-                  variant="outlined"
-                  error={emailError.length > 0}
-                  helperText={emailError}
                   value={email}
-                  onChange={onEmailChange}
+                  errorMessage={emailError}
+                  onChange={(event) => onInputValueChange(event, setEmail)}
                 />
               </Grid>
               <Grid item>
-                <TextField
+                <ControlledInput
                   className={classes.formInput}
-                  label="Password*"
-                  type="password"
-                  variant="outlined"
-                  error={passwordError.length > 0}
-                  helperText={passwordError}
+                  label="Password"
                   value={password}
-                  onChange={onPasswordChange}
+                  errorMessage={passwordError}
+                  onChange={(event) => onInputValueChange(event, setPassword)}
                 />
               </Grid>
               {error && error.length > 0 ? (
@@ -195,7 +181,7 @@ const RegisterForm = (): React.ReactElement => {
                   <LoadingButton
                     className={`${classes.formInput} ${classes.formButton}`}
                     loading
-                    variant="outlined"
+                    variant="contained"
                   >
                     Submit
                   </LoadingButton>
