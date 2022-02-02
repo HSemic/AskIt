@@ -20,7 +20,12 @@ import {
   EditNotificationSuccessPayload,
   EditNotificationSuccess,
   EditNotificationFailurePayload,
-  EditNotificationFailure
+  EditNotificationFailure,
+  ReceiveANotificationRequest,
+  ReceiveANotificationSuccessPayload,
+  ReceiveANotificationSuccess,
+  ReceiveANotificationFailurePayload,
+  ReceiveANotificationFailure
 } from '../reducers/notificationReducer/types';
 
 export const createNotificationSocketRequest =
@@ -103,5 +108,26 @@ export const editNotificationFailure = (
   payload: EditNotificationFailurePayload
 ): EditNotificationFailure => ({
   type: notificationTypes.EDIT_NOTIFICATION_FAILURE,
+  payload
+});
+
+export const receiveNotificationRequest = (
+  newNotification: NotificationApiData
+): ReceiveANotificationRequest => ({
+  type: notificationTypes.RECEIVE_A_NOTIFICATION_REQUEST,
+  newNotification
+});
+
+export const receiveNotificationSuccess = (
+  payload: ReceiveANotificationSuccessPayload
+): ReceiveANotificationSuccess => ({
+  type: notificationTypes.RECEIVE_A_NOTIFICATION_SUCCESS,
+  payload
+});
+
+export const receiveNotificationFailure = (
+  payload: ReceiveANotificationFailurePayload
+): ReceiveANotificationFailure => ({
+  type: notificationTypes.RECEIVE_A_NOTIFICATION_FAILURE,
   payload
 });

@@ -96,6 +96,24 @@ const notificationReducer = (
         requestStatus: 'failure',
         error: action.payload.error
       };
+    case notificationTypes.RECEIVE_A_NOTIFICATION_SUCCESS:
+      const newNotificationList2 = [
+        action.payload.receivedNotification,
+        ...state.notifications
+      ];
+      return {
+        ...state,
+        notifications: newNotificationList2,
+        pending: false,
+        requestStatus: 'success'
+      };
+    case notificationTypes.RECEIVE_A_NOTIFICATION_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        requestStatus: 'failure',
+        error: action.payload.error
+      };
     default:
       return {
         ...state

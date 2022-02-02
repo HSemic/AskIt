@@ -38,6 +38,15 @@ const SideListTopPosts = ({
       <SideListTitle text={title} />
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {questions.map((question, index) => {
+          const questionTextSliced = question.questionText
+            .split(' ')
+            .slice(0, 8);
+          let shortenedQuestionText = questionTextSliced.join(' ');
+          shortenedQuestionText =
+            questionTextSliced.length > 8
+              ? shortenedQuestionText + '...'
+              : shortenedQuestionText;
+
           return (
             <ListItem divider={index < questions.length - 1} key={index}>
               <Grid
@@ -55,7 +64,7 @@ const SideListTopPosts = ({
                     to={`question/${question.id}`}
                     className={classes.questionListLink}
                   >
-                    <ListItemText primary={question.questionText} />
+                    <ListItemText primary={shortenedQuestionText} />
                   </Link>
                 </Grid>
               </Grid>

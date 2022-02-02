@@ -116,6 +116,29 @@ export interface EditNotificationFailure {
   payload: EditNotificationFailurePayload;
 }
 
+export interface ReceiveANotificationSuccessPayload {
+  receivedNotification: NotificationData;
+}
+
+export interface ReceiveANotificationFailurePayload {
+  error: string;
+}
+
+export interface ReceiveANotificationRequest {
+  type: typeof notificationTypes.RECEIVE_A_NOTIFICATION_REQUEST;
+  newNotification: NotificationApiData;
+}
+
+export interface ReceiveANotificationSuccess {
+  type: typeof notificationTypes.RECEIVE_A_NOTIFICATION_SUCCESS;
+  payload: ReceiveANotificationSuccessPayload;
+}
+
+export interface ReceiveANotificationFailure {
+  type: typeof notificationTypes.RECEIVE_A_NOTIFICATION_FAILURE;
+  payload: ReceiveANotificationFailurePayload;
+}
+
 export type NotificationAction =
   | CreateNotificationSocketRequest
   | CreateNotificationSocketSuccess
@@ -129,4 +152,7 @@ export type NotificationAction =
   | SendNotificationFailure
   | EditNotificationRequest
   | EditNotificationSuccess
-  | EditNotificationFailure;
+  | EditNotificationFailure
+  | ReceiveANotificationRequest
+  | ReceiveANotificationSuccess
+  | ReceiveANotificationFailure;

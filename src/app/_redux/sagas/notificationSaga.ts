@@ -8,7 +8,9 @@ import {
   sendNotificationSuccess,
   sendNotificationFailure,
   editNotificationSuccess,
-  editNotificationFailure
+  editNotificationFailure,
+  receiveNotificationSuccess,
+  receiveNotificationFailure
 } from '../actions/notificationActions';
 import { notificationTypes } from '../actiontypes/notificationTypes';
 import {
@@ -16,7 +18,8 @@ import {
   FetchUnreadNotificationsRequest,
   NotificationData,
   SendNotificationRequest,
-  EditNotificationRequest
+  EditNotificationRequest,
+  ReceiveANotificationRequest
 } from '../reducers/notificationReducer/types';
 
 import { AxiosResponse } from 'axios';
@@ -160,6 +163,36 @@ function* editNotification(action: EditNotificationRequest) {
   }
 }
 
+function* receiveNotification(action: ReceiveANotificationRequest) {
+  try {
+    // if (action.attribute === 'title') console.log(action.value);
+
+    const users: { [id: string]: UserData } = yield select(
+      userSelectors.allUsers
+    );
+
+    const result: NotificationData = {
+      id: action.newNotification.id,
+      questionId: action.newNotification.questionId,
+      authorUsername: users[action.newNotification.authorId].username,
+      read: action.newNotification.read,
+      datetime: localizeDate(action.newNotification.datetime)
+    };
+
+    yield put(
+      receiveNotificationSuccess({
+        receivedNotification: result
+      })
+    );
+  } catch (e: any) {
+    yield put(
+      receiveNotificationFailure({
+        error: e
+      })
+    );
+  }
+}
+
 function* notificationSaga() {
   yield all([
     takeLatest(
@@ -171,7 +204,11 @@ function* notificationSaga() {
       createNewNotificationSocket
     ),
     takeLatest(notificationTypes.SEND_NOTIFICATION_REQUEST, sendNotification),
-    takeLatest(notificationTypes.EDIT_NOTIFICATION_REQUEST, editNotification)
+    takeLatest(notificationTypes.EDIT_NOTIFICATION_REQUEST, editNotification),
+    takeLatest(
+      notificationTypes.RECEIVE_A_NOTIFICATION_REQUEST,
+      receiveNotification
+    )
   ]);
 }
 
