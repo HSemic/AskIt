@@ -196,7 +196,7 @@ const QuestionTemplate = ({
 
           <Grid item xs={12}>
             {!loggedIn ? (
-              <LogInToMessage text="Log in to comment" />
+              <LogInToMessage text="Log in to answer" />
             ) : (
               <OneInputForm
                 onSubmit={onAddCommentFormSubmit}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button as Btn } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface ButtonProps {
   className: string;

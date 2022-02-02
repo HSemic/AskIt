@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { makeStyles } from '@mui/styles';
 
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -9,6 +10,17 @@ import ListItemText from '@mui/material/ListItemText';
 import SideListTitle from '../atoms/SideListTitle';
 
 import { Link } from 'react-router-dom';
+import { blue } from '@mui/material/colors';
+
+const useStyles = makeStyles({
+  questionListLink: {
+    textDecoration: 'none',
+    color: 'inherit',
+    '&:hover': {
+      color: blue[500]
+    }
+  }
+});
 
 interface SideListTopPostsProps {
   title: string;
@@ -19,6 +31,8 @@ const SideListTopPosts = ({
   title,
   questions
 }: SideListTopPostsProps): React.ReactElement => {
+  const classes = useStyles();
+
   return (
     <Paper>
       <SideListTitle text={title} />
@@ -39,7 +53,7 @@ const SideListTopPosts = ({
                 <Grid item>
                   <Link
                     to={`question/${question.id}`}
-                    style={{ textDecoration: 'none', color: 'inherit' }}
+                    className={classes.questionListLink}
                   >
                     <ListItemText primary={question.questionText} />
                   </Link>
