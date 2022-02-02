@@ -22,6 +22,8 @@ For middleware, [Redux Saga](https://redux-saga.js.org/) (v1.1.3) has been chose
 
 Navigation is implemented with [React Router](https://reactrouter.com/docs/en/v6/getting-started/overview) v6.
 
+CI/CD is done through [CircleCI](https://circleci.com/) service.
+
 ## Code organization
 
 The ```src``` directory contains the following subdirectories:
@@ -36,6 +38,7 @@ The ```src``` directory contains the following subdirectories:
 * ```styles``` - MaterialUI theme and basic styling for html and #root elements
 * ```types``` - Definitions of custom TypeScript interfaces and types, used throughout the app, as well as module definitions for .jpg and .png files, so that they can be safely imported.
 
+Outside the ```src``` directory, ```.circleci``` directory contains the ```config.yml``` file, which defines CI/CD pipeline.  
 
 ## Design
 
