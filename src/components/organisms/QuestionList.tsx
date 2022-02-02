@@ -33,9 +33,9 @@ const QuestionList = ({
           <Typography variant="h5">{title}</Typography>
         </Grid>
       ) : null}
-      {questions.map((question) => {
+      {questions.map((question, index) => {
         return (
-          <Grid item>
+          <Grid item key={index}>
             <QuestionCard question={question} />
           </Grid>
         );

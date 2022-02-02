@@ -25,7 +25,7 @@ const SideListTopPosts = ({
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {questions.map((question, index) => {
           return (
-            <ListItem divider={index < questions.length - 1}>
+            <ListItem divider={index < questions.length - 1} key={index}>
               <Grid
                 item
                 container

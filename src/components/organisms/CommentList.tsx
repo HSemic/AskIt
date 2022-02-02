@@ -25,9 +25,9 @@ const CommentList = ({
         <Typography variant="h5">Comments</Typography>
       </Grid>
       <Grid item container direction="column" rowGap={4}>
-        {comments.map((comment) => {
+        {comments.map((comment, index) => {
           return (
-            <Grid item>
+            <Grid item key={index}>
               <Comment
                 comment={comment}
                 loggedInUserId={loggedInUserId}

@@ -28,7 +28,7 @@ const SideListUsers = ({
         {users.map((user, index) => {
           const username = processUsername(user.firstName, user.lastName);
           return (
-            <ListItem divider={index < users.length - 1}>
+            <ListItem divider={index < users.length - 1} key={index}>
               <Grid item container gap={2} justifyContent="flex-start">
                 <Grid item>
                   <ListItemText primary={`${index + 1}.`} />
