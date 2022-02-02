@@ -30,7 +30,6 @@ import { AxiosResponse } from 'axios';
 import * as userSelectors from '../selectors/userSelectors';
 import { generateRandomId } from '../../../services/uuidService';
 import { localizeDate } from '../../../services/localization';
-import { processUsername } from '../../../services/username';
 
 const getQuestionListNewest = (page: number, id: string | null) => {
   if (id === null)

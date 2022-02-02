@@ -63,12 +63,7 @@ function* fetchQuestionCommentList(action: FetchQuestionCommentsRequest) {
         id: comment.id,
         text: comment.text,
         authorId: comment.authorId,
-        authorUsername:
-          users[comment.authorId].firstName || users[comment.authorId].lastName
-            ? users[comment.authorId].firstName +
-              ' ' +
-              users[comment.authorId].lastName
-            : 'Anonymous',
+        authorUsername: users[comment.authorId].username,
         postId: comment.postId,
         datetime: comment.datetime
       });
@@ -102,13 +97,7 @@ function* addNewComment(action: AddCommentRequest) {
       id: response.data.id,
       text: response.data.text,
       authorId: response.data.authorId,
-      authorUsername:
-        users[response.data.authorId].firstName ||
-        users[response.data.authorId].lastName
-          ? users[response.data.authorId].firstName +
-            ' ' +
-            users[response.data.authorId].lastName
-          : 'Anonymous',
+      authorUsername: users[response.data.authorId].username,
       postId: response.data.postId,
       datetime: response.data.datetime
     };
@@ -143,13 +132,7 @@ function* editComment(action: EditCommentRequest) {
       id: response.data.id,
       text: response.data.text,
       authorId: response.data.authorId,
-      authorUsername:
-        users[response.data.authorId].firstName ||
-        users[response.data.authorId].lastName
-          ? users[response.data.authorId].firstName +
-            ' ' +
-            users[response.data.authorId].lastName
-          : 'Anonymous',
+      authorUsername: users[response.data.authorId].username,
       postId: response.data.postId,
       datetime: response.data.datetime
     };

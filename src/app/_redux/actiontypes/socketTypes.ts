@@ -1,4 +1,0 @@
-export enum socketTypes {
-  CREATE_SOCKET = 'CREATE_SOCKET',
-  DESTROY_SOCKET = 'DESTROY_SOCKET'
-}

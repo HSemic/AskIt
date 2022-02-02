@@ -8,7 +8,7 @@ import {
   registerUserRequest,
   logout
 } from '../../app/_redux/actions/userActions';
-import { destroySocket } from '../../app/_redux/actions/socketActions';
+import { destroyNotificationSocket } from '../../app/_redux/actions/notificationActions';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 interface AuthContext {
@@ -56,7 +56,7 @@ export function useAuth() {
     },
     logout() {
       dispatch(logout());
-      dispatch(destroySocket());
+      dispatch(destroyNotificationSocket());
     },
     register(
       firstName: string,

@@ -2,12 +2,16 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createSocket } from '../app/_redux/actions/socketActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 import { useAuth } from '../components/providers/AuthProvider';
 
 import LoginTemplate from '../components/templates/LoginTemplate';
 import { validateEmail, validatePassword } from '../services/validationService';
+
+import {
+  createNotificationSocketRequest,
+  fetchUnreadNotificationsRequest
+} from '../app/_redux/actions/notificationActions';
 
 const config = {
   formTitle: 'Sign In',
@@ -30,7 +34,7 @@ const LoginPage = (): React.ReactElement => {
     (state: RootState) => state.user
   );
 
-  const { login, loggedIn } = useAuth();
+  const { login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -47,12 +51,11 @@ const LoginPage = (): React.ReactElement => {
   }, [password]);
 
   useEffect(() => {
-    if (loggedIn) navigate('/');
-  }, [loggedIn, navigate]);
-
-  useEffect(() => {
-    if (loggedInUser !== null) dispatch(createSocket());
-  }, [loggedInUser, dispatch]);
+    if (!loggedInUser) return;
+    dispatch(createNotificationSocketRequest());
+    dispatch(fetchUnreadNotificationsRequest(loggedInUser.id));
+    navigate('/');
+  }, [loggedInUser, navigate, dispatch]);
 
   const onLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

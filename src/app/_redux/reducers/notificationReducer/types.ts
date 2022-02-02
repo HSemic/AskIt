@@ -1,0 +1,132 @@
+import { Socket } from 'socket.io-client';
+import { notificationTypes } from '../../actiontypes/notificationTypes';
+
+export interface NotificationApiData {
+  id: string;
+  recipientId: string;
+  questionId: string;
+  authorId: string;
+  read: boolean;
+  datetime: number;
+}
+
+export interface NotificationData {
+  id: string;
+  questionId: string;
+  authorUsername: string;
+  read: boolean;
+  datetime: string;
+}
+
+export interface NotificationState {
+  notifications: NotificationData[];
+  error: string | null;
+  pending: boolean;
+  requestStatus: 'success' | 'failure';
+  notificationSocket: Socket | null;
+}
+
+export interface CreateNotificationSocketSuccessPayload {
+  newSocket: Socket;
+}
+
+export interface CreateNotificationSocketFailurePayload {
+  error: string;
+}
+
+export interface CreateNotificationSocketRequest {
+  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_REQUEST;
+}
+
+export interface CreateNotificationSocketSuccess {
+  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_SUCCESS;
+  payload: CreateNotificationSocketSuccessPayload;
+}
+
+export interface CreateNotificationSocketFailure {
+  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_FAILURE;
+  payload: CreateNotificationSocketFailurePayload;
+}
+
+export interface DestroyNotificationSocket {
+  type: typeof notificationTypes.DESTROY_NOTIFICATION_SOCKET;
+}
+
+export interface FetchUnreadNotificationsSuccessPayload {
+  notificationList: NotificationData[];
+}
+
+export interface FetchUnreadNotificationsFailurePayload {
+  error: string;
+}
+
+export interface FetchUnreadNotificationsRequest {
+  type: typeof notificationTypes.FETCH_UNREAD_NOTIFICATIONS_REQUEST;
+  recipientId: string;
+}
+
+export type FetchUnreadNotificationsSuccess = {
+  type: typeof notificationTypes.FETCH_UNREAD_NOTIFICATIONS_SUCCESS;
+  payload: FetchUnreadNotificationsSuccessPayload;
+};
+
+export type FetchUnreadNotificationsFailure = {
+  type: typeof notificationTypes.FETCH_UNREAD_NOTIFICATIONS_FAILURE;
+  payload: FetchUnreadNotificationsFailurePayload;
+};
+
+export interface SendNotificationFailurePayload {
+  error: string;
+}
+
+export interface SendNotificationRequest {
+  type: typeof notificationTypes.SEND_NOTIFICATION_REQUEST;
+  newNotification: Omit<NotificationApiData, 'id' | 'read' | 'datetime'>;
+}
+
+export interface SendNotificationSuccess {
+  type: typeof notificationTypes.SEND_NOTIFICATION_SUCCESS;
+}
+
+export interface SendNotificationFailure {
+  type: typeof notificationTypes.SEND_NOTIFICATION_FAILURE;
+  payload: SendNotificationFailurePayload;
+}
+
+export interface EditNotificationSuccessPayload {
+  editedNotification: NotificationData;
+}
+
+export interface EditNotificationFailurePayload {
+  error: string;
+}
+
+export interface EditNotificationRequest {
+  type: typeof notificationTypes.EDIT_NOTIFICATION_REQUEST;
+  id: string;
+}
+
+export interface EditNotificationSuccess {
+  type: typeof notificationTypes.EDIT_NOTIFICATION_SUCCESS;
+  payload: EditNotificationSuccessPayload;
+}
+
+export interface EditNotificationFailure {
+  type: typeof notificationTypes.EDIT_NOTIFICATION_FAILURE;
+  payload: EditNotificationFailurePayload;
+}
+
+export type NotificationAction =
+  | CreateNotificationSocketRequest
+  | CreateNotificationSocketSuccess
+  | CreateNotificationSocketFailure
+  | DestroyNotificationSocket
+  | FetchUnreadNotificationsRequest
+  | FetchUnreadNotificationsSuccess
+  | FetchUnreadNotificationsFailure
+  | SendNotificationRequest
+  | SendNotificationSuccess
+  | SendNotificationFailure
+  | EditNotificationRequest
+  | EditNotificationSuccess
+  | EditNotificationFailure;

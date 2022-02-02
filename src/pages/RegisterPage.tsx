@@ -9,6 +9,10 @@ import { useAuth } from '../components/providers/AuthProvider';
 
 import RegisterTemplate from '../components/templates/RegisterTemplate';
 
+import { useDispatch } from 'react-redux';
+
+import { createNotificationSocketRequest } from '../app/_redux/actions/notificationActions';
+
 const config = {
   formTitle: 'Sign Up',
   validationErrors: {
@@ -32,6 +36,8 @@ const RegisterPage = (): React.ReactElement => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (email.length > 0 && !validateEmail(email))
       setEmailError(config.validationErrors.email);
@@ -45,8 +51,11 @@ const RegisterPage = (): React.ReactElement => {
   }, [password]);
 
   useEffect(() => {
-    if (loggedIn) navigate('/');
-  }, [loggedIn, navigate]);
+    if (loggedIn) {
+      dispatch(createNotificationSocketRequest());
+      navigate('/');
+    }
+  }, [loggedIn, navigate, dispatch]);
 
   const onRegisterFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

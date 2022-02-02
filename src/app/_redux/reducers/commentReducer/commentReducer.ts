@@ -37,12 +37,12 @@ const commentReducer = (
         requestStatus: 'failure'
       };
     case commentTypes.EDIT_COMMENT_SUCCESS:
-      const editedQUestionIndex = state.commentList
+      const editedQuestionIndex = state.commentList
         .map((c) => c.id)
         .indexOf(action.payload.editedComment.id);
 
       const newCommentList = [...state.commentList];
-      newCommentList[editedQUestionIndex] = action.payload.editedComment;
+      newCommentList[editedQuestionIndex] = action.payload.editedComment;
 
       return {
         ...state,
