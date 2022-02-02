@@ -34,17 +34,23 @@ const SideListUsers = ({
                   <ListItemText primary={`${index + 1}.`} />
                 </Grid>
                 <Grid item>
-                  <ListItemAvatar>
-                    <UserAvatar
-                      username={username.length > 0 ? username : 'Anonymous'}
-                      size="normal"
-                    />
-                  </ListItemAvatar>
-                </Grid>
-                <Grid item>
-                  <ListItemText
-                    primary={username.length > 0 ? username : 'Anonymous'}
-                  />
+                  <Grid container>
+                    <Grid item flexGrow={0}>
+                      <ListItemAvatar>
+                        <UserAvatar
+                          username={
+                            username.length > 0 ? username : 'Anonymous'
+                          }
+                          size="normal"
+                        />
+                      </ListItemAvatar>
+                    </Grid>
+                    <Grid item flexGrow={1}>
+                      <ListItemText
+                        primary={username.length > 0 ? username : 'Anonymous'}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item flexGrow={1}>
                   <Grid container justifyContent="flex-end">

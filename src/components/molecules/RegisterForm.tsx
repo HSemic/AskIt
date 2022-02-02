@@ -117,6 +117,7 @@ const RegisterForm = ({
                   className={classes.formInput}
                   label="Password"
                   value={password}
+                  type="password"
                   errorMessage={passwordError}
                   onChange={(event) => onInputValueChange(event, setPassword)}
                 />

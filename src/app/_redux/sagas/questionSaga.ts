@@ -43,7 +43,7 @@ const getQuestionListNewest = (page: number, id: string | null) => {
 };
 
 const getTopQuestions = () =>
-  askIt.get<QuestionApiData[]>(`/questions?_sort=likes&_limit=5`);
+  askIt.get<QuestionApiData[]>(`/questions?_sort=likes&_order=desc&_limit=5`);
 
 const getQuestionDetails = (id: string) =>
   askIt.get<QuestionData>(`/questions/${id}`);

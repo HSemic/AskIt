@@ -7,13 +7,13 @@ import VerticalSpacer from '../atoms/VerticalSpacer';
 
 const useStyles = makeStyles({
   footer: {
-    height: '10rem',
+    height: '7rem',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     position: 'absolute',
     bottom: 0
   },
   footerText: {
-    fontSize: '3rem !important',
+    fontSize: '2.8rem !important',
     fontWeight: 'bold !important'
   }
 });
