@@ -43,7 +43,8 @@ export function useAuth() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (loggedInUser !== null && loggedInUser.id.length > 0) setLoggedIn(true);
+    if (loggedInUser && loggedInUser !== null && loggedInUser.id.length > 0)
+      setLoggedIn(true);
     else setLoggedIn(false);
   }, [loggedInUser]);
 

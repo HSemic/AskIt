@@ -63,7 +63,9 @@ const OneInputForm = ({
               onChange={onInputChange}
             />
           </Grid>
-          {fetchErrorMessage !== null && fetchErrorMessage.length > 0 ? (
+          {fetchErrorMessage &&
+          fetchErrorMessage !== null &&
+          fetchErrorMessage.length > 0 ? (
             <Grid item>
               <FormMessage type="error" text={fetchErrorMessage} />
             </Grid>
