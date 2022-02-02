@@ -1,4 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# AskIt, the online tool for asking and answering questions on various topics
+
+Welcome to AskIt!
+
+This web app allows users to post questions and answers. Fell free to try it out. 
+
+Please note that, for now, ***passwords are saved in database as clear text. Do not use any of your usual passwords***.
+
+This app is deployed with Netlify and can be accessed here: https://mop-react-frontend.netlify.app/. I hope you have fun playing around with it.
+
+## Used technologies
+
+The app was built using the [React library](https://reactjs.org/) v17.0.2 and bootstrapped using create-react-app.
+
+Code itself was written using [TypeScript](https://www.typescriptlang.org/) (v4.5.5 at the moment), a statically typed JavaScript superset.
+
+UI and styling was done using [MaterialUI](https://material-ui.com/) (v5), a React UI framework.
+
+Global state was managed using the [Redux](https://redux.js.org/) (v4.1.2 at the moment) library.
+
+For middleware, [Redux Saga](https://redux-saga.js.org/) (v1.1.3) has been chosen.
+
+Navigation is implemented with [React Router](https://reactrouter.com/docs/en/v6/getting-started/overview) v6.
+
+## Code organization
+
+The ```src``` directory contains the following subdirectories:
+
+* ```app```
+  * ```api``` - Api configuration
+  * ```_redux``` - Redux store, actions, reducers and types
+* ```components``` - React components. Atomic design is used, so the components are split into atoms, molecules, organisms and templates. There are also provider components that wrap the App to provide specific services, such as Authentication. Pages are defined separately from this directory.
+* ```images``` - Used images, such as logo
+* ```pages``` - Page components, that each render the appropriate template.
+* ```services``` - Contains code for several services such as localization, id generation, etc.
+* ```styles``` - MaterialUI theme and basic styling for html and #root elements
+* ```types``` - Definitions of custom TypeScript interfaces and types, used throughout the app, as well as module definitions for .jpg and .png files, so that they can be safely imported.
+
+
+## Design
+
+Design was implemented using MaterialUI. The app is responsive and works on various screen sizes.
 
 ## Available Scripts
 
