@@ -30,7 +30,6 @@ import { AxiosResponse } from 'axios';
 import * as userSelectors from '../selectors/userSelectors';
 import { generateRandomId } from '../../../services/uuidService';
 import { localizeDate } from '../../../services/localization';
-import { validateQuestionText } from '../../../services/validationService';
 
 const getQuestionListNewest = (page: number, id: string | null) => {
   if (id === null)
@@ -51,7 +50,7 @@ const getQuestionDetails = (id: string) =>
 
 const editAQuestion = (
   id: string,
-  attribute: 'likes' | 'dislikes' | 'title',
+  attribute: 'likes' | 'dislikes' | 'title' | 'commentNumber',
   value: string | number
 ) =>
   askIt.patch<QuestionApiData>(`/questions/${id}`, {
@@ -97,7 +96,7 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
         author:
           user.firstName.length > 0 || user.lastName.length > 0
             ? user.firstName + ' ' + user.lastName
-            : 'Unknown',
+            : 'Anonymous',
         authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
@@ -140,9 +139,9 @@ function* fetchTopQuestions() {
         id: question.id,
         questionText: question.title,
         author:
-          user.firstName.length > 0 || user.lastName.length > 0
+          user.firstName || user.lastName
             ? user.firstName + ' ' + user.lastName
-            : 'Unknown',
+            : 'Anonymous',
         authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
@@ -181,9 +180,12 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
       id: response.data.id,
       questionText: response.data.title,
       author:
-        users[response.data.authorId].firstName +
-        ' ' +
-        users[response.data.authorId].lastName,
+        users[response.data.authorId].firstName ||
+        users[response.data.authorId].lastName
+          ? users[response.data.authorId].firstName +
+            ' ' +
+            users[response.data.authorId].lastName
+          : 'Anonymous',
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
@@ -212,8 +214,6 @@ function* postNewQuestion(action: PostQuestionRequest) {
       addNewQuestion(action.newQuestion)
     );
 
-    const loggedInUser: UserApiData = yield select(userSelectors.loggedInUser);
-
     // yield call(() =>
     //   setUserQuestionCount(loggedInUser.id, loggedInUser.numberOfQuestions + 1)
     // );
@@ -226,9 +226,12 @@ function* postNewQuestion(action: PostQuestionRequest) {
       id: response.data.id,
       questionText: response.data.title,
       author:
-        users[response.data.authorId].firstName +
-        ' ' +
-        users[response.data.authorId].lastName,
+        users[response.data.authorId].firstName ||
+        users[response.data.authorId].lastName
+          ? users[response.data.authorId].firstName +
+            ' ' +
+            users[response.data.authorId].lastName
+          : 'Anonymous',
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
@@ -267,9 +270,12 @@ function* editQuestion(action: EditQuestionRequest) {
       id: response.data.id,
       questionText: response.data.title,
       author:
-        users[response.data.authorId].firstName +
-        ' ' +
-        users[response.data.authorId].lastName,
+        users[response.data.authorId].firstName ||
+        users[response.data.authorId].lastName
+          ? users[response.data.authorId].firstName +
+            ' ' +
+            users[response.data.authorId].lastName
+          : 'Anonymous',
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,

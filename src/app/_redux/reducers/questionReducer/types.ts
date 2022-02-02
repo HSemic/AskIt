@@ -145,7 +145,7 @@ export interface EditQuestionFailurePayload {
 export interface EditQuestionRequest {
   type: typeof questionTypes.EDIT_QUESTION_REQUEST;
   id: string;
-  attribute: 'title' | 'likes' | 'dislikes';
+  attribute: 'title' | 'likes' | 'dislikes' | 'commentNumber';
   value: string | number;
 }
 

@@ -42,6 +42,12 @@ const ProfilePage = (): React.ReactElement => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!loggedInUser) return;
+
+    dispatch(fetchQuestionListRequest(page, loggedInUser?.id));
+  }, [page]);
+
   const incrementPage = () => {
     setPage(page + 1);
   };

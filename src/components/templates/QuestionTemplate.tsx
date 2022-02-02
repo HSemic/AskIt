@@ -209,6 +209,7 @@ const QuestionTemplate = ({
                   comments={comments}
                   loggedInUserId={loggedInUserId}
                   loggedInUserNumberOfAnswers={loggedInUserNumberOfAnswers}
+                  currentQuestionNumberOfComments={question.commentNumber}
                 />
               )}
             </Paper>

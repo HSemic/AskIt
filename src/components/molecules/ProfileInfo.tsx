@@ -74,7 +74,9 @@ const ProfileInfo = ({
 }: ProfileInfoProps): React.ReactElement => {
   const classes = useStyles();
 
-  const username = user.firstName + ' ' + user.lastName || 'Anonymous';
+  let username = user.firstName ? user.dateJoined : '';
+  username = user.lastName ? username + ' ' + user.lastName : username + '';
+  if (username.length === 0) username = 'Anonymous';
 
   const onInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>,

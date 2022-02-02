@@ -25,6 +25,7 @@ import {
 } from '../../app/_redux/actions/commentActions';
 import { editUserRequest } from '../../app/_redux/actions/userActions';
 import OneInputForm from './OneInputForm';
+import { editQuestionRequest } from '../../app/_redux/actions/questionActions';
 
 const config = {
   authorDateDivider: {
@@ -37,12 +38,14 @@ const config = {
 
 interface CommentProps {
   comment: CommentData;
+  currentQuestionNumberOfComments: number;
   loggedInUserId: string | undefined;
   loggedInUserNumberOfAnswers: number | undefined;
 }
 
 const Comment = ({
   comment,
+  currentQuestionNumberOfComments,
   loggedInUserId,
   loggedInUserNumberOfAnswers
 }: CommentProps): React.ReactElement => {
@@ -71,6 +74,14 @@ const Comment = ({
         loggedInUserId,
         'numberOfAnswers',
         loggedInUserNumberOfAnswers - 1
+      )
+    );
+
+    dispatch(
+      editQuestionRequest(
+        comment.postId,
+        'commentNumber',
+        currentQuestionNumberOfComments - 1
       )
     );
   };

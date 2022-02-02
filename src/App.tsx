@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage';
 
 import RequireAuth from './components/molecules/RequireAuth';
 import VerticalSpacer from './components/atoms/VerticalSpacer';
+import Footer from './components/molecules/Footer';
 
 const App = (): React.ReactElement => {
   return (
@@ -51,6 +52,7 @@ const App = (): React.ReactElement => {
         />
       </Routes>
       <VerticalSpacer />
+      <Footer />
     </>
   );
 };

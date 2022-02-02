@@ -48,6 +48,7 @@ const addNewUser = (
     ...user,
     id: generateRandomId(),
     numberOfAnswers: 0,
+    numberOfQuestions: 0,
     dateJoined: Date.now()
   });
 

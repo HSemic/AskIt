@@ -18,7 +18,8 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#dae0e6' // body background color
+          backgroundColor: '#dae0e6', // body background color
+          minHeight: '100vh'
         }
       }
     },

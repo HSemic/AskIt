@@ -14,6 +14,7 @@ import {
 import {
   addCommentRequest,
   clearComments,
+  deleteACommentRequest,
   fetchQuestionCommentsRequest
 } from '../app/_redux/actions/commentActions';
 
@@ -80,6 +81,10 @@ const QuestionPage = (): React.ReactElement => {
 
   const onQuestionDelete = () => {
     if (!loggedInUser || !currentQuestion) return;
+
+    // commentList.forEach(() => {
+    //   dispatch(deleteACommentRequest(currentQuestion.id));
+    // });
 
     dispatch(deleteAQuestionRequest(currentQuestion.id));
 
@@ -150,6 +155,14 @@ const QuestionPage = (): React.ReactElement => {
     );
 
     if (questionApiError) return;
+
+    dispatch(
+      editQuestionRequest(
+        currentQuestion.id,
+        'commentNumber',
+        currentQuestion.commentNumber + 1
+      )
+    );
   };
 
   const onThumbsUpClick = () => {
