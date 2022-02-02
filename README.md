@@ -6,7 +6,7 @@ This web app allows users to post questions and answers. Fell free to try it out
 
 Please note that, for now, ***passwords are saved in database as clear text. Do not use any of your usual passwords***.
 
-This app is deployed with Netlify and can be accessed here: https://mop-react-frontend.netlify.app/. I hope you have fun playing around with it.
+This app is deployed with Netlify and can be accessed here: https://mop-react-frontend.netlify.app/.
 
 ## Used technologies
 
