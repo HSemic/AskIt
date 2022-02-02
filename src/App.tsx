@@ -16,7 +16,7 @@ import RequireAuth from './components/molecules/RequireAuth';
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 import Footer from './components/molecules/Footer';
 
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from './components/atoms/CircularProgress';
 
 // import { hashAPassword } from './services/passwordHashingService';
 

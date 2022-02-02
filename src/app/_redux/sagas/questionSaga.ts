@@ -30,6 +30,7 @@ import { AxiosResponse } from 'axios';
 import * as userSelectors from '../selectors/userSelectors';
 import { generateRandomId } from '../../../services/uuidService';
 import { localizeDate } from '../../../services/localization';
+import { processUsername } from '../../../services/username';
 
 const getQuestionListNewest = (page: number, id: string | null) => {
   if (id === null)
@@ -93,10 +94,7 @@ function* fetchNewQuestionList(action: FetchQuestionListRequest) {
       results.push({
         id: question.id,
         questionText: question.title,
-        author:
-          user.firstName.length > 0 || user.lastName.length > 0
-            ? user.firstName + ' ' + user.lastName
-            : 'Anonymous',
+        author: user.username,
         authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
@@ -138,10 +136,7 @@ function* fetchTopQuestions() {
       results.push({
         id: question.id,
         questionText: question.title,
-        author:
-          user.firstName || user.lastName
-            ? user.firstName + ' ' + user.lastName
-            : 'Anonymous',
+        author: user.username,
         authorId: question.authorId,
         datetime: localizeDate(question.datetime),
         likes: question.likes,
@@ -179,13 +174,7 @@ function* fetchQuestionDetails(action: FetchQuestionDetailsRequest) {
     const addedQuestion: QuestionData = {
       id: response.data.id,
       questionText: response.data.title,
-      author:
-        users[response.data.authorId].firstName ||
-        users[response.data.authorId].lastName
-          ? users[response.data.authorId].firstName +
-            ' ' +
-            users[response.data.authorId].lastName
-          : 'Anonymous',
+      author: users[response.data.authorId].username,
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
@@ -225,13 +214,7 @@ function* postNewQuestion(action: PostQuestionRequest) {
     const addedQuestion: QuestionData = {
       id: response.data.id,
       questionText: response.data.title,
-      author:
-        users[response.data.authorId].firstName ||
-        users[response.data.authorId].lastName
-          ? users[response.data.authorId].firstName +
-            ' ' +
-            users[response.data.authorId].lastName
-          : 'Anonymous',
+      author: users[response.data.authorId].username,
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,
@@ -269,13 +252,7 @@ function* editQuestion(action: EditQuestionRequest) {
     const result: QuestionData = {
       id: response.data.id,
       questionText: response.data.title,
-      author:
-        users[response.data.authorId].firstName ||
-        users[response.data.authorId].lastName
-          ? users[response.data.authorId].firstName +
-            ' ' +
-            users[response.data.authorId].lastName
-          : 'Anonymous',
+      author: users[response.data.authorId].username,
       authorId: response.data.authorId,
       datetime: localizeDate(response.data.datetime),
       likes: response.data.likes,

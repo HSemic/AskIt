@@ -21,6 +21,7 @@ import {
 import { AxiosResponse } from 'axios';
 
 import { generateRandomId } from '../../../services/uuidService';
+import { processUsername } from '../../../services/username';
 
 // import { verifyPassword } from '../../../services/passwordHashingService';
 
@@ -102,7 +103,11 @@ function* fetchUserList() {
     const response: AxiosResponse<UserApiData[]> = yield call(getAllUsers);
     const results: { [id: string]: UserData } = {};
     response.data.forEach((user) => {
-      results[user.id] = { firstName: user.firstName, lastName: user.lastName };
+      results[user.id] = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: processUsername(user.firstName, user.lastName)
+      };
     });
     yield put(
       fetchUserListSuccess({

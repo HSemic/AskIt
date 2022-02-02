@@ -1,3 +1,4 @@
+import { processUsername } from '../../../../services/username';
 import { userTypes } from '../../actiontypes/userTypes';
 import { UserAction, UserState } from './types';
 
@@ -29,11 +30,15 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
       };
     case userTypes.REGISTER_USER_SUCCESS:
       const newUserEntry: {
-        [id: string]: { firstName: string; lastName: string };
+        [id: string]: { firstName: string; lastName: string; username: string };
       } = {};
       newUserEntry[action.payload.user.id] = {
         firstName: action.payload.user.firstName,
-        lastName: action.payload.user.lastName
+        lastName: action.payload.user.lastName,
+        username: processUsername(
+          action.payload.user.firstName,
+          action.payload.user.lastName
+        )
       };
       return {
         ...state,

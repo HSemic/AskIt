@@ -14,6 +14,7 @@ export interface UserApiData {
 export interface UserData {
   firstName: string;
   lastName: string;
+  username: string;
 }
 
 export interface UserState {

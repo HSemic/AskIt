@@ -29,12 +29,18 @@ const SideListUsers = ({
           const username = processUsername(user.firstName, user.lastName);
           return (
             <ListItem divider={index < users.length - 1} key={index}>
-              <Grid item container gap={2} justifyContent="flex-start">
-                <Grid item>
+              <Grid
+                item
+                container
+                gap={2}
+                justifyContent="flex-end"
+                display="table"
+              >
+                <Grid item display="table-cell">
                   <ListItemText primary={`${index + 1}.`} />
                 </Grid>
-                <Grid item>
-                  <Grid container>
+                <Grid item display="table-cell">
+                  <Grid container justifyContent="flex-start">
                     <Grid item flexGrow={0}>
                       <ListItemAvatar>
                         <UserAvatar
@@ -52,18 +58,14 @@ const SideListUsers = ({
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item flexGrow={1}>
-                  <Grid container justifyContent="flex-end">
-                    <Grid item>
-                      <ListItemText
-                        primary={
-                          user.numberOfAnswers === 1
-                            ? user.numberOfAnswers + 'comment'
-                            : user.numberOfAnswers + ' comments'
-                        }
-                      />
-                    </Grid>
-                  </Grid>
+                <Grid item flexGrow={1} display="table-cell">
+                  <ListItemText
+                    primary={
+                      user.numberOfAnswers === 1
+                        ? user.numberOfAnswers + ' comment'
+                        : user.numberOfAnswers + ' comments'
+                    }
+                  />
                 </Grid>
               </Grid>
             </ListItem>

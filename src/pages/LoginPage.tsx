@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { createSocket } from '../app/_redux/actions/socketActions';
 import { RootState } from '../app/_redux/reducers/rootReducer';
 import { useAuth } from '../components/providers/AuthProvider';
 
@@ -23,7 +24,11 @@ const LoginPage = (): React.ReactElement => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const { pending, error } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
+  const { loggedInUser, pending, error } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const { login, loggedIn } = useAuth();
 
@@ -44,6 +49,10 @@ const LoginPage = (): React.ReactElement => {
   useEffect(() => {
     if (loggedIn) navigate('/');
   }, [loggedIn, navigate]);
+
+  useEffect(() => {
+    if (loggedInUser !== null) dispatch(createSocket());
+  }, [loggedInUser, dispatch]);
 
   const onLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
