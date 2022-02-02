@@ -10,6 +10,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import UserAvatar from '../atoms/UserAvatar';
 import SideListTitle from '../atoms/SideListTitle';
 import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
+import { processUsername } from '../../services/username';
 
 interface SideListUsersProps {
   title: string;
@@ -25,18 +26,12 @@ const SideListUsers = ({
       <SideListTitle text={title} />
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {users.map((user, index) => {
-          let username = user.firstName ? user.firstName : '';
-          username = user.lastName
-            ? username + ' ' + user.lastName
-            : username + '';
+          const username = processUsername(user.firstName, user.lastName);
           return (
             <ListItem divider={index < users.length - 1}>
-              <Grid container gap={4}>
+              <Grid item container gap={2} justifyContent="flex-start">
                 <Grid item>
-                  <ListItemText
-                    primary={`${index + 1}.`}
-                    sx={{ flex: '0.2' }}
-                  />
+                  <ListItemText primary={`${index + 1}.`} />
                 </Grid>
                 <Grid item>
                   <ListItemAvatar>
@@ -46,14 +41,20 @@ const SideListUsers = ({
                     />
                   </ListItemAvatar>
                 </Grid>
-                <ListItemText
-                  primary={username.length > 0 ? username : 'Anonymous'}
-                  sx={{ marginLeft: '-40px' }}
-                />
-                <ListItemText
-                  primary={user.numberOfAnswers + ' comments'}
-                  sx={{ marginLeft: '-2px' }}
-                />
+                <Grid item>
+                  <ListItemText
+                    primary={username.length > 0 ? username : 'Anonymous'}
+                  />
+                </Grid>
+                <Grid item flexGrow={1}>
+                  <Grid container justifyContent="flex-end">
+                    <Grid item>
+                      <ListItemText
+                        primary={user.numberOfAnswers + ' comments'}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
             </ListItem>
           );

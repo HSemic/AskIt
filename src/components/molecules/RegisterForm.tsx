@@ -14,7 +14,8 @@ import FormMessage from '../atoms/FormMessage';
 
 const useStyles = makeStyles({
   formPaper: {
-    padding: '4rem 2rem'
+    padding: '4rem 2rem',
+    background: 'transparent !important'
   },
   formInput: {
     width: '100%'
@@ -73,7 +74,7 @@ const RegisterForm = ({
   };
 
   return (
-    <Paper className={classes.formPaper}>
+    <Paper className={classes.formPaper} elevation={0}>
       <Grid
         container
         direction="row"

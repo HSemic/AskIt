@@ -70,7 +70,14 @@ const ProfileTemplate = ({
   const classes = useStyles();
 
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.82)',
+        borderRadius: '2rem',
+        padding: '3rem 0'
+      }}
+    >
       <Grid container direction="column" gap={4}>
         <Grid item>
           <Paper className={classes.profilePaper}>

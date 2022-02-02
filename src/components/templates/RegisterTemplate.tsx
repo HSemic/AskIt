@@ -36,7 +36,14 @@ const RegisterTemplate = ({
   onRegisterFormSubmit
 }: RegisterTemplateProps): React.ReactElement => {
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.82)',
+        borderRadius: '2rem',
+        padding: '3rem 0'
+      }}
+    >
       <RegisterForm
         email={email}
         setEmail={setEmail}

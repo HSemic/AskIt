@@ -17,6 +17,7 @@ import Author from '../atoms/MetaAuthor';
 import MetaDate from '../atoms/MetaDate';
 import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 import { localizeDate } from '../../services/localization';
+import { processUsername } from '../../services/username';
 
 const useStyles = makeStyles({
   profilePaper: {
@@ -74,9 +75,7 @@ const ProfileInfo = ({
 }: ProfileInfoProps): React.ReactElement => {
   const classes = useStyles();
 
-  let username = user.firstName ? user.dateJoined : '';
-  username = user.lastName ? username + ' ' + user.lastName : username + '';
-  if (username.length === 0) username = 'Anonymous';
+  const username = processUsername(user.firstName, user.lastName);
 
   const onInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>,

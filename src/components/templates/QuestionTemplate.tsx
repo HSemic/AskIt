@@ -97,7 +97,14 @@ const QuestionTemplate = ({
     loggedInUserId && loggedInUserId === question.authorId;
 
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.82)',
+        borderRadius: '2rem',
+        padding: '3rem 0'
+      }}
+    >
       <Paper className={classes.paperMain}>
         <Grid container direction="column" gap={4}>
           <Grid item xs={12}>

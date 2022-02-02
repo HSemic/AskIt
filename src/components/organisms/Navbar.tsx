@@ -10,13 +10,13 @@ import LinkButton from '../atoms/LinkButton';
 import ButtonGroup from '../molecules/ButtonGroup';
 import ProfileMenu from '../molecules/ProfileMenu';
 
-import logo from '../../images/logo2.jpg';
+import logo from '../../images/logo.png';
 
 import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles({
   appBar: {
-    backgroundColor: 'white !important'
+    backgroundColor: 'rgba(255, 255, 255, 0.8) !important'
   }
 });
 

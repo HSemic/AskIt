@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
 import QuestionList from '../organisms/QuestionList';
-import SideListUsers from '../organisms/SideListUsers';
-import SideListTopPosts from '../organisms/SideListTopPosts';
+import SideListUsers from '../molecules/SideListUsers';
+import SideListTopPosts from '../molecules/SideListTopPosts';
 
 import OneInputForm from '../molecules/OneInputForm';
 import LogInToMessage from '../atoms/LogInToMessage';
@@ -46,8 +46,14 @@ const HomeTemplate = ({
   pendingAddQuestion
 }: HomeTemplateProps): React.ReactElement => {
   return (
-    <Container>
-      <Grid container gap={2}>
+    <Container
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.82)',
+        borderRadius: '2rem',
+        padding: '3rem 0'
+      }}
+    >
+      <Grid container gap={2} justifyContent="center">
         <Grid item md={7} xs={12}>
           <Grid container gap={2}>
             <Grid item xs={12}>

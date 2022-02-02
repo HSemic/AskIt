@@ -7,13 +7,13 @@ import VerticalSpacer from '../atoms/VerticalSpacer';
 
 const useStyles = makeStyles({
   footer: {
-    height: '20rem',
-    backgroundColor: '#2D293D',
+    height: '10rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     position: 'absolute',
     bottom: 0
   },
   footerText: {
-    fontSize: '4rem !important',
+    fontSize: '3rem !important',
     fontWeight: 'bold !important'
   }
 });
@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <>
       <VerticalSpacer />
-      <VerticalSpacer />
+
       <Grid
         container
         className={classes.footer}
@@ -34,7 +34,7 @@ const Footer = () => {
         <Typography
           className={classes.footerText}
           variant="body1"
-          color={'white'}
+          color={'black'}
         >
           HSemic
         </Typography>
