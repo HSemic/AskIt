@@ -10,13 +10,13 @@ This app is deployed with Netlify and can be accessed here: https://mop-react-fr
 
 ## Used technologies
 
-The app was built using the [React library](https://reactjs.org/) v17.0.2 and bootstrapped using create-react-app.
+The app is built using the [React library](https://reactjs.org/) v17.0.2 and bootstrapped using create-react-app.
 
-Code itself was written using [TypeScript](https://www.typescriptlang.org/) (v4.5.5 at the moment), a statically typed JavaScript superset.
+Code itself is written using [TypeScript](https://www.typescriptlang.org/) (v4.5.5 at the moment), a statically typed JavaScript superset.
 
-UI and styling was done using [MaterialUI](https://material-ui.com/) (v5), a React UI framework.
+UI and styling is done with [MaterialUI](https://material-ui.com/) (v5), a React UI framework.
 
-Global state was managed using the [Redux](https://redux.js.org/) (v4.1.2 at the moment) library.
+Global state is managed using the [Redux](https://redux.js.org/) (v4.1.2 at the moment) library.
 
 For middleware, [Redux Saga](https://redux-saga.js.org/) (v1.1.3) has been chosen.
 
