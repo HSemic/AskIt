@@ -1,4 +1,4 @@
-# Ordinare, the learning tool and visualizer for sorting algorithms
+# AskIt, the online tool for asking and answering questions on various topics
 
 Welcome to AskIt!
 
