@@ -97,7 +97,7 @@ const LoginForm = ({
                   onChange={(event) => onInputValueChange(event, setPassword)}
                 />
               </Grid>
-              {apiError !== null && apiError.length > 0 ? (
+              {apiError && apiError !== null && apiError.length > 0 ? (
                 <Grid item>
                   <FormMessage type="error" text={apiError} />
                 </Grid>
