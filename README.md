@@ -42,7 +42,7 @@ Outside the ```src``` directory, ```.circleci``` directory contains the ```confi
 
 ## Design
 
-Design was implemented using MaterialUI. The app is responsive and works on various screen sizes.
+Design is implemented using MaterialUI. The app is responsive and works on various screen sizes.
 
 ## Available Scripts
 
