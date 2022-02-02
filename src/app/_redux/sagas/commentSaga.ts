@@ -133,7 +133,7 @@ function* editComment(action: EditCommentRequest) {
       editAComment(action.id, 'text', action.value)
     );
 
-    console.log(response);
+    // console.log(response);
 
     const users: { [id: string]: UserData } = yield select(
       userSelectors.allUsers

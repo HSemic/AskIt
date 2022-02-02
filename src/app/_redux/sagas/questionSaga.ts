@@ -73,7 +73,7 @@ const deleteAQuestion = (id: string) =>
 
 function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
-    console.log(action.id);
+    // console.log(action.id);
 
     const response: AxiosResponse<QuestionApiData[]> = yield call(
       getQuestionListNewest,
@@ -256,7 +256,7 @@ function* postNewQuestion(action: PostQuestionRequest) {
 
 function* editQuestion(action: EditQuestionRequest) {
   try {
-    if (action.attribute === 'title') console.log(action.value);
+    // if (action.attribute === 'title') console.log(action.value);
 
     const response: AxiosResponse<QuestionApiData> = yield call(() =>
       editAQuestion(action.id, action.attribute, action.value)

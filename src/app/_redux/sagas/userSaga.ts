@@ -169,7 +169,7 @@ function* editUser(action: EditUserRequest) {
       editAnUser(action.id, action.attribute, action.value)
     );
 
-    console.log(response);
+    // console.log(response);
 
     yield put(
       registerUserSuccess({

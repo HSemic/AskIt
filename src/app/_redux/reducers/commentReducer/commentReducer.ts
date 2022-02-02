@@ -56,7 +56,7 @@ const commentReducer = (
       ) {
         return comment.id !== action.payload.deletedId;
       });
-      console.log(action.payload.deletedId);
+      // console.log(action.payload.deletedId);
       return {
         ...state,
         pending: false,
