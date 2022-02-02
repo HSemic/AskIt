@@ -1,7 +1,6 @@
 import askIt from '../../api/askIt';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
-  fetchQuestionCommentsRequest,
   fetchQuestionCommentsSuccess,
   fetchQuestionCommentsFailure,
   editCommentSuccess,
@@ -29,11 +28,6 @@ import { UserData } from '../reducers/userReducer/types';
 import * as userSelectors from '../selectors/userSelectors';
 
 // import { verifyPassword } from '../../../services/passwordHashingService';
-
-const config = {
-  userLogInErrorMessage: 'Incorrect username or password',
-  userExistsMessage: 'User already exists'
-};
 
 const getCommentsByQuestionId = (id: string) =>
   askIt.get<CommentApiData[]>(`/comments?postId=${id}&_sort=datetime`);
@@ -176,9 +170,7 @@ function* editComment(action: EditCommentRequest) {
 
 function* deleteComment(action: DeleteACommentRequest) {
   try {
-    const response: AxiosResponse<CommentApiData> = yield call(() =>
-      deleteAComment(action.id)
-    );
+    yield call(() => deleteAComment(action.id));
 
     yield put(
       deleteACommentSuccess({

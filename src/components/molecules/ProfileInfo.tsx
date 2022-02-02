@@ -14,7 +14,7 @@ import FormMessage from '../atoms/FormMessage';
 
 import UserAvatar from '../atoms/UserAvatar';
 import Author from '../atoms/MetaAuthor';
-import MetaDate from '../atoms/MetaDate';
+import MetaText from '../atoms/MetaText';
 import { UserApiData } from '../../app/_redux/reducers/userReducer/types';
 import { localizeDate } from '../../services/localization';
 import { processUsername } from '../../services/username';
@@ -132,7 +132,7 @@ const ProfileInfo = ({
                   </Grid>
                   <Grid item>
                     <Typography variant="body1">Date joined: </Typography>
-                    <MetaDate
+                    <MetaText
                       date={localizeDate(user.dateJoined)}
                       variant="profile"
                     />
@@ -142,7 +142,7 @@ const ProfileInfo = ({
                       <Typography variant="body1">
                         Number of questions:{' '}
                       </Typography>
-                      <MetaDate
+                      <MetaText
                         date={user.numberOfQuestions.toString()}
                         variant="profile"
                       />
@@ -151,7 +151,7 @@ const ProfileInfo = ({
                       <Typography variant="body1">
                         Number of answers:{' '}
                       </Typography>
-                      <MetaDate
+                      <MetaText
                         date={user.numberOfAnswers.toString()}
                         variant="profile"
                       />

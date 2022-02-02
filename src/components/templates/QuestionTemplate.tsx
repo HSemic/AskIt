@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 
 const config = {
   editQuestionInputLabel: 'Question text',
-  addCommentLabel: 'Comment text'
+  addCommentLabel: 'Answer text'
 };
 
 interface QuestionTemplateProps {
@@ -217,6 +217,7 @@ const QuestionTemplate = ({
                   loggedInUserId={loggedInUserId}
                   loggedInUserNumberOfAnswers={loggedInUserNumberOfAnswers}
                   currentQuestionNumberOfComments={question.commentNumber}
+                  fallBackMessage="No answers yet. Be the first to answer!"
                 />
               )}
             </Paper>

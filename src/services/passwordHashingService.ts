@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
+import { createHash } from 'crypto';
 
 export const hashAPassword = (password: string): string => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync());
+  return createHash('sha256').update(password).digest('hex');
 };
 
 export const verifyPassword = (password: string, hash: string): boolean => {
-  return bcrypt.compareSync(password, hash);
+  return createHash('sha256').update(password).digest('hex') === hash;
 };

@@ -6,7 +6,6 @@ import {
   fetchUserByEmailAndValidateFailure,
   fetchUserListFailure,
   registerUserSuccess,
-  registerUserFailure,
   fetchTopUsersSuccess,
   fetchTopUsersFailure
 } from '../actions/userActions';

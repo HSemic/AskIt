@@ -55,7 +55,7 @@ const HomeTemplate = ({
     >
       <Grid container gap={2} justifyContent="center">
         <Grid item md={7} xs={12}>
-          <Grid container gap={2}>
+          <Grid container gap={6}>
             <Grid item xs={12}>
               {loggedIn ? (
                 <OneInputForm
@@ -75,6 +75,8 @@ const HomeTemplate = ({
               <QuestionList
                 questions={questions}
                 incrementPage={incrementPage}
+                fallBackText="No questions have been asked yet"
+                title="Most recent questions"
               />
             </Grid>
           </Grid>

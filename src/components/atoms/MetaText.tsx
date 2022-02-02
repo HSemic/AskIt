@@ -8,12 +8,12 @@ const useStyles = makeStyles({
   }
 });
 
-interface MetaDateProps {
+interface MetaTextProps {
   date: string;
   variant: 'normal' | 'profile';
 }
 
-const MetaDate = ({ date, variant }: MetaDateProps): React.ReactElement => {
+const MetaText = ({ date, variant }: MetaTextProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
@@ -27,4 +27,4 @@ const MetaDate = ({ date, variant }: MetaDateProps): React.ReactElement => {
   );
 };
 
-export default MetaDate;
+export default MetaText;

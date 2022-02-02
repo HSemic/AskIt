@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 interface ProfileTemplateProps {
   userData: UserApiData;
   questions: QuestionData[];
-  page: number;
   incrementPage: () => void;
   firstName: string;
   setFirstName: React.Dispatch<React.SetStateAction<string>>;
@@ -45,7 +44,6 @@ interface ProfileTemplateProps {
 const ProfileTemplate = ({
   userData,
   questions,
-  page,
   incrementPage,
   firstName,
   setFirstName,
@@ -111,6 +109,7 @@ const ProfileTemplate = ({
               questions={questions}
               title="My questions"
               incrementPage={incrementPage}
+              fallBackText="You haven't asked any questions yet."
             />
           </Paper>
         </Grid>

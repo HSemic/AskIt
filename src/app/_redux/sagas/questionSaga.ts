@@ -23,7 +23,7 @@ import {
   QuestionApiData
 } from '../reducers/questionReducer/types';
 
-import { UserApiData, UserData } from '../reducers/userReducer/types';
+import { UserData } from '../reducers/userReducer/types';
 
 import { AxiosResponse } from 'axios';
 
@@ -66,10 +66,10 @@ const addNewQuestion = (question: Omit<QuestionApiData, 'id'>) =>
 const deleteAQuestion = (id: string) =>
   askIt.delete<QuestionApiData>(`/questions/${id}`);
 
-const setUserQuestionCount = (userId: string, questionCount: number) =>
-  askIt.patch<QuestionApiData>(`/users/${userId}`, {
-    numberOfQuestions: questionCount
-  });
+// const setUserQuestionCount = (userId: string, questionCount: number) =>
+//   askIt.patch<QuestionApiData>(`/users/${userId}`, {
+//     numberOfQuestions: questionCount
+//   });
 
 function* fetchNewQuestionList(action: FetchQuestionListRequest) {
   try {
@@ -300,9 +300,7 @@ function* editQuestion(action: EditQuestionRequest) {
 
 function* deleteQuestion(action: DeleteAQuestionRequest) {
   try {
-    const response: AxiosResponse<any> = yield call(() =>
-      deleteAQuestion(action.id)
-    );
+    yield call(() => deleteAQuestion(action.id));
 
     yield put(deleteAQuestionSuccess());
   } catch (e: any) {

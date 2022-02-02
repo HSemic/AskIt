@@ -40,13 +40,13 @@ const ProfilePage = (): React.ReactElement => {
     return function cleanup() {
       dispatch(clearQuestions());
     };
-  }, []);
+  }, [dispatch, loggedInUser]);
 
   useEffect(() => {
     if (!loggedInUser) return;
 
     dispatch(fetchQuestionListRequest(page, loggedInUser?.id));
-  }, [page]);
+  }, [dispatch, loggedInUser, page]);
 
   const incrementPage = () => {
     setPage(page + 1);
@@ -124,7 +124,6 @@ const ProfilePage = (): React.ReactElement => {
     <ProfileTemplate
       userData={loggedInUser}
       questions={questionList}
-      page={page}
       firstName={firstName}
       setFirstName={setFirstName}
       lastName={lastName}

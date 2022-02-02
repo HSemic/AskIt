@@ -15,7 +15,11 @@ import RequireAuth from './components/molecules/RequireAuth';
 import VerticalSpacer from './components/atoms/VerticalSpacer';
 import Footer from './components/molecules/Footer';
 
+// import { hashAPassword } from './services/passwordHashingService';
+
 const App = (): React.ReactElement => {
+  // console.log(hashAPassword('test'));
+
   return (
     <>
       <CssBaseline />

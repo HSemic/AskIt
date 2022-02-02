@@ -43,7 +43,7 @@ const LoginPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (loggedIn) navigate('/');
-  }, [loggedIn]);
+  }, [loggedIn, navigate]);
 
   const onLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

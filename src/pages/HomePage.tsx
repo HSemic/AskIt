@@ -48,11 +48,11 @@ const HomePage = (): React.ReactElement => {
     return function cleanup() {
       dispatch(clearQuestions());
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchQuestionListRequest(page, null));
-  }, [page]);
+  }, [page, dispatch]);
 
   const onAddQuestionFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

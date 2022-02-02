@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 
 import UserAvatar from '../atoms/UserAvatar';
 import Author from '../atoms/MetaAuthor';
-import MetaDate from '../atoms/MetaDate';
+import MetaText from '../atoms/MetaText';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
 import CommentText from '../atoms/CommentText';
 import { CommentData } from '../../app/_redux/reducers/commentReducer/types';
@@ -33,7 +33,7 @@ const config = {
     pageDivider: ' - '
   },
   notLoggedInError: 'You are not logged in.',
-  edditCommentFormInputLabel: 'Comment text'
+  edditCommentFormInputLabel: 'Answer text'
 };
 
 interface CommentProps {
@@ -118,7 +118,7 @@ const Comment = ({
                   variant="page"
                   {...config.authorDateDivider}
                 />
-                <MetaDate
+                <MetaText
                   date={localizeDate(comment.datetime)}
                   variant="normal"
                 />

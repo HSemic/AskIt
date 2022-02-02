@@ -9,7 +9,7 @@ const initialState: UserState = {
   error: null
 };
 
-export default (state = initialState, action: UserAction): UserState => {
+const userReducer = (state = initialState, action: UserAction): UserState => {
   switch (action.type) {
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_REQUEST ||
       userTypes.FETCH_USERLIST_REQUEST ||
@@ -95,3 +95,5 @@ export default (state = initialState, action: UserAction): UserState => {
       };
   }
 };
+
+export default userReducer;

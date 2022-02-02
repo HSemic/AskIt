@@ -33,7 +33,7 @@ const CommentCount = ({
         component="span"
         variant="body2"
       >
-        {`${commentCount} ${commentCount !== 1 ? 'comments' : 'comment'}`}
+        {`${commentCount} ${commentCount !== 1 ? 'answers' : 'answer'}`}
       </Typography>
     </Grid>
   );

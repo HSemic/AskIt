@@ -7,11 +7,15 @@ import { blue } from '@mui/material/colors';
 
 interface LoginToMessageProps {
   text: string;
+  height?: string;
 }
 
-const LogInToMessage = ({ text }: LoginToMessageProps): React.ReactElement => {
+const LogInToMessage = ({
+  text,
+  height
+}: LoginToMessageProps): React.ReactElement => {
   return (
-    <Paper sx={{ padding: '2rem' }}>
+    <Paper sx={{ padding: '2rem', height: height }}>
       <Typography variant="body1" color={blue[600]}>
         {text}
       </Typography>

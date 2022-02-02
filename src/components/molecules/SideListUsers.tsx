@@ -50,7 +50,11 @@ const SideListUsers = ({
                   <Grid container justifyContent="flex-end">
                     <Grid item>
                       <ListItemText
-                        primary={user.numberOfAnswers + ' comments'}
+                        primary={
+                          user.numberOfAnswers === 1
+                            ? user.numberOfAnswers + 'comment'
+                            : user.numberOfAnswers + ' comments'
+                        }
                       />
                     </Grid>
                   </Grid>

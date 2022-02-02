@@ -14,7 +14,6 @@ import {
 import {
   addCommentRequest,
   clearComments,
-  deleteACommentRequest,
   fetchQuestionCommentsRequest
 } from '../app/_redux/actions/commentActions';
 

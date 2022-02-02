@@ -46,14 +46,7 @@ const RegisterPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (loggedIn) navigate('/');
-  }, [loggedIn]);
-
-  const onInputValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setValue: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    setValue(event.currentTarget.value);
-  };
+  }, [loggedIn, navigate]);
 
   const onRegisterFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

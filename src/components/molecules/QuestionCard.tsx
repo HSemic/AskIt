@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent';
 
 import QuestionText from '../atoms/QuestionText';
 import Author from '../atoms/MetaAuthor';
-import MetaDate from '../atoms/MetaDate';
+import MetaText from '../atoms/MetaText';
 import CommentCount from '../atoms/CommentCount';
 import UserAvatar from '../atoms/UserAvatar';
 import AuthorDateDivider from '../atoms/AuthorDateDivider';
@@ -86,7 +86,7 @@ const QuestionCard = ({ question }: QuestionCardProps): React.ReactElement => {
                   variant={question.variant}
                   {...config.authorDateDivider}
                 />
-                <MetaDate
+                <MetaText
                   date={question.datetime.toString()}
                   variant="normal"
                 />
