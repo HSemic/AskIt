@@ -26,8 +26,6 @@ import * as userSelectors from '../selectors/userSelectors';
 import { localizeDate } from '../../../services/localization';
 import { UserData } from '../reducers/userReducer/types';
 
-import { generateRandomId } from '../../../services/uuidService';
-
 const getUnreadNotificationsForLoggedInUser = (id: string) =>
   askIt.get<NotificationApiData[]>(
     `/notifications?recipientId=${id}&_read=false&_sort=datetime&_order=desc`

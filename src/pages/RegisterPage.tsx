@@ -54,7 +54,7 @@ const RegisterPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (password2.length > 0 && !validatePassword(password2))
-      setPasswordError(config.validationErrors.passwordLength);
+      setPassword2Error(config.validationErrors.passwordLength);
     else setPassword2Error('');
   }, [password2]);
 
@@ -66,7 +66,7 @@ const RegisterPage = (): React.ReactElement => {
       setPasswordError('');
       setPassword2Error('');
     }
-  }, [password]);
+  }, [password, password2]);
 
   useEffect(() => {
     if (loggedIn) {
