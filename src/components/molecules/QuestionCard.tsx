@@ -87,7 +87,7 @@ const QuestionCard = ({ question }: QuestionCardProps): React.ReactElement => {
                   {...config.authorDateDivider}
                 />
                 <MetaText
-                  date={question.datetime.toString()}
+                  text={question.datetime.toString()}
                   variant="normal"
                 />
               </Grid>

@@ -22,6 +22,7 @@ import { RootState } from '../app/_redux/reducers/rootReducer';
 import QuestionTemplate from '../components/templates/QuestionTemplate';
 import { editUserRequest } from '../app/_redux/actions/userActions';
 import { validateQuestionText } from '../services/validationService';
+import { sendNotificationRequest } from '../app/_redux/actions/notificationActions';
 
 const config = {
   questionError: 'Question needs to be between 8 and 150 characters long.'
@@ -162,6 +163,19 @@ const QuestionPage = (): React.ReactElement => {
         currentQuestion.commentNumber + 1
       )
     );
+
+    if (questionApiError) return;
+
+    setCommentText('');
+
+    if (currentQuestion.authorId !== loggedInUser.id)
+      dispatch(
+        sendNotificationRequest({
+          recipientId: currentQuestion.authorId,
+          authorId: loggedInUser.id,
+          questionId: currentQuestion.id
+        })
+      );
   };
 
   const onThumbsUpClick = () => {

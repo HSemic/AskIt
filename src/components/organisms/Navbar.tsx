@@ -14,6 +14,14 @@ import logo from '../../images/logo.png';
 
 import { useAuth } from '../providers/AuthProvider';
 
+import NotificationList from './NotificationList';
+import { Grid } from '@mui/material';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/_redux/reducers/rootReducer';
+import { NotificationApiData } from '../../app/_redux/reducers/notificationReducer/types';
+import { receiveNotificationRequest } from '../../app/_redux/actions/notificationActions';
+
 const useStyles = makeStyles({
   appBar: {
     backgroundColor: 'rgba(255, 255, 255, 0.8) !important'
@@ -30,6 +38,23 @@ const Navbar = (): React.ReactElement => {
   const classes = useStyles();
 
   const { loggedIn } = useAuth();
+
+  const dispatch = useDispatch();
+
+  const { notificationSocket, notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
+
+  React.useEffect(() => {
+    if (!notificationSocket) return;
+
+    notificationSocket.on(
+      'notification',
+      (notification: NotificationApiData) => {
+        dispatch(receiveNotificationRequest(notification));
+      }
+    );
+  }, [dispatch, notificationSocket]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -52,7 +77,16 @@ const Navbar = (): React.ReactElement => {
                 />
               </>
             ) : (
-              <ProfileMenu />
+              <>
+                <Grid container alignItems="center">
+                  <Grid item>
+                    <NotificationList notificationList={notifications} />
+                  </Grid>
+                  <Grid item>
+                    <ProfileMenu />
+                  </Grid>
+                </Grid>
+              </>
             )}
           </ButtonGroup>
         </Toolbar>

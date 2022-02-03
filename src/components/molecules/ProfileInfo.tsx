@@ -133,7 +133,7 @@ const ProfileInfo = ({
                   <Grid item>
                     <Typography variant="body1">Date joined: </Typography>
                     <MetaText
-                      date={localizeDate(user.dateJoined)}
+                      text={localizeDate(user.dateJoined)}
                       variant="profile"
                     />
                   </Grid>
@@ -143,7 +143,7 @@ const ProfileInfo = ({
                         Number of questions:{' '}
                       </Typography>
                       <MetaText
-                        date={user.numberOfQuestions.toString()}
+                        text={user.numberOfQuestions.toString()}
                         variant="profile"
                       />
                     </Grid>
@@ -152,7 +152,7 @@ const ProfileInfo = ({
                         Number of answers:{' '}
                       </Typography>
                       <MetaText
-                        date={user.numberOfAnswers.toString()}
+                        text={user.numberOfAnswers.toString()}
                         variant="profile"
                       />
                     </Grid>

@@ -3,7 +3,7 @@ import { IconButton as IcnBtn } from '@mui/material';
 
 interface IconButtonProps {
   children: JSX.Element;
-  onClick?: () => void;
+  onClick?: (() => void) | ((event: React.MouseEvent<HTMLElement>) => void);
 }
 
 const IconButton = ({

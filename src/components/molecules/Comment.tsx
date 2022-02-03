@@ -119,7 +119,7 @@ const Comment = ({
                   {...config.authorDateDivider}
                 />
                 <MetaText
-                  date={localizeDate(comment.datetime)}
+                  text={localizeDate(comment.datetime)}
                   variant="normal"
                 />
               </Grid>

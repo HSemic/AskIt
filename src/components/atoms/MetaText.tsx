@@ -3,26 +3,26 @@ import { makeStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 
 const useStyles = makeStyles({
-  date: {
+  text: {
     color: '#787C7E'
   }
 });
 
 interface MetaTextProps {
-  date: string;
+  text: string;
   variant: 'normal' | 'profile';
 }
 
-const MetaText = ({ date, variant }: MetaTextProps): React.ReactElement => {
+const MetaText = ({ text, variant }: MetaTextProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <Typography
-      className={classes.date}
+      className={classes.text}
       variant={variant === 'normal' ? 'body2' : 'body1'}
       component="span"
     >
-      {date}
+      {text}
     </Typography>
   );
 };
