@@ -67,7 +67,7 @@ const commentReducer = (
       return {
         ...state,
         pending: false,
-        commentList: [action.payload.newComment, ...state.commentList],
+        commentList: [...state.commentList, action.payload.newComment],
         requestStatus: 'success'
       };
     case commentTypes.ADD_COMMENT_FAILURE:

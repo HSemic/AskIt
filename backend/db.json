@@ -1,0 +1,294 @@
+{
+  "questions": [
+    {
+      "title": "Which GPU brand is the best?",
+      "authorId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "datetime": 1643868662661,
+      "likes": 7,
+      "dislikes": 2,
+      "commentNumber": 4,
+      "id": "e812bc17-097f-4c65-b2e6-551f769a05a9"
+    },
+    {
+      "title": "So, I wanted to make one long question, just to make you all read it. I don't have much to say, except that you should probably visit Bosnia and try some ćevapi. So, how are you doing?",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "datetime": 1643869927611,
+      "likes": 2,
+      "dislikes": 0,
+      "commentNumber": 1,
+      "id": "be6c7deb-11eb-44cb-9aff-0890488b3fcc"
+    },
+    {
+      "title": "So, Game of Thrones or Witcher?",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "datetime": 1643871559680,
+      "likes": 4,
+      "dislikes": 2,
+      "commentNumber": 1,
+      "id": "8ef27d31-0816-4610-b584-f1a99f9d103f"
+    },
+    {
+      "title": "Do you guys go to the gym and what is your favorite exercise?\n\nEDIT: My favorite exercise are back squats, but I don't think they favor me very much",
+      "authorId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "datetime": 1643871727395,
+      "likes": 4,
+      "dislikes": 1,
+      "commentNumber": 4,
+      "id": "a5a53e8d-94be-452a-a411-29956322f528"
+    },
+    {
+      "title": "Guys, I need medical advice. My elbow hurts when I lift my arm? What should I do?",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "datetime": 1643873095120,
+      "likes": 0,
+      "dislikes": 0,
+      "commentNumber": 1,
+      "id": "89fe10c3-aafb-4e97-8ea5-e4673df7ebc9"
+    }
+  ],
+  "comments": [
+    {
+      "text": "I suggest nVidia",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "datetime": 1643868714796,
+      "postId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "id": "cd09dff1-842f-4c6d-bec1-08ae9938dbd8"
+    },
+    {
+      "text": "I think AMD is better than nVidia. Radeons are nice.",
+      "authorId": "6ed97ab8-fd23-4b1c-a74d-dcde4ba41db3",
+      "datetime": 1643868812378,
+      "postId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "id": "2518d6e2-2073-495e-b327-557cdfa36c00"
+    },
+    {
+      "text": "I suggest you go outside, RL has the best graphics",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "datetime": 1643868855540,
+      "postId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "id": "69a9ce62-c58b-4f17-9c1b-6ccc8fb61f90"
+    },
+    {
+      "text": "ty for help everyone... I guess",
+      "authorId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "datetime": 1643869369553,
+      "postId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "id": "42160b6e-5d50-4a4a-b8af-fccac39e5bf0"
+    },
+    {
+      "text": "I'm not doing well, but those \"ćevapi\" sound like they might help...",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "datetime": 1643871115500,
+      "postId": "be6c7deb-11eb-44cb-9aff-0890488b3fcc",
+      "id": "72c66aea-d390-45ae-ad2b-81ec54841ff7"
+    },
+    {
+      "text": "Lord of the Rings, dude...",
+      "authorId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "datetime": 1643871586154,
+      "postId": "8ef27d31-0816-4610-b584-f1a99f9d103f",
+      "id": "d68f30c0-ab71-4278-87fc-8edde31d0003"
+    },
+    {
+      "text": "Who does squats these days anyway? I just hang from a smith machine and I am JACKED",
+      "authorId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "datetime": 1643871927954,
+      "postId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "id": "d63cc7d4-96de-496b-8d91-fff67cad5389"
+    },
+    {
+      "text": "that can actually be good for grip strength",
+      "authorId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "datetime": 1643871995900,
+      "postId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "id": "804177d2-1cad-4001-93ca-ae14197baca6"
+    },
+    {
+      "text": "my favorite exercise are pringles/poritos supersets.. sometimes I add a good burger to the mix",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "datetime": 1643872724410,
+      "postId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "id": "1836b606-50bc-4bf5-8089-da37497b1b89"
+    },
+    {
+      "text": "@Anonymous and who the heck are you, anyway?",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "datetime": 1643872859403,
+      "postId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "id": "0ecf3ece-c7d6-42b5-bd36-28e649de41c3"
+    },
+    {
+      "text": "don't lift your arm m8",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "datetime": 1643873127303,
+      "postId": "89fe10c3-aafb-4e97-8ea5-e4673df7ebc9",
+      "id": "3f1dba36-1b1f-438e-ad5b-063043770eec"
+    }
+  ],
+  "users": [
+    {
+      "firstName": "Haris",
+      "lastName": "Semic",
+      "email": "hsemic991@gmail.com",
+      "password": "528ada333877e7084ffd748fbfca9c1f902718eff62ab9f85b22e3065aab020b",
+      "id": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "numberOfAnswers": 2,
+      "numberOfQuestions": 1,
+      "dateJoined": 1643867741614
+    },
+    {
+      "firstName": "Haris",
+      "lastName": "Dev",
+      "email": "test@test.com",
+      "password": "528ada333877e7084ffd748fbfca9c1f902718eff62ab9f85b22e3065aab020b",
+      "id": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "numberOfAnswers": 3,
+      "numberOfQuestions": 2,
+      "dateJoined": 1643867805241
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "email": "testtest@test.com",
+      "password": "528ada333877e7084ffd748fbfca9c1f902718eff62ab9f85b22e3065aab020b",
+      "id": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "numberOfAnswers": 3,
+      "numberOfQuestions": 1,
+      "dateJoined": 1643868496635
+    },
+    {
+      "firstName": "Emina",
+      "lastName": "",
+      "email": "emina@test.com",
+      "password": "641ef60e95aa560dde4a4a6a76a519b808e65c02219c53b53088567c87d7935b",
+      "id": "6ed97ab8-fd23-4b1c-a74d-dcde4ba41db3",
+      "numberOfAnswers": 1,
+      "numberOfQuestions": 0,
+      "dateJoined": 1643868541862
+    },
+    {
+      "firstName": "Emin",
+      "lastName": "",
+      "email": "emin@test.com",
+      "password": "6841d06ab69281d78ffa9ae8229d4eebe098abf8a8abb7648b1c14bfbe02cb7b",
+      "id": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "numberOfAnswers": 2,
+      "numberOfQuestions": 1,
+      "dateJoined": 1643868615937
+    }
+  ],
+  "notifications": [
+    {
+      "id": "3fe4727e-b9f9-4074-8126-ad172458576c",
+      "recipientId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "questionId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": true,
+      "datetime": 1643868714802
+    },
+    {
+      "id": "60923de9-32be-4b2c-b9c0-b0105cf92870",
+      "recipientId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "questionId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "authorId": "6ed97ab8-fd23-4b1c-a74d-dcde4ba41db3",
+      "read": true,
+      "datetime": 1643868812384
+    },
+    {
+      "id": "ebc9f952-bb9c-430c-9f57-6240547e6250",
+      "recipientId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "questionId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "read": true,
+      "datetime": 1643868855547
+    },
+    {
+      "id": "d209b986-965e-4376-bd16-7f7282d5f698",
+      "recipientId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "questionId": "e812bc17-097f-4c65-b2e6-551f769a05a9",
+      "authorId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "read": true,
+      "datetime": 1643869369558
+    },
+    {
+      "id": "631498d1-b78c-428d-9075-4ee4711c8e5e",
+      "recipientId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "questionId": "be6c7deb-11eb-44cb-9aff-0890488b3fcc",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "read": true,
+      "datetime": 1643871115511
+    },
+    {
+      "id": "830e5c24-65ac-4996-a19b-53f12503def1",
+      "recipientId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "questionId": "8ef27d31-0816-4610-b584-f1a99f9d103f",
+      "authorId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "read": true,
+      "datetime": 1643871586160
+    },
+    {
+      "id": "19803a7e-2045-4e31-9334-827cd65a6fc8",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "e0e2da76-00a8-4d95-ac84-e650c1df1e4d",
+      "read": true,
+      "datetime": 1643871927961
+    },
+    {
+      "id": "22138c7b-379b-49b8-b136-be75b6b76a73",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "read": true,
+      "datetime": 1643871995905
+    },
+    {
+      "id": "5faafa3e-8dbe-4470-ac83-e0f69f137b5a",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": true,
+      "datetime": 1643872138531
+    },
+    {
+      "id": "d06455ee-ba72-4ea0-8de6-067634b46309",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": true,
+      "datetime": 1643872548624
+    },
+    {
+      "id": "e1e8b626-1e0d-4a5a-899a-2a8d434c1440",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": true,
+      "datetime": 1643872616986
+    },
+    {
+      "id": "6976f92d-b185-4471-aa34-220fd18a4b9f",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "read": true,
+      "datetime": 1643872724415
+    },
+    {
+      "id": "9e5ead0d-f969-4f6b-ae3d-1f0641825d2a",
+      "recipientId": "ebf2fd1f-d07b-4c25-be56-3134fe265673",
+      "questionId": "a5a53e8d-94be-452a-a411-29956322f528",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": true,
+      "datetime": 1643872859410
+    },
+    {
+      "id": "013c63b9-f8ab-49c5-a127-b3a8b4f03ae0",
+      "recipientId": "045e4e40-6f96-448a-af50-02b46bf6eda3",
+      "questionId": "89fe10c3-aafb-4e97-8ea5-e4673df7ebc9",
+      "authorId": "e320f9c0-f2e5-44c0-a9df-2f6a7aecb7f3",
+      "read": false,
+      "datetime": 1643873127309
+    }
+  ]
+}

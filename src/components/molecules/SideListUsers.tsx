@@ -58,8 +58,8 @@ const SideListUsers = ({
                       <ListItemText
                         primary={
                           user.numberOfAnswers === 1
-                            ? user.numberOfAnswers + ' comment'
-                            : user.numberOfAnswers + ' comments'
+                            ? user.numberOfAnswers + ' answer'
+                            : user.numberOfAnswers + ' answers'
                         }
                       />
                     </Grid>

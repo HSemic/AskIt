@@ -104,9 +104,9 @@ const Comment = ({
   };
 
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" gap={2}>
       <Grid item>
-        <Grid container gap={1} sx={{ paddingRight: '2rem' }}>
+        <Grid container direction="row" gap={1} sx={{ paddingRight: '2rem' }}>
           <Grid item>
             <UserAvatar username={comment.authorUsername} size="normal" />
           </Grid>
@@ -123,18 +123,19 @@ const Comment = ({
                   variant="normal"
                 />
               </Grid>
-              <Grid item>
-                <CommentText text={comment.text} />
-              </Grid>
             </Grid>
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        <Grid container direction="column" gap={1}>
+          <Grid item>
+            <CommentText text={comment.text} />
+          </Grid>
+
           {isCurrentUserOwner ? (
             <>
-              <Grid
-                item
-                gap={1}
-                sx={{ marginLeft: 'auto', marginRight: '-2rem' }}
-              >
+              <Grid item gap={1} sx={{ marginLeft: 'auto' }}>
                 <Button
                   variant="outlined"
                   color="primary"

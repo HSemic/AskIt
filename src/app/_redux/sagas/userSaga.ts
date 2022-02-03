@@ -37,7 +37,7 @@ const getUserByEmail = (email: string) =>
 const getAllUsers = () => askIt.get<UserApiData[]>('/users');
 
 const getTopUsers = () =>
-  askIt.get<UserApiData[]>('/users?_sort=comments&_order=desc&_limit=5');
+  askIt.get<UserApiData[]>('/users?_sort=numberOfAnswers&_order=desc&_limit=5');
 
 const addNewUser = (
   user: Omit<
