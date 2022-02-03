@@ -51,14 +51,10 @@ const App = (): React.ReactElement => {
 
     if (isUserLoggedIn && socket) return;
 
-    console.log(isUserLoggedIn);
-
     const newSocket = io(apiUrl);
 
     newSocket.on('notification', (notification: NotificationApiData) => {
-      console.log(notification);
       dispatch(receiveNotificationRequest(notification));
-      console.log(notification);
     });
 
     loggedInUser && newSocket.emit('newUser', loggedInUser.id);

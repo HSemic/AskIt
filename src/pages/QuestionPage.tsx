@@ -182,8 +182,6 @@ const QuestionPage = ({ socket }: QuestionPageProps): React.ReactElement => {
       datetime: Date.now()
     };
 
-    console.log(newNotification);
-
     dispatch(sendNotificationRequest(newNotification));
 
     socket?.emit('notification', newNotification);

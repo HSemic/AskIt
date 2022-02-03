@@ -1,10 +1,10 @@
 // Imports
-import jsonServer from "json-server";
-import express from "express";
-import http from "http";
-import cors from "cors";
+import jsonServer from 'json-server';
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
 
-import { Server } from "socket.io";
+import { Server } from 'socket.io';
 
 // Express app setup
 const app = express();
@@ -17,7 +17,7 @@ app.use(cors());
 // Adding json server middleware
 
 const middlewares = jsonServer.defaults();
-const router = jsonServer.router("db.json");
+const router = jsonServer.router('db.json');
 
 app.use(middlewares);
 app.use(router);
@@ -28,9 +28,9 @@ const PORT = process.env.PORT || 3001;
 
 const io = new Server(server, {
   cors: {
-    origin: "https://mop-react-frontend.netlify.app/",
-    methods: ["GET", "POST"],
-  },
+    origin: 'https://mop-react-frontend.netlify.app/',
+    methods: ['GET', 'POST']
+  }
 });
 
 // The below array stores currently connected users in the form userId: socketId
@@ -53,32 +53,31 @@ const getUser = (userId) => {
 };
 
 // Defining event for the io object
-io.on("connection", (socket) => {
+io.on('connection', (socket) => {
   // Adds a new user
-  socket.on("newUser", (userId) => {
+  socket.on('newUser', (userId) => {
     addNewUser(userId, socket.id);
-    console.log(onlineUsers);
   });
 
   socket.on(
-    "notification",
+    'notification',
     ({ id, recipientId, questionId, authorId, read, datetime }) => {
       const receiver = getUser(recipientId);
       if (!receiver) return;
 
-      io.to(receiver.socketId).emit("notification", {
+      io.to(receiver.socketId).emit('notification', {
         id,
         recipientId,
         questionId,
         authorId,
         read,
-        datetime,
+        datetime
       });
     }
   );
 
   // Removes an user
-  socket.on("disconnect", () => {
+  socket.on('disconnect', () => {
     removeUser(socket.id);
   });
 });
