@@ -10,6 +10,8 @@ This app is deployed with Netlify and can be accessed here: https://mop-react-fr
 
 ## Used technologies
 
+### Frontend
+
 The app is built using the [React library](https://reactjs.org/) v17.0.2 and bootstrapped using create-react-app.
 
 Code itself is written using [TypeScript](https://www.typescriptlang.org/) (v4.5.5 at the moment), a statically typed JavaScript superset.
@@ -23,6 +25,12 @@ For middleware, [Redux Saga](https://redux-saga.js.org/) (v1.1.3) has been chose
 Navigation is implemented with [React Router](https://reactrouter.com/docs/en/v6/getting-started/overview) v6.
 
 CI/CD is done through [CircleCI](https://circleci.com/) service.
+
+### Backend
+
+Backend is a node/express app coupled with [JSON Server](https://github.com/typicode/json-server) fake REST API. It is deployed on Heroku. The code for it can be found in the ```backend``` directory.
+
+Notifications are implemented with [SocketIO](https://socket.io/) on both server and client side.
 
 ## Code organization
 
@@ -38,7 +46,7 @@ The ```src``` directory contains the following subdirectories:
 * ```styles``` - MaterialUI theme and basic styling for html and #root elements
 * ```types``` - Definitions of custom TypeScript interfaces and types, used throughout the app, as well as module definitions for .jpg and .png files, so that they can be safely imported.
 
-Outside the ```src``` directory, ```.circleci``` directory contains the ```config.yml``` file, which defines CI/CD pipeline.  
+Outside the ```src``` directory, ```.circleci``` directory contains the ```config.yml``` file, which defines CI/CD pipeline. and ```backend``` directory contains the backend code.
 
 ## Design
 
