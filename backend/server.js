@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 3001;
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://mop-react-frontend.netlify.app/',
+    origin: 'https://mop-react-frontend.netlify.app',
     methods: ['GET', 'POST']
   }
 });
