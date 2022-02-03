@@ -34,12 +34,7 @@ const getUnreadNotificationsForLoggedInUser = (id: string) =>
   );
 
 const addNewNotification = (notification: NotificationApiData) =>
-  askIt.post<NotificationApiData>('/notifications', {
-    ...notification,
-    id: generateRandomId(),
-    read: false,
-    datetime: Date.now()
-  });
+  askIt.post<NotificationApiData>('/notifications', notification);
 
 const editANotification = (id: string) =>
   askIt.patch<NotificationApiData>(`/notifications/${id}`, {

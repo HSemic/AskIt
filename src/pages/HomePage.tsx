@@ -83,6 +83,8 @@ const HomePage = (): React.ReactElement => {
           loggedInUser.numberOfQuestions + 1
         )
       );
+
+      setQuestionText('');
     }
   };
 
