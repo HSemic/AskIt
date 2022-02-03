@@ -24,7 +24,7 @@ For middleware, [Redux Saga](https://redux-saga.js.org/) (v1.1.3) has been chose
 
 Navigation is implemented with [React Router](https://reactrouter.com/docs/en/v6/getting-started/overview) v6.
 
-CI/CD is done through [CircleCI](https://circleci.com/) service.
+CI/CD is done through [CircleCI](https://circleci.com/) service. Related .yml filed can be found within ```circleci``` directory.
 
 ### Backend
 
