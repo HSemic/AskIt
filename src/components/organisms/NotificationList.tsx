@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import NotificationIcon from '../atoms/NotificationIcon';
 import Notification from '../molecules/Notification';
+import LogInToMessage from '../atoms/LogInToMessage';
 
 const useStyles = makeStyles({
   list: {
@@ -41,7 +42,10 @@ const NotificationList = ({ notificationList }: NotificationListProps) => {
     <div>
       <NotificationIcon
         onClick={onButtonClick}
-        notificationNumber={notificationList.length}
+        notificationNumber={
+          notificationList.filter((notification) => notification.read === false)
+            .length
+        }
       />
       <Menu
         classes={{ list: classes.list }}
@@ -59,18 +63,22 @@ const NotificationList = ({ notificationList }: NotificationListProps) => {
           }
         }}
       >
-        {notificationList.map((notification, index) => (
-          <MenuItem
-            key={index}
-            onClick={onClose}
-            sx={{
-              padding: '0'
-            }}
-            disableGutters
-          >
-            <Notification {...notification} />
-          </MenuItem>
-        ))}
+        {notificationList.length === 0 && (
+          <LogInToMessage height="10rem" text="No new notifications" />
+        )}
+        {notificationList.length > 0 &&
+          notificationList.map((notification, index) => (
+            <MenuItem
+              key={index}
+              onClick={onClose}
+              sx={{
+                padding: '0'
+              }}
+              disableGutters
+            >
+              <Notification {...notification} />
+            </MenuItem>
+          ))}
       </Menu>
     </div>
   );

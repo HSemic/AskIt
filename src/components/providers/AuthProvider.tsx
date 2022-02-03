@@ -10,6 +10,7 @@ import {
 } from '../../app/_redux/actions/userActions';
 
 import { RootState } from '../../app/_redux/reducers/rootReducer';
+import { hashAPassword } from '../../services/passwordHashingService';
 
 interface AuthContext {
   loggedIn: boolean;
@@ -66,7 +67,7 @@ export function useAuth() {
           firstName: firstName,
           lastName: lastName,
           email: email,
-          password: password
+          password: hashAPassword(password)
         })
       );
     }

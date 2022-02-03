@@ -44,7 +44,7 @@ export const fetchUnreadNotificationsFailure = (
 });
 
 export const sendNotificationRequest = (
-  newNotification: Omit<NotificationApiData, 'id' | 'read' | 'datetime'>
+  newNotification: NotificationApiData
 ): SendNotificationRequest => ({
   type: notificationTypes.SEND_NOTIFICATION_REQUEST,
   newNotification

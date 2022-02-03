@@ -40,13 +40,13 @@ const ProfilePage = (): React.ReactElement => {
     return function cleanup() {
       dispatch(clearQuestions());
     };
-  }, [dispatch, isUserLoggedIn]);
+  }, [dispatch, isUserLoggedIn, loggedInUser]);
 
   useEffect(() => {
     if (!loggedInUser) return;
 
     dispatch(fetchQuestionListRequest(page, loggedInUser.id));
-  }, [dispatch, isUserLoggedIn, page]);
+  }, [dispatch, isUserLoggedIn, page, loggedInUser]);
 
   const incrementPage = () => {
     setPage(page + 1);

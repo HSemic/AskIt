@@ -9,5 +9,5 @@ export const validatePassword = (password: string): boolean => {
 };
 
 export const validateQuestionText = (questionText: string): boolean => {
-  return questionText.length >= 8 && questionText.length <= 150;
+  return questionText.length >= 8 && questionText.length <= 300;
 };

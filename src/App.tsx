@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -17,8 +17,14 @@ import VerticalSpacer from './components/atoms/VerticalSpacer';
 import Footer from './components/molecules/Footer';
 
 import CircularProgress from './components/atoms/CircularProgress';
+import { useSelector } from 'react-redux';
+import { RootState } from './app/_redux/reducers/rootReducer';
+import { io, Socket } from 'socket.io-client';
+import { apiUrl } from './app/api/askIt';
+import { receiveNotificationRequest } from './app/_redux/actions/notificationActions';
 
-// import { hashAPassword } from './services/passwordHashingService';
+import { useDispatch } from 'react-redux';
+import { NotificationApiData } from './app/_redux/reducers/notificationReducer/types';
 
 const QuestionPage = lazy(() => import('./pages/QuestionPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
@@ -26,7 +32,39 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 
 const App = (): React.ReactElement => {
-  // console.log(hashAPassword('test'));
+  const { isUserLoggedIn, loggedInUser } = useSelector(
+    (state: RootState) => state.user
+  );
+
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isUserLoggedIn) {
+      if (socket) {
+        socket.close();
+        setSocket(null);
+      }
+      return;
+    }
+
+    if (isUserLoggedIn && socket) return;
+
+    console.log(isUserLoggedIn);
+
+    const newSocket = io(apiUrl);
+
+    newSocket.on('notification', (notification: NotificationApiData) => {
+      console.log(notification);
+      dispatch(receiveNotificationRequest(notification));
+      console.log(notification);
+    });
+
+    loggedInUser && newSocket.emit('newUser', loggedInUser.id);
+
+    setSocket(newSocket);
+  }, [isUserLoggedIn, loggedInUser, dispatch, socket]);
 
   return (
     <>
@@ -65,7 +103,7 @@ const App = (): React.ReactElement => {
           path="/question/:id"
           element={
             <Suspense fallback={<CircularProgress />}>
-              <QuestionPage />
+              <QuestionPage socket={socket} />
             </Suspense>
           }
         />
@@ -74,7 +112,7 @@ const App = (): React.ReactElement => {
           element={
             <RequireAuth>
               <Suspense fallback={<CircularProgress />}>
-                <QuestionPage />
+                <QuestionPage socket={socket} />
               </Suspense>
             </RequireAuth>
           }

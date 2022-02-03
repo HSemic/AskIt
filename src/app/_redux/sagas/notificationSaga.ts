@@ -33,9 +33,7 @@ const getUnreadNotificationsForLoggedInUser = (id: string) =>
     `/notifications?recipientId=${id}&_read=false&_sort=datetime&_order=desc`
   );
 
-const addNewNotification = (
-  notification: Omit<NotificationApiData, 'id' | 'read' | 'datetime'>
-) =>
+const addNewNotification = (notification: NotificationApiData) =>
   askIt.post<NotificationApiData>('/notifications', {
     ...notification,
     id: generateRandomId(),
@@ -111,10 +109,7 @@ function* fetchUnreadNotifications(action: FetchUnreadNotificationsRequest) {
 
 function* sendNotification(action: SendNotificationRequest) {
   try {
-    const addedNotification: AxiosResponse<NotificationApiData> = yield call(
-      addNewNotification,
-      action.newNotification
-    );
+    yield call(addNewNotification, action.newNotification);
 
     yield put(sendNotificationSuccess());
   } catch (e: any) {

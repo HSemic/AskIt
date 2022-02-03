@@ -9,8 +9,11 @@ interface RegisterTemplateProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  password2: string;
+  setPassword2: React.Dispatch<React.SetStateAction<string>>;
   emailError: string;
   passwordError: string;
+  password2Error: string;
   firstName: string;
   setFirstName: React.Dispatch<React.SetStateAction<string>>;
   lastName: string;
@@ -25,8 +28,11 @@ const RegisterTemplate = ({
   setEmail,
   password,
   setPassword,
+  password2,
+  setPassword2,
   emailError,
   passwordError,
+  password2Error,
   firstName,
   setFirstName,
   lastName,
@@ -49,8 +55,11 @@ const RegisterTemplate = ({
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
+        password2={password2}
+        setPassword2={setPassword2}
         emailError={emailError}
         passwordError={passwordError}
+        password2Error={password2Error}
         firstName={firstName}
         setFirstName={setFirstName}
         lastName={lastName}

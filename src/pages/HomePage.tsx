@@ -18,7 +18,7 @@ import HomeTemplate from '../components/templates/HomeTemplate';
 import { validateQuestionText } from '../services/validationService';
 
 const config = {
-  questionError: 'Question needs to be between 8 and 150 characters long.'
+  questionError: 'Question needs to be between 8 and 300 characters long.'
 };
 
 const HomePage = (): React.ReactElement => {

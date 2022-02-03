@@ -54,7 +54,7 @@ export interface SendNotificationFailurePayload {
 
 export interface SendNotificationRequest {
   type: typeof notificationTypes.SEND_NOTIFICATION_REQUEST;
-  newNotification: Omit<NotificationApiData, 'id' | 'read' | 'datetime'>;
+  newNotification: NotificationApiData;
 }
 
 export interface SendNotificationSuccess {

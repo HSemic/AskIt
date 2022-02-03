@@ -22,14 +22,20 @@ import { RootState } from '../app/_redux/reducers/rootReducer';
 import QuestionTemplate from '../components/templates/QuestionTemplate';
 import { editUserRequest } from '../app/_redux/actions/userActions';
 import { validateQuestionText } from '../services/validationService';
-import { useSocket } from '../components/providers/SocketProvider';
 import { generateRandomId } from '../services/uuidService';
+import { sendNotificationRequest } from '../app/_redux/actions/notificationActions';
+import { NotificationApiData } from '../app/_redux/reducers/notificationReducer/types';
+import { Socket } from 'socket.io-client';
 
 const config = {
   questionError: 'Question needs to be between 8 and 150 characters long.'
 };
 
-const QuestionPage = (): React.ReactElement => {
+interface QuestionPageProps {
+  socket: Socket | null;
+}
+
+const QuestionPage = ({ socket }: QuestionPageProps): React.ReactElement => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -63,7 +69,7 @@ const QuestionPage = (): React.ReactElement => {
 
   const [deleted, setDeleted] = useState(false);
 
-  const socket = useSocket();
+  // const socket = useSocket();
 
   useEffect(() => {
     if (!id) return;
@@ -84,10 +90,6 @@ const QuestionPage = (): React.ReactElement => {
 
   const onQuestionDelete = () => {
     if (!loggedInUser || !currentQuestion) return;
-
-    // commentList.forEach(() => {
-    //   dispatch(deleteACommentRequest(currentQuestion.id));
-    // });
 
     dispatch(deleteAQuestionRequest(currentQuestion.id));
 
@@ -171,14 +173,20 @@ const QuestionPage = (): React.ReactElement => {
 
     setCommentText('');
 
-    socket?.socket?.emit('notification', {
+    const newNotification: NotificationApiData = {
       id: generateRandomId(),
       recipientId: currentQuestion.authorId,
       questionId: currentQuestion.id,
       authorId: loggedInUser.id,
       read: false,
       datetime: Date.now()
-    });
+    };
+
+    console.log(newNotification);
+
+    dispatch(sendNotificationRequest(newNotification));
+
+    socket?.emit('notification', newNotification);
   };
 
   const onThumbsUpClick = () => {

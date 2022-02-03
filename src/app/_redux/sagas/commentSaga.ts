@@ -30,7 +30,9 @@ import * as userSelectors from '../selectors/userSelectors';
 // import { verifyPassword } from '../../../services/passwordHashingService';
 
 const getCommentsByQuestionId = (id: string) =>
-  askIt.get<CommentApiData[]>(`/comments?postId=${id}&_sort=datetime`);
+  askIt.get<CommentApiData[]>(
+    `/comments?postId=${id}&_sort=datetime_order=desc`
+  );
 
 const addANewComment = (comment: Omit<CommentApiData, 'id'>) =>
   askIt.post<CommentApiData>('/comments', {

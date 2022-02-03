@@ -51,7 +51,7 @@ const LoginPage = (): React.ReactElement => {
     if (!loggedInUser) return;
     dispatch(fetchUnreadNotificationsRequest(loggedInUser.id));
     navigate('/');
-  }, [isUserLoggedIn, navigate, dispatch]);
+  }, [isUserLoggedIn, navigate, dispatch, loggedInUser]);
 
   const onLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

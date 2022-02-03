@@ -110,7 +110,7 @@ const QuestionTemplate = ({
           <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperQuestion}>
               <Grid container gap={2}>
-                <Grid item>
+                <Grid item xs={1}>
                   <Grid container direction="column">
                     <Grid item>
                       <Grid
@@ -146,7 +146,7 @@ const QuestionTemplate = ({
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item flexGrow={1}>
+                <Grid item xs={10}>
                   <QuestionCard question={question} />
                 </Grid>
               </Grid>

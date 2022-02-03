@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     fontSize: '3rem !important'
   },
   logoLink: {
-    textDecoration: 'none'
+    textDecoration: 'none',
+    maxWidth: '20rem'
   },
   wrapper: {
     flexGrow: 1

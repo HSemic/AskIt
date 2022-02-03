@@ -1,9 +1,10 @@
-import { createHash } from 'crypto';
+import sha256 from 'crypto-js/sha256';
 
 export const hashAPassword = (password: string): string => {
-  return createHash('sha256').update(password).digest('hex');
+  console.log(sha256(password).toString());
+  return sha256(password).toString();
 };
 
 export const verifyPassword = (password: string, hash: string): boolean => {
-  return createHash('sha256').update(password).digest('hex') === hash;
+  return sha256(password).toString() === hash;
 };

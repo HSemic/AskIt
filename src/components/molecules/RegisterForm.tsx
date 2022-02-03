@@ -38,8 +38,11 @@ interface RegisterFormProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  password2: string;
+  setPassword2: React.Dispatch<React.SetStateAction<string>>;
   emailError: string;
   passwordError: string;
+  password2Error: string;
   firstName: string;
   setFirstName: React.Dispatch<React.SetStateAction<string>>;
   lastName: string;
@@ -54,8 +57,11 @@ const RegisterForm = ({
   setEmail,
   password,
   setPassword,
+  password2,
+  setPassword2,
   emailError,
   passwordError,
+  password2Error,
   firstName,
   setFirstName,
   lastName,
@@ -120,6 +126,16 @@ const RegisterForm = ({
                   type="password"
                   errorMessage={passwordError}
                   onChange={(event) => onInputValueChange(event, setPassword)}
+                />
+              </Grid>
+              <Grid item>
+                <ControlledInput
+                  className={classes.formInput}
+                  label="Repeat password"
+                  value={password2}
+                  type="password"
+                  errorMessage={password2Error}
+                  onChange={(event) => onInputValueChange(event, setPassword2)}
                 />
               </Grid>
               {apiError && apiError !== null && apiError.length > 0 ? (

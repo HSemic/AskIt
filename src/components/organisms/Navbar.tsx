@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { makeStyles } from '@mui/styles';
 
 import AppBar from '@mui/material/AppBar';
@@ -17,11 +18,8 @@ import { useAuth } from '../providers/AuthProvider';
 import NotificationList from './NotificationList';
 import { Grid } from '@mui/material';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
-import { NotificationApiData } from '../../app/_redux/reducers/notificationReducer/types';
-import { receiveNotificationRequest } from '../../app/_redux/actions/notificationActions';
-import { useSocket } from '../providers/SocketProvider';
 
 const useStyles = makeStyles({
   appBar: {
@@ -40,18 +38,6 @@ const Navbar = (): React.ReactElement => {
 
   const { loggedIn } = useAuth();
 
-  const dispatch = useDispatch();
-
-  const socket = useSocket();
-
-  React.useEffect(() => {
-    if (!socket.socket) return;
-
-    socket.socket.on('notification', (notification: NotificationApiData) => {
-      dispatch(receiveNotificationRequest(notification));
-    });
-  }, [loggedIn]);
-
   const { notifications } = useSelector(
     (state: RootState) => state.notifications
   );
@@ -60,35 +46,46 @@ const Navbar = (): React.ReactElement => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
-          <Logo text={config.logoText} imgSrc={logo} />
-
-          <ButtonGroup direction="row" gap={1}>
-            {!loggedIn ? (
-              <>
-                <LinkButton
-                  text={config.buttonSignInText}
-                  color="primary"
-                  href="login"
-                />
-                <LinkButton
-                  text={config.buttonSignUpText}
-                  color="secondary"
-                  href="register"
-                />
-              </>
-            ) : (
-              <>
-                <Grid container alignItems="center">
-                  <Grid item>
-                    <NotificationList notificationList={notifications} />
-                  </Grid>
-                  <Grid item>
-                    <ProfileMenu />
-                  </Grid>
+          <Grid container direction="row" alignItems="center">
+            <Grid item>
+              <Logo text={config.logoText} imgSrc={logo} />
+            </Grid>
+            <Grid item flex={1}>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <ButtonGroup direction="row" gap={1}>
+                    {!loggedIn ? (
+                      <>
+                        <LinkButton
+                          text={config.buttonSignInText}
+                          color="primary"
+                          href="login"
+                        />
+                        <LinkButton
+                          text={config.buttonSignUpText}
+                          color="secondary"
+                          href="register"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <NotificationList
+                              notificationList={notifications}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <ProfileMenu />
+                          </Grid>
+                        </Grid>
+                      </>
+                    )}
+                  </ButtonGroup>
                 </Grid>
-              </>
-            )}
-          </ButtonGroup>
+              </Grid>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </Box>

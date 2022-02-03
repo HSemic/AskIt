@@ -15,7 +15,8 @@ const config = {
   formTitle: 'Sign Up',
   validationErrors: {
     email: 'The email address is invalid',
-    password: 'Password needs to be at least 5 characters long'
+    passwordLength: 'Password needs to be at least 5 characters long',
+    passwordMatch: 'Passwords must match!'
   }
 };
 
@@ -27,6 +28,9 @@ const RegisterPage = (): React.ReactElement => {
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const [password2, setPassword2] = useState('');
+  const [password2Error, setPassword2Error] = useState('');
 
   const { pending, error } = useSelector((state: RootState) => state.user);
 
@@ -44,8 +48,24 @@ const RegisterPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (password.length > 0 && !validatePassword(password))
-      setPasswordError(config.validationErrors.password);
+      setPasswordError(config.validationErrors.passwordLength);
     else setPasswordError('');
+  }, [password]);
+
+  useEffect(() => {
+    if (password2.length > 0 && !validatePassword(password2))
+      setPasswordError(config.validationErrors.passwordLength);
+    else setPassword2Error('');
+  }, [password2]);
+
+  useEffect(() => {
+    if (password.length > 0 && password2.length > 0 && password !== password2) {
+      setPasswordError(config.validationErrors.passwordMatch);
+      setPassword2Error(config.validationErrors.passwordMatch);
+    } else {
+      setPasswordError('');
+      setPassword2Error('');
+    }
   }, [password]);
 
   useEffect(() => {
@@ -59,11 +79,21 @@ const RegisterPage = (): React.ReactElement => {
 
     const validEmail = validateEmail(email);
     const validPassword = validatePassword(password);
+    const validPassword2 = validatePassword(password2);
 
     if (!validEmail) setEmailError(config.validationErrors.email);
-    if (!validPassword) setPasswordError(config.validationErrors.password);
+    if (!validPassword)
+      setPasswordError(config.validationErrors.passwordLength);
+    if (!validPassword2)
+      setPassword2Error(config.validationErrors.passwordLength);
 
-    if (validEmail && validPassword)
+    const passwordsMatch = password === password2;
+
+    if (!passwordsMatch) {
+      setPasswordError(config.validationErrors.passwordMatch);
+    }
+
+    if (validEmail && validPassword && passwordsMatch)
       register(firstName, lastName, email, password);
   };
 
@@ -73,8 +103,11 @@ const RegisterPage = (): React.ReactElement => {
       setEmail={setEmail}
       password={password}
       setPassword={setPassword}
+      password2={password2}
+      setPassword2={setPassword2}
       emailError={emailError}
       passwordError={passwordError}
+      password2Error={password2Error}
       firstName={firstName}
       setFirstName={setFirstName}
       lastName={lastName}

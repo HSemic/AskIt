@@ -10,9 +10,13 @@ import MetaAuthor from '../atoms/MetaAuthor';
 import UserAvatar from '../atoms/UserAvatar';
 import { blue } from '@mui/material/colors';
 
+import { useDispatch } from 'react-redux';
+import { editNotificationRequest } from '../../app/_redux/actions/notificationActions';
+
 const useStyles = makeStyles({
   container: {
     display: 'block',
+    width: '100%',
     maxWidth: '30rem',
     textDecoration: 'none',
     padding: '1rem 1.5rem',
@@ -26,6 +30,7 @@ const useStyles = makeStyles({
 });
 
 interface NotificationProps {
+  id: string;
   questionId: string;
   authorUsername: string;
   read: boolean;
@@ -33,6 +38,7 @@ interface NotificationProps {
 }
 
 const Notification = ({
+  id,
   questionId,
   authorUsername,
   read,
@@ -40,12 +46,19 @@ const Notification = ({
 }: NotificationProps): React.ReactElement => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const onNotificationClick = () => {
+    dispatch(editNotificationRequest(id));
+  };
+
   return (
     <Link
       className={`${classes.container} ${
         !read ? classes.containerNotRead : null
       }`}
       to={`/question/${questionId}`}
+      onClick={onNotificationClick}
     >
       <Grid container direction="row" alignItems="center" gap={2}>
         <Grid item>
@@ -54,8 +67,14 @@ const Notification = ({
         <Grid item>
           <Grid container direction="column" gap={1}>
             <Grid item>
-              <MetaAuthor author={authorUsername} variant="profile" />{' '}
-              <MetaText text={'answered your question'} variant="normal" />
+              <Grid container direction="column">
+                <Grid item>
+                  <MetaAuthor author={authorUsername} variant="profile" />
+                </Grid>
+                <Grid item>
+                  <MetaText text={'answered your question'} variant="normal" />
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item>
               <MetaText text={datetime} variant="normal" />
