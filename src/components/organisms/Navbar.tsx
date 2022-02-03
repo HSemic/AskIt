@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 import { NotificationApiData } from '../../app/_redux/reducers/notificationReducer/types';
 import { receiveNotificationRequest } from '../../app/_redux/actions/notificationActions';
+import { useSocket } from '../providers/SocketProvider';
 
 const useStyles = makeStyles({
   appBar: {
@@ -41,20 +42,19 @@ const Navbar = (): React.ReactElement => {
 
   const dispatch = useDispatch();
 
-  const { notificationSocket, notifications } = useSelector(
-    (state: RootState) => state.notifications
-  );
+  const socket = useSocket();
 
   React.useEffect(() => {
-    if (!notificationSocket) return;
+    if (!socket.socket) return;
 
-    notificationSocket.on(
-      'notification',
-      (notification: NotificationApiData) => {
-        dispatch(receiveNotificationRequest(notification));
-      }
-    );
-  }, [dispatch, notificationSocket]);
+    socket.socket.on('notification', (notification: NotificationApiData) => {
+      dispatch(receiveNotificationRequest(notification));
+    });
+  }, [loggedIn]);
+
+  const { notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>

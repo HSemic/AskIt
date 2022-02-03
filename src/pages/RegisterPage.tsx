@@ -11,8 +11,6 @@ import RegisterTemplate from '../components/templates/RegisterTemplate';
 
 import { useDispatch } from 'react-redux';
 
-import { createNotificationSocketRequest } from '../app/_redux/actions/notificationActions';
-
 const config = {
   formTitle: 'Sign Up',
   validationErrors: {
@@ -52,7 +50,6 @@ const RegisterPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (loggedIn) {
-      dispatch(createNotificationSocketRequest());
       navigate('/');
     }
   }, [loggedIn, navigate, dispatch]);

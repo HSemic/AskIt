@@ -1,5 +1,5 @@
 import askIt from '../../api/askIt';
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   fetchUserListSuccess,
   fetchUserByEmailAndValidateSuccess,
@@ -22,6 +22,8 @@ import { AxiosResponse } from 'axios';
 
 import { generateRandomId } from '../../../services/uuidService';
 import { processUsername } from '../../../services/username';
+
+import * as userSelectors from '../selectors/userSelectors';
 
 // import { verifyPassword } from '../../../services/passwordHashingService';
 
@@ -71,6 +73,10 @@ function* fetchUserByEmailAndValidate(
   action: FetchUserByEmailAndValidateRequest
 ) {
   try {
+    const isUserLoggedIn: boolean = yield select(userSelectors.isUserLoggedIn);
+
+    if (isUserLoggedIn === true) throw 'User is already logged in!';
+
     const response: AxiosResponse<UserApiData[]> = yield call(
       getUserByEmail,
       action.email

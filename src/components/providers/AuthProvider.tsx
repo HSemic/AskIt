@@ -8,7 +8,7 @@ import {
   registerUserRequest,
   logout
 } from '../../app/_redux/actions/userActions';
-import { destroyNotificationSocket } from '../../app/_redux/actions/notificationActions';
+
 import { RootState } from '../../app/_redux/reducers/rootReducer';
 
 interface AuthContext {
@@ -39,15 +39,13 @@ const authContext = React.createContext<AuthContext>({
 export function useAuth() {
   const dispatch = useDispatch();
 
-  const { loggedInUser } = useSelector((state: RootState) => state.user);
+  const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
 
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (loggedInUser && loggedInUser !== null && loggedInUser.id.length > 0)
-      setLoggedIn(true);
-    else setLoggedIn(false);
-  }, [loggedInUser]);
+    setLoggedIn(isUserLoggedIn);
+  }, [isUserLoggedIn]);
 
   return {
     loggedIn,
@@ -56,7 +54,6 @@ export function useAuth() {
     },
     logout() {
       dispatch(logout());
-      dispatch(destroyNotificationSocket());
     },
     register(
       firstName: string,

@@ -1,11 +1,5 @@
 import { notificationTypes } from '../actiontypes/notificationTypes';
 import {
-  CreateNotificationSocketFailure,
-  CreateNotificationSocketFailurePayload,
-  CreateNotificationSocketRequest,
-  CreateNotificationSocketSuccess,
-  CreateNotificationSocketSuccessPayload,
-  DestroyNotificationSocket,
   FetchUnreadNotificationsFailure,
   FetchUnreadNotificationsFailurePayload,
   FetchUnreadNotificationsRequest,
@@ -27,29 +21,6 @@ import {
   ReceiveANotificationFailurePayload,
   ReceiveANotificationFailure
 } from '../reducers/notificationReducer/types';
-
-export const createNotificationSocketRequest =
-  (): CreateNotificationSocketRequest => ({
-    type: notificationTypes.CREATE_NOTIFICATION_SOCKET_REQUEST
-  });
-
-export const createNotificationSocketSuccess = (
-  payload: CreateNotificationSocketSuccessPayload
-): CreateNotificationSocketSuccess => ({
-  type: notificationTypes.CREATE_NOTIFICATION_SOCKET_SUCCESS,
-  payload
-});
-
-export const createNotificationSocketFailure = (
-  payload: CreateNotificationSocketFailurePayload
-): CreateNotificationSocketFailure => ({
-  type: notificationTypes.CREATE_NOTIFICATION_SOCKET_FAILURE,
-  payload
-});
-
-export const destroyNotificationSocket = (): DestroyNotificationSocket => ({
-  type: notificationTypes.DESTROY_NOTIFICATION_SOCKET
-});
 
 export const fetchUnreadNotificationsRequest = (
   recipientId: string

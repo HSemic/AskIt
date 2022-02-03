@@ -7,3 +7,7 @@ export const allUsers = (state: RootState) => {
 export const loggedInUser = (state: RootState) => {
   return { ...state.user.loggedInUser };
 };
+
+export const isUserLoggedIn = (state: RootState): boolean => {
+  return state.user.isUserLoggedIn;
+};

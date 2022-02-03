@@ -8,10 +8,7 @@ import { useAuth } from '../components/providers/AuthProvider';
 import LoginTemplate from '../components/templates/LoginTemplate';
 import { validateEmail, validatePassword } from '../services/validationService';
 
-import {
-  createNotificationSocketRequest,
-  fetchUnreadNotificationsRequest
-} from '../app/_redux/actions/notificationActions';
+import { fetchUnreadNotificationsRequest } from '../app/_redux/actions/notificationActions';
 
 const config = {
   formTitle: 'Sign In',
@@ -30,7 +27,7 @@ const LoginPage = (): React.ReactElement => {
 
   const dispatch = useDispatch();
 
-  const { loggedInUser, pending, error } = useSelector(
+  const { loggedInUser, pending, error, isUserLoggedIn } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -52,10 +49,9 @@ const LoginPage = (): React.ReactElement => {
 
   useEffect(() => {
     if (!loggedInUser) return;
-    dispatch(createNotificationSocketRequest());
     dispatch(fetchUnreadNotificationsRequest(loggedInUser.id));
     navigate('/');
-  }, [loggedInUser, navigate, dispatch]);
+  }, [isUserLoggedIn, navigate, dispatch]);
 
   const onLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

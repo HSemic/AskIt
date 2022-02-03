@@ -22,7 +22,8 @@ import { RootState } from '../app/_redux/reducers/rootReducer';
 import QuestionTemplate from '../components/templates/QuestionTemplate';
 import { editUserRequest } from '../app/_redux/actions/userActions';
 import { validateQuestionText } from '../services/validationService';
-import { sendNotificationRequest } from '../app/_redux/actions/notificationActions';
+import { useSocket } from '../components/providers/SocketProvider';
+import { generateRandomId } from '../services/uuidService';
 
 const config = {
   questionError: 'Question needs to be between 8 and 150 characters long.'
@@ -61,6 +62,8 @@ const QuestionPage = (): React.ReactElement => {
   const [commentError, setCommentError] = useState('');
 
   const [deleted, setDeleted] = useState(false);
+
+  const socket = useSocket();
 
   useEffect(() => {
     if (!id) return;
@@ -168,14 +171,14 @@ const QuestionPage = (): React.ReactElement => {
 
     setCommentText('');
 
-    if (currentQuestion.authorId !== loggedInUser.id)
-      dispatch(
-        sendNotificationRequest({
-          recipientId: currentQuestion.authorId,
-          authorId: loggedInUser.id,
-          questionId: currentQuestion.id
-        })
-      );
+    socket?.socket?.emit('notification', {
+      id: generateRandomId(),
+      recipientId: currentQuestion.authorId,
+      questionId: currentQuestion.id,
+      authorId: loggedInUser.id,
+      read: false,
+      datetime: Date.now()
+    });
   };
 
   const onThumbsUpClick = () => {

@@ -13,7 +13,7 @@ import { blue } from '@mui/material/colors';
 const useStyles = makeStyles({
   container: {
     display: 'block',
-    maxWidth: '28rem',
+    maxWidth: '30rem',
     textDecoration: 'none',
     padding: '1rem 1.5rem',
     '&:hover': {

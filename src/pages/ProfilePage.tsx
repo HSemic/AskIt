@@ -13,7 +13,7 @@ import { editUserRequest } from '../app/_redux/actions/userActions';
 import { validateEmail, validatePassword } from '../services/validationService';
 
 const ProfilePage = (): React.ReactElement => {
-  const { loggedInUser, error, pending } = useSelector(
+  const { loggedInUser, error, pending, isUserLoggedIn } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -40,13 +40,13 @@ const ProfilePage = (): React.ReactElement => {
     return function cleanup() {
       dispatch(clearQuestions());
     };
-  }, [dispatch, loggedInUser]);
+  }, [dispatch, isUserLoggedIn]);
 
   useEffect(() => {
     if (!loggedInUser) return;
 
-    dispatch(fetchQuestionListRequest(page, loggedInUser?.id));
-  }, [dispatch, loggedInUser, page]);
+    dispatch(fetchQuestionListRequest(page, loggedInUser.id));
+  }, [dispatch, isUserLoggedIn, page]);
 
   const incrementPage = () => {
     setPage(page + 1);

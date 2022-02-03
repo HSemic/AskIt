@@ -23,33 +23,6 @@ export interface NotificationState {
   error: string | null;
   pending: boolean;
   requestStatus: 'success' | 'failure';
-  notificationSocket: Socket | null;
-}
-
-export interface CreateNotificationSocketSuccessPayload {
-  newSocket: Socket;
-}
-
-export interface CreateNotificationSocketFailurePayload {
-  error: string;
-}
-
-export interface CreateNotificationSocketRequest {
-  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_REQUEST;
-}
-
-export interface CreateNotificationSocketSuccess {
-  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_SUCCESS;
-  payload: CreateNotificationSocketSuccessPayload;
-}
-
-export interface CreateNotificationSocketFailure {
-  type: typeof notificationTypes.CREATE_NOTIFICATION_SOCKET_FAILURE;
-  payload: CreateNotificationSocketFailurePayload;
-}
-
-export interface DestroyNotificationSocket {
-  type: typeof notificationTypes.DESTROY_NOTIFICATION_SOCKET;
 }
 
 export interface FetchUnreadNotificationsSuccessPayload {
@@ -140,10 +113,6 @@ export interface ReceiveANotificationFailure {
 }
 
 export type NotificationAction =
-  | CreateNotificationSocketRequest
-  | CreateNotificationSocketSuccess
-  | CreateNotificationSocketFailure
-  | DestroyNotificationSocket
   | FetchUnreadNotificationsRequest
   | FetchUnreadNotificationsSuccess
   | FetchUnreadNotificationsFailure

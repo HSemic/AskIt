@@ -1,10 +1,8 @@
-import askIt, { apiUrl } from '../../api/askIt';
+import askIt from '../../api/askIt';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   fetchUnreadNotificationsSuccess,
   fetchUnreadNotificationsFailure,
-  createNotificationSocketSuccess,
-  createNotificationSocketFailure,
   sendNotificationSuccess,
   sendNotificationFailure,
   editNotificationSuccess,
@@ -25,11 +23,9 @@ import {
 import { AxiosResponse } from 'axios';
 
 import * as userSelectors from '../selectors/userSelectors';
-import * as notificationSelectors from '../selectors/notificationSelectors';
 import { localizeDate } from '../../../services/localization';
 import { UserData } from '../reducers/userReducer/types';
 
-import { io, Socket } from 'socket.io-client';
 import { generateRandomId } from '../../../services/uuidService';
 
 const getUnreadNotificationsForLoggedInUser = (id: string) =>
@@ -52,23 +48,27 @@ const editANotification = (id: string) =>
     read: true
   });
 
-function* createNewNotificationSocket() {
-  try {
-    const newSocket = io(apiUrl);
+// function* createNewNotificationSocket() {
+//   try {
+//     const loggedInUser: UserApiData = yield select(userSelectors.loggedInUser);
 
-    yield put(
-      createNotificationSocketSuccess({
-        newSocket: newSocket
-      })
-    );
-  } catch (e: any) {
-    yield put(
-      createNotificationSocketFailure({
-        error: e.error
-      })
-    );
-  }
-}
+//     const newSocket: Socket = io(apiUrl);
+
+//     newSocket.emit('newUser', loggedInUser.id);
+
+//     yield put(
+//       createNotificationSocketSuccess({
+//         newSocket: newSocket
+//       })
+//     );
+//   } catch (e: any) {
+//     yield put(
+//       createNotificationSocketFailure({
+//         error: e.error
+//       })
+//     );
+//   }
+// }
 
 function* fetchUnreadNotifications(action: FetchUnreadNotificationsRequest) {
   try {
@@ -111,13 +111,10 @@ function* fetchUnreadNotifications(action: FetchUnreadNotificationsRequest) {
 
 function* sendNotification(action: SendNotificationRequest) {
   try {
-    yield call(addNewNotification, action.newNotification);
-
-    const notificationSocket: Socket = yield select(
-      notificationSelectors.socket
+    const addedNotification: AxiosResponse<NotificationApiData> = yield call(
+      addNewNotification,
+      action.newNotification
     );
-
-    notificationSocket.emit('notification', action.newNotification);
 
     yield put(sendNotificationSuccess());
   } catch (e: any) {
@@ -198,10 +195,6 @@ function* notificationSaga() {
     takeLatest(
       notificationTypes.FETCH_UNREAD_NOTIFICATIONS_REQUEST,
       fetchUnreadNotifications
-    ),
-    takeLatest(
-      notificationTypes.CREATE_NOTIFICATION_SOCKET_REQUEST,
-      createNewNotificationSocket
     ),
     takeLatest(notificationTypes.SEND_NOTIFICATION_REQUEST, sendNotification),
     takeLatest(notificationTypes.EDIT_NOTIFICATION_REQUEST, editNotification),

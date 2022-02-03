@@ -13,6 +13,8 @@ import theme from './styles/theme';
 
 import { AuthProvider } from './components/providers/AuthProvider';
 
+import { SocketProvider } from './components/providers/SocketProvider';
+
 import App from './App';
 
 store.dispatch(fetchUserListRequest());
@@ -21,9 +23,11 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SocketProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SocketProvider>
       </AuthProvider>
     </Provider>
   </ThemeProvider>,

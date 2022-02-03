@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 
 interface NotificationListProps {
   notificationList: {
+    id: string;
     questionId: string;
     authorUsername: string;
     read: boolean;

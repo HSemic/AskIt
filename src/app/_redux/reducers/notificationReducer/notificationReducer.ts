@@ -5,8 +5,7 @@ const initialState: NotificationState = {
   notifications: [],
   error: null,
   pending: false,
-  requestStatus: 'success',
-  notificationSocket: null
+  requestStatus: 'success'
 };
 
 const notificationReducer = (
@@ -14,40 +13,6 @@ const notificationReducer = (
   action: NotificationAction
 ): NotificationState => {
   switch (action.type) {
-    case notificationTypes.CREATE_NOTIFICATION_SOCKET_REQUEST ||
-      notificationTypes.FETCH_UNREAD_NOTIFICATIONS_REQUEST ||
-      notificationTypes.SEND_NOTIFICATION_REQUEST ||
-      notificationTypes.EDIT_NOTIFICATION_REQUEST:
-      return {
-        ...state,
-        pending: true
-      };
-    case notificationTypes.CREATE_NOTIFICATION_SOCKET_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        requestStatus: 'success',
-        notificationSocket: action.payload.newSocket
-      };
-    case notificationTypes.CREATE_NOTIFICATION_SOCKET_FAILURE:
-      return {
-        ...state,
-        pending: false,
-        requestStatus: 'failure',
-        error: action.payload.error
-      };
-    case notificationTypes.DESTROY_NOTIFICATION_SOCKET:
-      if (!state.notificationSocket || state.notificationSocket === null) {
-        return {
-          ...state
-        };
-      } else {
-        state.notificationSocket.close();
-        return {
-          ...state,
-          notificationSocket: null
-        };
-      }
     case notificationTypes.FETCH_UNREAD_NOTIFICATIONS_SUCCESS:
       return {
         ...state,

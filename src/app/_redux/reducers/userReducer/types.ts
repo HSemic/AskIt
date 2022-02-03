@@ -23,6 +23,7 @@ export interface UserState {
   userList: { [id: string]: UserData };
   topUsers: UserApiData[];
   error: string | null;
+  isUserLoggedIn: boolean;
 }
 
 export interface RegisterUserSuccessPayload {

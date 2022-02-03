@@ -7,7 +7,8 @@ const initialState: UserState = {
   loggedInUser: null,
   userList: {},
   topUsers: [],
-  error: null
+  error: null,
+  isUserLoggedIn: false
 };
 
 const userReducer = (state = initialState, action: UserAction): UserState => {
@@ -26,7 +27,8 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
         ...state,
         pending: false,
         loggedInUser: action.payload.user,
-        error: null
+        error: null,
+        isUserLoggedIn: true
       };
     case userTypes.REGISTER_USER_SUCCESS:
       const newUserEntry: {
@@ -45,7 +47,8 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
         pending: false,
         loggedInUser: action.payload.user,
         userList: { ...state.userList, ...newUserEntry },
-        error: null
+        error: null,
+        isUserLoggedIn: true
       };
     case userTypes.FETCH_USER_BY_EMAIL_AND_VALIDATE_FAILURE ||
       userTypes.REGISTER_USER_FAILURE:
@@ -71,7 +74,8 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
     case userTypes.LOGOUT: {
       return {
         ...state,
-        loggedInUser: null
+        loggedInUser: null,
+        isUserLoggedIn: false
       };
     }
     case userTypes.FETCH_TOPUSERS_SUCCESS:
