@@ -44,7 +44,7 @@ The ```src``` directory contains the following subdirectories:
 * ```styles``` - MaterialUI theme and basic styling for html and #root elements
 * ```types``` - Definitions of custom TypeScript interfaces and types, used throughout the app, as well as module definitions for .jpg and .png files, so that they can be safely imported.
 
-Outside the ```src``` directory, ```.circleci``` directory contains the ```config.yml``` file, which defines CI/CD pipeline. and ```backend``` directory contains the backend code.
+Outside the ```src``` directory, ```.circleci``` directory contains the ```config.yml``` file, which defines CI/CD pipeline, and ```backend``` directory contains the backend code.
 
 ## Design
 
