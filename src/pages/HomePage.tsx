@@ -92,6 +92,11 @@ const HomePage = (): React.ReactElement => {
     setPage(page + 1);
   };
 
+  const reload = () => {
+    dispatch(clearQuestions());
+    dispatch(fetchQuestionListRequest(1, null));
+  };
+
   return (
     <HomeTemplate
       questions={questionList}
@@ -105,6 +110,7 @@ const HomePage = (): React.ReactElement => {
       questionError={questionError}
       questionApiError={error}
       pendingAddQuestion={pending}
+      reload={reload}
     />
   );
 };

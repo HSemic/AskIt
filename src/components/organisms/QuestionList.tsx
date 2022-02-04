@@ -2,22 +2,27 @@ import * as React from 'react';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import QuestionCard from '../molecules/QuestionCard';
 import Button from '@mui/material/Button';
+import ReplayIcon from '@mui/icons-material/Replay';
+
 import LogInToMessage from '../atoms/LogInToMessage';
+import IconButton from '../atoms/IconButton';
+import QuestionCard from '../molecules/QuestionCard';
 
 interface QuestionListProps {
   questions: QuestionData[];
   incrementPage?: () => void;
   title?: string;
   fallBackText: string;
+  reload?: () => void;
 }
 
 const QuestionList = ({
   questions,
   incrementPage,
   title,
-  fallBackText
+  fallBackText,
+  reload
 }: QuestionListProps): React.ReactElement => {
   const onButtonClick = () => {
     if (incrementPage) incrementPage();
@@ -51,7 +56,23 @@ const QuestionList = ({
     >
       {title ? (
         <Grid item>
-          <Typography variant="h5">{title}</Typography>
+          <Grid
+            container
+            gap={2}
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Grid item>
+              <Typography variant="h5">{title}</Typography>
+            </Grid>
+            {reload && (
+              <Grid item>
+                <IconButton onClick={reload}>
+                  <ReplayIcon />
+                </IconButton>
+              </Grid>
+            )}
+          </Grid>
         </Grid>
       ) : null}
       {questions.map((question, index) => {

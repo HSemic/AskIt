@@ -30,6 +30,7 @@ interface HomeTemplateProps {
   questionError: string;
   questionApiError: string | null;
   pendingAddQuestion: boolean;
+  reload: () => void;
 }
 
 const HomeTemplate = ({
@@ -43,7 +44,8 @@ const HomeTemplate = ({
   setQuestionText,
   questionError,
   questionApiError,
-  pendingAddQuestion
+  pendingAddQuestion,
+  reload
 }: HomeTemplateProps): React.ReactElement => {
   return (
     <Container
@@ -77,6 +79,7 @@ const HomeTemplate = ({
                 incrementPage={incrementPage}
                 fallBackText="No questions have been asked yet"
                 title="Most recent questions"
+                reload={reload}
               />
             </Grid>
           </Grid>
