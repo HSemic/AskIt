@@ -2,7 +2,7 @@
 
 Welcome to AskIt!
 
-This web app allows users to post questions and answers. Fell free to try it out. 
+This web app allows users to post questions and answers. Feel free to try it out. 
 
 This app is deployed with Netlify and can be accessed here: https://mop-react-frontend.netlify.app/.
 
