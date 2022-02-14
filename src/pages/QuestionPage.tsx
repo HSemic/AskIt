@@ -57,7 +57,7 @@ const QuestionPage = ({ socket }: QuestionPageProps): React.ReactElement => {
   const { loggedInUser } = useSelector((state: RootState) => state.user);
 
   const [questionText, setQuestionText] = useState(
-    currentQuestion?.questionText || ''
+    currentQuestion ? currentQuestion.questionText : ''
   );
 
   const [questionError, setQuestionError] = useState('');
